@@ -73,3 +73,25 @@ header {
 }
 
 <link rel="stylesheet" href="https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/ZeniaMed/main/styles.css">
+.banner-container {
+    width: 100%;
+    overflow: hidden;
+    text-align: center;
+}
+
+.banner {
+    position: relative;
+}
+
+.banner-img {
+    width: 90%;
+    max-height: 300px;
+    display: none; /* Initially hide all images */
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Show the first image by default */
+.banner-img:first-child {
+    display: block;
+}
+
