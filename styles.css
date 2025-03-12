@@ -7,6 +7,7 @@ body {
     background-color: #f8f9fa;
 }
 
+/* Header */
 header {
     background-color: #28a745;
     color: white;
@@ -15,7 +16,7 @@ header {
     font-weight: bold;
 }
 
-/* Banner Styles */
+/* Banner Section */
 .banner-container {
     width: 100%;
     overflow: hidden;
@@ -24,21 +25,14 @@ header {
 
 .banner {
     display: flex;
-    animation: slide 10s infinite;
+    justify-content: center;
 }
 
 .banner-img {
-    width: 100%;
+    width: 90%;
     height: auto;
+    max-height: 300px;
     border-radius: 10px;
-}
-
-/* Keyframe Animation for Banners */
-@keyframes slide {
-    0% { transform: translateX(0); }
-    33% { transform: translateX(-100%); }
-    66% { transform: translateX(-200%); }
-    100% { transform: translateX(0); }
 }
 
 /* Categories */
@@ -77,4 +71,5 @@ header {
 .cart-link:hover {
     color: #0056b3;
 }
+
 <link rel="stylesheet" href="https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/ZeniaMed/main/styles.css">
