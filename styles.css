@@ -1,45 +1,55 @@
 /* General Styling */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     text-align: center;
-    background-color: #f4f4f4;
+    background-color: #f8f9fa;
     margin: 0;
     padding: 0;
 }
 
 /* Header */
 header {
-    background-color: #28a745;
+    background: linear-gradient(90deg, #28a745, #218838);
     color: white;
-    padding: 15px;
+    padding: 20px;
     font-size: 24px;
     font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Categories */
+header p {
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+/* Category Section */
 .category-section {
-    margin-top: 20px;
+    margin: 30px auto;
+    max-width: 900px;
 }
 
 .categories {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 15px;
     padding: 20px;
 }
 
+/* Category Buttons */
 .category-btn {
     text-decoration: none;
-    background-color: #007bff;
+    background: linear-gradient(90deg, #007bff, #0056b3);
     color: white;
-    padding: 12px 20px;
-    border-radius: 5px;
+    padding: 14px 20px;
+    border-radius: 8px;
     font-size: 16px;
     font-weight: bold;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    text-align: center;
 }
 
 .category-btn:hover {
-    background-color: #0056b3;
+    background: linear-gradient(90deg, #0056b3, #003b80);
+    transform: scale(1.05);
 }
