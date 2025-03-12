@@ -1,18 +1,23 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-    background-color: #f4f4f4;
+/* Banner Styles */
+.banner-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    max-height: 250px;
 }
 
-header {
-    background: #28a745;
-    color: white;
-    padding: 15px;
-    font-size: 24px;
+.banner {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
 }
 
+.banner-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* Categories Styling */
 .categories {
     display: flex;
     flex-wrap: wrap;
@@ -32,25 +37,4 @@ header {
 
 .category-btn:hover {
     background: #0056b3;
-}
-
-.cart-link {
-    display: block;
-    margin: 20px;
-    font-size: 18px;
-    text-decoration: none;
-    color: #007bff;
-}
-
-button {
-    background: #28a745;
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    margin: 5px;
-}
-
-button:hover {
-    background: #218838;
 }
