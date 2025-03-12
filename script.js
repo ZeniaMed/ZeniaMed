@@ -1,91 +1,93 @@
 document.addEventListener("DOMContentLoaded", function () {
-    if (document.getElementById("category-title")) {
-        loadCategory();
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get("category");
+
+    if (category) {
+        document.getElementById("categoryTitle").textContent = category;
+        loadProducts(category);
     }
-    if (document.getElementById("cart-items")) {
-        loadCart();
-    }
-    if (document.getElementById("checkout-summary")) {
-        loadCheckout();
-    }
+
+    updateCartDisplay();
 });
 
-// Medicine data
-const medicines = {
-    "Diabetes": ["Metformin", "Insulin"],
-    "Cardiac": ["Aspirin", "Atorvastatin"],
-    "Stomach": ["Antacid", "Omeprazole"],
-    "Sexual Wellness": ["Viagra", "Condom"],
-    "Oral Care": ["Toothpaste", "Mouthwash"],
-    "Liver Care": ["Liv 52", "Essentiale"],
-    "Pain Relievers": ["Paracetamol", "Ibuprofen"],
-    "Cold and Immunity": ["Vitamin C", "Cough Syrup"],
-    "Elderly Care": ["Calcium", "Multivitamins"],
-    "Respiratory": ["Inhaler", "Nasal Spray"]
+const products = {
+    "Sexual Wellness": [
+        { name: "Viagra", price: 100 },
+        { name: "Condom", price: 100 }
+    ],
+    "Diabetes": [
+        { name: "Metformin", price: 200 },
+        { name: "Insulin", price: 500 }
+    ]
 };
 
-// Load category
-function loadCategory() {
-    const params = new URLSearchParams(window.location.search);
-    const category = params.get("category");
-    document.getElementById("category-title").innerText = category;
-    
-    const list = document.getElementById("medicine-list");
-    medicines[category].forEach(med => {
-        const div = document.createElement("div");
-        div.innerHTML = `${med} - ₹100 <button onclick="addToCart('${med}')">Add to Cart</button>`;
-        list.appendChild(div);
-    });
+function loadProducts(category) {
+    const productList = document.getElementById("productList");
+    productList.innerHTML = "";
+
+    if (products[category]) {
+        products[category].forEach((product, index) => {
+            const productItem = document.createElement("div");
+            productItem.innerHTML = `
+                <p>${product.name} - ₹${product.price} 
+                <button onclick="addToCart('${category}', ${index})">Add to Cart</button></p>
+            `;
+            productList.appendChild(productItem);
+        });
+    }
 }
 
-// Add to Cart
-function addToCart(medicine) {
+function addToCart(category, productIndex) {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    cart.push({ name: medicine, price: 100 });
+    let product = products[category][productIndex];
+
+    cart.push(product);
     localStorage.setItem("cart", JSON.stringify(cart));
-    alert(`${medicine} added to cart!`);
+    alert(`${product.name} added to cart!`);
 }
 
-// Load Cart
-function loadCart() {
+function updateCartDisplay() {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    let cartHTML = "";
-    let total = 0;
-    
-    cart.forEach((item, index) => {
-        cartHTML += `<p>${item.name} - ₹${item.price} <button onclick="removeFromCart(${index})">Remove</button></p>`;
-        total += item.price;
-    });
+    let cartItems = document.getElementById("cartItems");
+    let cartTotal = document.getElementById("cartTotal");
 
-    document.getElementById("cart-items").innerHTML = cartHTML;
-    document.getElementById("total-price").innerText = total;
-    document.getElementById("grand-total").innerText = total;
+    if (cartItems && cartTotal) {
+        cartItems.innerHTML = "";
+        let total = 0;
+
+        cart.forEach((item, index) => {
+            let itemElement = document.createElement("p");
+            itemElement.innerHTML = `${item.name} - ₹${item.price} 
+                <button onclick="removeFromCart(${index})">Remove</button>`;
+            cartItems.appendChild(itemElement);
+            total += item.price;
+        });
+
+        cartTotal.innerHTML = `<h2>Total: ₹${total}</h2>`;
+    }
 }
 
-// Remove from Cart
 function removeFromCart(index) {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     cart.splice(index, 1);
     localStorage.setItem("cart", JSON.stringify(cart));
-    loadCart();
+    updateCartDisplay();
 }
 
-// Apply Discount
 function applyDiscount() {
-    let discount = 50;
-    document.getElementById("discount-amount").innerText = discount;
-    document.getElementById("grand-total").innerText = parseInt(document.getElementById("total-price").innerText) - discount;
+    let discountCode = document.getElementById("discountCode").value;
+    let total = JSON.parse(localStorage.getItem("cart")).reduce((sum, item) => sum + item.price, 0);
+
+    if (discountCode === "SAVE10") {
+        total *= 0.9;
+        alert("10% discount applied!");
+    }
+
+    document.getElementById("cartTotal").innerHTML = `<h2>Total: ₹${total.toFixed(2)}</h2>`;
 }
 
-// Load Checkout
-function loadCheckout() {
-    document.getElementById("checkout-summary").innerText = localStorage.getItem("cart");
-    document.getElementById("final-total").innerText = document.getElementById("grand-total").innerText;
-}
-
-// Complete Order
-function completeOrder() {
-    alert("Order placed successfully!");
-    localStorage.clear();
+function checkout() {
+    alert("Order Placed Successfully!");
+    localStorage.removeItem("cart");
     window.location.href = "index.html";
 }
