@@ -1,15 +1,13 @@
-let currentIndex = 0;
-function changeBanner() {
-    const banners = document.querySelector(".banner");
-    const totalBanners = document.querySelectorAll(".banner-img").length;
+// Auto Sliding Banner
+let index = 0;
+const slides = document.querySelectorAll(".banner-img");
 
-    currentIndex++;
-    if (currentIndex >= totalBanners) {
-        currentIndex = 0;
-    }
-
-    banners.style.transform = `translateX(-${currentIndex * 100}%)`;
+function showSlides() {
+    slides.forEach((slide, i) => {
+        slide.style.display = (i === index) ? "block" : "none";
+    });
+    index = (index + 1) % slides.length;
 }
 
-// Change banner every 3 seconds
-setInterval(changeBanner, 3000);
+setInterval(showSlides, 3000); // Change every 3 seconds
+showSlides();
