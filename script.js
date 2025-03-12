@@ -1,6 +1,11 @@
-window.onload = function () {
+document.addEventListener("DOMContentLoaded", function () {
     let index = 0;
     const slides = document.querySelectorAll(".banner-img");
+
+    if (slides.length === 0) {
+        console.error("No images found with class .banner-img");
+        return;
+    }
 
     function showSlides() {
         slides.forEach((slide, i) => {
@@ -9,8 +14,6 @@ window.onload = function () {
         index = (index + 1) % slides.length;
     }
 
-    if (slides.length > 0) {
-        showSlides(); // Show first image
-        setInterval(showSlides, 3000); // Change every 3 seconds
-    }
-};
+    showSlides(); // Show the first image
+    setInterval(showSlides, 3000); // Change every 3 seconds
+});
