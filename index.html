@@ -20,6 +20,11 @@
     </nav>
 </header>
 
+<!-- Banners -->
+<div class="banner">
+    <img src="images/banner1.jpg" alt="Online Pharmacy Banner">
+</div>
+
 <section class="hero">
     <h1>Welcome to ZeniaMed</h1>
     <p>Your one-stop shop for medicines, delivered in just 10 minutes!</p>
@@ -27,24 +32,18 @@
 
 <section class="shop">
     <h2>Shop by Category</h2>
-    <div id="categories" class="category-container"></div>
-</section>
-
-<section id="cart">
-    <h2>Shopping Cart</h2>
-    <p>Total: <span id="total-price">₹0</span></p>
-    <input type="text" id="coupon-code" placeholder="Enter Coupon Code">
-    <button class="button green" onclick="applyCoupon()">Apply</button>
-    <p>Discount: <span id="discount">₹0</span></p>
-    <p>Grand Total: <span id="grand-total">₹0</span></p>
-    <button class="checkout-btn" onclick="checkout()">Checkout</button>
-</section>
-
-<section id="tracking">
-    <h2>Live Order Tracking</h2>
-    <p>Status: <span id="order-status">Waiting for Pickup</span></p>
-    <p>ETA: <span id="eta-time">2 Minutes</span></p>
-    <button class="button blue" onclick="refreshStatus()">Refresh Status</button>
+    <div id="categories" class="category-container">
+        <a href="categories/diabetes.html" class="category">Diabetes</a>
+        <a href="categories/cardiac.html" class="category">Cardiac</a>
+        <a href="categories/stomach.html" class="category">Stomach</a>
+        <a href="categories/sexual-wellness.html" class="category">Sexual Wellness</a>
+        <a href="categories/oral-care.html" class="category">Oral Care</a>
+        <a href="categories/liver-care.html" class="category">Liver Care</a>
+        <a href="categories/pain-relievers.html" class="category">Pain Relievers</a>
+        <a href="categories/cold-immunity.html" class="category">Cold & Immunity</a>
+        <a href="categories/elderly-care.html" class="category">Elderly Care</a>
+        <a href="categories/respiratory.html" class="category">Respiratory</a>
+    </div>
 </section>
 
 <footer>
