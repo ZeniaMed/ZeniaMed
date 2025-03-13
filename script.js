@@ -279,4 +279,8 @@ document.addEventListener("DOMContentLoaded", function() {
             { name: "Prednisolone", price: 150 },
             { name: "Dexamethasone",
 ::contentReference[oaicite:0]{index=0}
+    document.addEventListener("DOMContentLoaded", function() {
+    console.log("ZeniaMed App Loaded");
+});
+
  
