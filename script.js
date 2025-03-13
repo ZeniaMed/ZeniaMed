@@ -17,3 +17,4 @@ document.addEventListener("DOMContentLoaded", function () {
     showSlides(); // Show the first image
     setInterval(showSlides, 3000); // Change every 3 seconds
 });
+<script src="/ZeniaMed/script.js"></script>
