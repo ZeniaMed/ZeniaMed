@@ -1,20 +1,29 @@
-document.addEventListener("DOMContentLoaded", function () {
-    let index = 0;
-    const slides = document.querySelectorAll(".banner-img");
+document.addEventListener("DOMContentLoaded", function() {
+    const categories = [
+        "Diabetes", "Cardiac", "Stomach", "Sexual Wellness", "Oral Care",
+        "Liver Care", "Pain Relievers", "Cold and Immunity", "Elderly Care", "Respiratory"
+    ];
 
-    if (slides.length === 0) {
-        console.error("No images found with class .banner-img");
-        return;
-    }
-
-    function showSlides() {
-        slides.forEach((slide, i) => {
-            slide.style.display = (i === index) ? "block" : "none";
-        });
-        index = (index + 1) % slides.length;
-    }
-
-    showSlides(); // Show the first image
-    setInterval(showSlides, 3000); // Change every 3 seconds
+    const categoryContainer = document.getElementById("categories");
+    
+    categories.forEach(category => {
+        let div = document.createElement("div");
+        div.classList.add("category");
+        div.textContent = category;
+        div.onclick = () => alert(`Showing products for ${category}`);
+        categoryContainer.appendChild(div);
+    });
 });
-<script src="/ZeniaMed/script.js"></script>
+
+function applyCoupon() {
+    alert("Coupon Applied! Discount updated.");
+}
+
+function checkout() {
+    alert("Proceeding to checkout...");
+}
+
+function refreshStatus() {
+    let statuses = ["Preparing Order", "Out for Delivery", "Arriving Soon"];
+    document.getElementById("order-status").textContent = statuses[Math.floor(Math.random() * statuses.length)];
+}
