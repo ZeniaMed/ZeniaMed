@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
     ];
 
     const categoryContainer = document.getElementById("categories");
-    
+
     categories.forEach(category => {
         let div = document.createElement("div");
         div.classList.add("category");
@@ -15,12 +15,27 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+// Shopping cart logic
+let cart = {
+    total: 0,
+    discount: 0
+};
+
+function updateCartDisplay() {
+    document.getElementById("total-price").textContent = `₹${cart.total}`;
+    document.getElementById("discount").textContent = `₹${cart.discount}`;
+    document.getElementById("grand-total").textContent = `₹${cart.total - cart.discount}`;
+}
+
 function applyCoupon() {
-    alert("Coupon Applied! Discount updated.");
+    let discountAmount = 50; // Example discount in ₹
+    cart.discount = discountAmount;
+    updateCartDisplay();
+    alert(`Coupon Applied! ₹${discountAmount} discount added.`);
 }
 
 function checkout() {
-    alert("Proceeding to checkout...");
+    alert(`Proceeding to checkout...\nTotal Amount: ₹${cart.total - cart.discount}`);
 }
 
 function refreshStatus() {
