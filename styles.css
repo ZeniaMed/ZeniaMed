@@ -18,19 +18,19 @@ header {
 
 /* Logo Styling */
 .logo img {
-    width: 120px; /* Medium size */
+    width: 150px; /* Adjusted for better visibility */
     height: auto;
-    margin-bottom: 15px; /* Space between logo and buttons */
+    margin-bottom: 10px; /* Space between logo and buttons */
 }
 
-/* Navigation */
-nav {
+/* Navigation Bar */
+.nav-bar {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 15px;
 }
 
-/* Navigation Buttons */
+/* Navigation & Category Buttons */
 .nav-btn {
     background-color: #007bff;
     color: white;
@@ -64,27 +64,12 @@ nav {
     margin-bottom: 20px;
 }
 
-.category-grid {
+/* Category Navigation (Now Styled Like Top Buttons) */
+.category-nav {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 15px;
-}
-
-.category-btn {
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    padding: 15px 25px;
-    font-size: 18px;
-    border-radius: 8px;
-    transition: 0.3s;
-    width: 180px;
-    text-align: center;
-}
-
-.category-btn:hover {
-    background-color: #0056b3;
 }
 
 /* Footer */
