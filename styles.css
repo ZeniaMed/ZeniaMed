@@ -3,79 +3,89 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #f5f5f5;
     text-align: center;
-    background-color: #f8f9fa;
 }
 
-/* Header */
-header {
-    background-color: #228B22;
-    padding: 15px;
+/* Header Section */
+.header-container {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
+    background-color: green;
+    padding: 15px;
 }
 
-/* Logo Styling */
-.logo img {
-    width: 150px; /* Adjusted for better visibility */
-    height: auto;
-    margin-bottom: 10px; /* Space between logo and buttons */
-}
-
-/* Navigation Bar */
-.nav-bar {
+/* Navigation Buttons */
+.nav-buttons {
     display: flex;
-    justify-content: center;
-    gap: 15px;
+    gap: 10px;
 }
 
-/* Navigation & Category Buttons */
 .nav-btn {
-    background-color: #007bff;
+    padding: 10px 15px;
+    background-color: blue;
     color: white;
-    text-decoration: none;
-    padding: 14px 22px;
-    font-size: 18px;
-    border-radius: 8px;
-    transition: 0.3s;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-.nav-btn:hover {
-    background-color: #0056b3;
+/* Logo Styling (Aligned to Top Right) */
+.logo-container {
+    margin-left: auto;
 }
 
-/* Banner */
-.banner {
-    background-color: #2ecc71;
-    padding: 30px;
-    color: white;
-    font-size: 22px;
+.logo {
+    height: 60px;
+    width: auto;
 }
 
-/* Categories Section */
-.categories {
-    padding: 30px 20px;
+/* Hero Section */
+.hero-section {
+    background-color: lightgreen;
+    padding: 20px;
 }
 
-.categories h2 {
+.hero-section h1 {
     font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
 }
 
-/* Category Navigation (Now Styled Like Top Buttons) */
-.category-nav {
+.hero-section p {
+    font-size: 16px;
+}
+
+/* Category Section */
+.category-section {
+    background-color: white;
+    padding: 20px;
+}
+
+.category-section h2 {
+    font-size: 20px;
+}
+
+.category-buttons {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 15px;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.category-btn {
+    padding: 10px 15px;
+    background-color: blue;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 /* Footer */
-footer {
-    background-color: #228B22;
+.footer {
+    background-color: green;
     color: white;
-    padding: 15px;
+    padding: 10px;
     margin-top: 20px;
 }
