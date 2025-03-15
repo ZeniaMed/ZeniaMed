@@ -26,8 +26,8 @@ header {
 .nav-btn {
     background-color: blue;
     color: white;
-    padding: 15px 20px;
-    font-size: 16px;
+    padding: 18px 25px; /* Increased button size */
+    font-size: 18px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -36,13 +36,14 @@ header {
 .search-bar {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 8px; /* Increased spacing */
+    margin-left: 20px; /* More space after tracking */
 }
 
 .search-bar input {
-    padding: 10px;
+    padding: 12px;
     font-size: 16px;
-    width: 250px;
+    width: 300px;
     border: 2px solid gray;
     border-radius: 5px;
 }
@@ -50,7 +51,7 @@ header {
 .search-btn {
     background-color: blue;
     color: white;
-    padding: 10px;
+    padding: 12px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -61,7 +62,7 @@ header {
 }
 
 .logo-container img {
-    width: 150px;
+    width: 180px; /* Increased logo size */
 }
 
 .banner {
@@ -85,8 +86,8 @@ header {
     background-color: blue;
     color: white;
     border: none;
-    padding: 15px 20px;
-    font-size: 16px;
+    padding: 18px 25px; /* Increased button size */
+    font-size: 18px;
     border-radius: 5px;
     cursor: pointer;
 }
