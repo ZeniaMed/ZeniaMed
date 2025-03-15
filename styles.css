@@ -20,13 +20,37 @@ header {
 
 .nav-buttons {
     display: flex;
-    gap: 10px;
+    gap: 15px;
 }
 
 .nav-btn {
     background-color: blue;
     color: white;
-    padding: 10px 15px;
+    padding: 15px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.search-bar input {
+    padding: 10px;
+    font-size: 16px;
+    width: 250px;
+    border: 2px solid gray;
+    border-radius: 5px;
+}
+
+.search-btn {
+    background-color: blue;
+    color: white;
+    padding: 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -37,7 +61,7 @@ header {
 }
 
 .logo-container img {
-    width: 150px; /* Adjust size as needed */
+    width: 150px;
 }
 
 .banner {
@@ -54,13 +78,15 @@ header {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
+    gap: 15px;
 }
 
 .category-btn {
-    background-color: white;
-    border: 1px solid gray;
-    padding: 10px;
+    background-color: blue;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    font-size: 16px;
     border-radius: 5px;
     cursor: pointer;
 }
