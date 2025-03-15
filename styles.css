@@ -1,4 +1,4 @@
-/* General Reset */
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -9,18 +9,18 @@ body {
 
 /* Header */
 header {
-    background-color: #228B22; /* Green color */
+    background-color: #228B22;
     padding: 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-/* Logo */
+/* Logo Styling */
 .logo img {
     width: 120px; /* Medium size */
     height: auto;
-    margin-bottom: 10px; /* Space between logo and buttons */
+    margin-bottom: 15px; /* Space between logo and buttons */
 }
 
 /* Navigation */
@@ -35,8 +35,8 @@ nav {
     background-color: #007bff;
     color: white;
     text-decoration: none;
-    padding: 12px 18px;
-    font-size: 18px; /* Increased size */
+    padding: 14px 22px;
+    font-size: 18px;
     border-radius: 8px;
     transition: 0.3s;
 }
@@ -45,36 +45,45 @@ nav {
     background-color: #0056b3;
 }
 
-/* Hero Section */
-.hero {
-    background-color: #28a745;
-    padding: 20px;
+/* Banner */
+.banner {
+    background-color: #2ecc71;
+    padding: 30px;
     color: white;
+    font-size: 22px;
 }
 
-/* Categories */
+/* Categories Section */
 .categories {
-    padding: 30px;
-    background-color: white;
+    padding: 30px 20px;
+}
+
+.categories h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
 .category-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 15px;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
+    gap: 15px;
 }
 
-.category {
+.category-btn {
     background-color: #007bff;
     color: white;
     text-decoration: none;
-    padding: 15px;
-    border-radius: 8px;
+    padding: 15px 25px;
     font-size: 18px;
+    border-radius: 8px;
+    transition: 0.3s;
+    width: 180px;
+    text-align: center;
 }
 
-.category:hover {
+.category-btn:hover {
     background-color: #0056b3;
 }
 
@@ -82,6 +91,6 @@ nav {
 footer {
     background-color: #228B22;
     color: white;
-    padding: 10px;
+    padding: 15px;
     margin-top: 20px;
 }
