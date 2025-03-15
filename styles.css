@@ -1,68 +1,53 @@
-/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
+    background-color: #f8f9fa;
     text-align: center;
 }
 
-/* Header Section */
+header {
+    background-color: green;
+    padding: 10px;
+}
+
 .header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: green;
-    padding: 15px;
+    padding: 10px;
 }
 
-/* Navigation Buttons */
 .nav-buttons {
     display: flex;
     gap: 10px;
 }
 
 .nav-btn {
-    padding: 10px 15px;
     background-color: blue;
     color: white;
+    padding: 10px 15px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
-/* Logo Styling (Aligned to Top Right) */
 .logo-container {
     margin-left: auto;
 }
 
-.logo {
-    height: 60px;
-    width: auto;
+.logo-container img {
+    width: 150px; /* Adjust size as needed */
 }
 
-/* Hero Section */
-.hero-section {
+.banner {
     background-color: lightgreen;
     padding: 20px;
 }
 
-.hero-section h1 {
-    font-size: 24px;
-}
-
-.hero-section p {
-    font-size: 16px;
-}
-
-/* Category Section */
-.category-section {
+.categories {
     background-color: white;
     padding: 20px;
-}
-
-.category-section h2 {
-    font-size: 20px;
 }
 
 .category-buttons {
@@ -70,22 +55,18 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
-    margin-top: 10px;
 }
 
 .category-btn {
-    padding: 10px 15px;
-    background-color: blue;
-    color: white;
-    border: none;
+    background-color: white;
+    border: 1px solid gray;
+    padding: 10px;
     border-radius: 5px;
     cursor: pointer;
 }
 
-/* Footer */
-.footer {
-    background-color: green;
+footer {
+    background-color: black;
     color: white;
     padding: 10px;
-    margin-top: 20px;
 }
