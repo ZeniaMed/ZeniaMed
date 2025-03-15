@@ -97,3 +97,50 @@ footer {
     color: white;
     padding: 10px;
 }
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+header {
+    background: green;
+    padding: 15px;
+    color: white;
+    font-size: 20px;
+}
+
+.medicine-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    padding: 20px;
+}
+
+.medicine-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    width: 250px;
+    background: white;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+}
+
+.medicine-item h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.medicine-item p {
+    color: green;
+    font-weight: bold;
+}
+
+button {
+    background: blue;
+    color: white;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+}
