@@ -7,14 +7,30 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
     <header>
-        <h1>Pain Relievers</h1>
-        <a href="index.html">← Back to Home</a>
+        <div class="header-container">
+            <button class="nav-btn" onclick="location.href='index.html'">🏠 Home</button>
+            <button class="nav-btn" onclick="location.href='shop.html'">🛒 Shop</button>
+            <button class="nav-btn" onclick="location.href='cart.html'">🛍 Cart</button>
+            <button class="nav-btn" onclick="location.href='tracking.html'">📦 Tracking</button>
+        </div>
     </header>
-    <section>
-        <h2>Available Medicines</h2>
-        <p>List of pain relief medicines will go here...</p>
+
+    <section class="banner">
+        <h1>Pain Relievers</h1>
+        <p>Get relief from pain with our trusted medicines.</p>
     </section>
+
+    <section class="medicine-list">
+        <!-- Medicines will be dynamically added here -->
+    </section>
+
+    <footer>
+        <p>© 2025 ZeniaMed. All rights reserved.</p>
+    </footer>
+
+    <script src="pain-relievers.js"></script>
+
 </body>
 </html>
-
