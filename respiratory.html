@@ -3,18 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Respiratory Care - ZeniaMed</title>
+    <title>Respiratory - ZeniaMed</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
     <header>
-        <h1>Respiratory Care</h1>
-        <a href="index.html">← Back to Home</a>
+        <div class="header-container">
+            <button class="nav-btn" onclick="location.href='index.html'">🏠 Home</button>
+            <button class="nav-btn" onclick="location.href='shop.html'">🛒 Shop</button>
+            <button class="nav-btn" onclick="location.href='cart.html'">🛍 Cart</button>
+            <button class="nav-btn" onclick="location.href='tracking.html'">📦 Tracking</button>
+        </div>
     </header>
-    <section>
-        <h2>Available Medicines</h2>
-        <p>List of respiratory care medicines will go here...</p>
+
+    <section class="banner">
+        <h1>Respiratory</h1>
+        <p>Medicines for better breathing and lung care.</p>
     </section>
+
+    <section class="medicine-list">
+        <!-- Medicines will be dynamically added here -->
+    </section>
+
+    <footer>
+        <p>© 2025 ZeniaMed. All rights reserved.</p>
+    </footer>
+
+    <script src="respiratory.js"></script>
+
 </body>
 </html>
-
