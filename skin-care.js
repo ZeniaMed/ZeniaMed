@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const medicines = [
-        { name: "ALOE VERA MOISTURIZER", price: 200, image: "images/aloe-vera.jpg" },
+        { name: "CANDID DUSTING POWDER 100GM", price: 174, image: "images/candidpowder.jpg" },
         { name: "SUNSCREEN SPF 50", price: 450, image: "images/spf50.jpg" },
         { name: "ACNE CREAM", price: 320, image: "images/acne-cream.jpg" },
         { name: "VITAMIN E CREAM", price: 270, image: "images/vitamin-e.jpg" },
