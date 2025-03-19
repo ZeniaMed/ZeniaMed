@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZeniaMed - 10 Min Medicine Delivery</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
 </head>
 <body>
 
@@ -12,7 +18,7 @@
         <div class="header-container">
             <div class="nav-buttons">
                 <button class="nav-btn" onclick="location.href='index.html'">🏠 Home</button>
-                <button class="nav-btn" onclick="location.href='shop.html'">🛒 Shop</button>
+                <button class="nav-btn" onclick="scrollToCategories()">🛒 Shop</button>
                 <button class="nav-btn" onclick="location.href='cart.html'">🛍 Cart</button>
                 <button class="nav-btn" onclick="location.href='tracking.html'">📦 Tracking</button>
             </div>
@@ -31,7 +37,8 @@
         <p>Shop from 1000+ medicines at the best prices.</p>
     </section>
 
-    <section class="categories">
+    <!-- Added ID to Categories Section -->
+    <section class="categories" id="categories">
         <h2>Shop by Category</h2>
         <div class="category-buttons">
             <button class="category-btn" onclick="location.href='diabetes.html'">💉 Diabetes</button>
@@ -51,6 +58,13 @@
     <footer>
         <p>© 2025 ZeniaMed. All rights reserved.</p>
     </footer>
+
+    <!-- JavaScript for Smooth Scrolling -->
+    <script>
+        function scrollToCategories() {
+            document.getElementById('categories').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
 
 </body>
 </html>
