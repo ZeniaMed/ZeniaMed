@@ -18,7 +18,7 @@
         <div class="header-container">
             <div class="nav-buttons">
                 <button class="nav-btn" onclick="location.href='index.html'">🏠 Home</button>
-                <button class="nav-btn" onclick="scrollToCategories()">🛒 Shop</button>
+                <button class="nav-btn" id="shopBtn">🛒 Shop</button> 
                 <button class="nav-btn" onclick="location.href='cart.html'">🛍 Cart</button>
                 <button class="nav-btn" onclick="location.href='tracking.html'">📦 Tracking</button>
             </div>
@@ -61,9 +61,9 @@
 
     <!-- JavaScript for Smooth Scrolling -->
     <script>
-        function scrollToCategories() {
+        document.getElementById('shopBtn').addEventListener('click', function() {
             document.getElementById('categories').scrollIntoView({ behavior: 'smooth' });
-        }
+        });
     </script>
 
 </body>
