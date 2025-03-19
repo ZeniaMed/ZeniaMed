@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const medicines = [
-        { name: "ALOEVERA MOISTURIZER", price: 200 },
+        { name: "ALOEVERA MOISTURIZER", price: 200 }, image: "images/spf50.jpg" 
         { name: "SUNSCREEN SPF 50", price: 450 },
         { name: "ACNE CREAM", price: 320 },
         { name: "VITAMIN E CREAM", price: 270 },
