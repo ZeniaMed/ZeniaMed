@@ -9,35 +9,13 @@
 <body>
 
     <header>
-        <div class="header-container">
-            <button class="nav-btn" onclick="location.href='index.html'">🏠 Home</button>
-            <button class="nav-btn" id="shopBtn">🛒 Shop</button>  <!-- Added ID -->
-            <button class="nav-btn" onclick="location.href='cart.html'">🛍 Cart</button>
-            <button class="nav-btn" onclick="location.href='tracking.html'">📦 Tracking</button>
-        </div>
+        <h1>Cardiac Medicines</h1>
+        <p>Best heart-related medicines available at affordable prices.</p>
     </header>
 
-    <section class="banner">
-        <h1>Cardiac Medicines</h1>
-        <p>Best cardiac medicines available at affordable prices.</p>
-    </section>
-
-    <section class="medicine-list">
-        <!-- Medicines will be dynamically added here -->
-    </section>
-
-    <footer>
-        <p>© 2025 ZeniaMed. All rights reserved.</p>
-    </footer>
+    <div class="medicine-list"></div>
 
     <script src="cardiac.js"></script>
-    
-    <!-- JavaScript to Redirect Shop Button to Home Page -->
-    <script>
-        document.getElementById('shopBtn').addEventListener('click', function() {
-            window.location.href = 'index.html'; // Redirect to Home Page
-        });
-    </script>
 
 </body>
 </html>
