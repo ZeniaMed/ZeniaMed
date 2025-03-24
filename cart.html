@@ -3,42 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart - ZeniaMed</title>
+    <title>Shopping Cart</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="cart.css"> <!-- Separate CSS for Cart Page -->
 </head>
 <body>
+    <h1>Your Cart</h1>
+    <div id="cart-items"></div>
+    <button id="checkout">Go to Checkout</button>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let cartContainer = document.getElementById("cart-items");
 
-    <header>
-        <div class="header-container">
-            <button class="nav-btn" onclick="location.href='index.html'">🏠 Home</button>
-            <button class="nav-btn" onclick="location.href='shop.html'">🛒 Shop</button>
-            <button class="nav-btn" onclick="location.href='cart.html'">🛍 Cart</button>
-            <button class="nav-btn" onclick="location.href='tracking.html'">📦 Tracking</button>
-        </div>
-    </header>
+            if (cart.length === 0) {
+                cartContainer.innerHTML = "<p>Your cart is empty.</p>";
+            } else {
+                cart.forEach(item => {
+                    let itemDiv = document.createElement("div");
+                    itemDiv.innerHTML = `${item.product} - ₹${item.price} x ${item.quantity}`;
+                    cartContainer.appendChild(itemDiv);
+                });
+            }
 
-    <section class="cart-container">
-        <div class="cart-content">
-            <img src="cart-icon.png" alt="Empty Cart" class="cart-icon">
-            <h2>Your Cart is Empty</h2>
-            <button class="go-to-shop" onclick="location.href='shop.html'">Go to Pharmacy</button>
-        </div>
-    </section>
-
-    <section class="before-you-leave">
-        <h3>Before You Leave</h3>
-        <div class="links">
-            <a href="#">Hot Sellers</a>
-            <a href="#">Minimum 50% Off</a>
-            <a href="#">Ayurvedic Wellness</a>
-            <a href="#">Diapering & Baby Care</a>
-        </div>
-    </section>
-
-    <footer>
-        <p>© 2025 ZeniaMed. All rights reserved.</p>
-    </footer>
-
+            document.getElementById("checkout").addEventListener("click", function () {
+                window.location.href = "checkout.html";
+            });
+        });
+    </script>
 </body>
 </html>
