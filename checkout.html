@@ -1,163 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Checkout - ZeniaMed</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - ZeniaMed</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <header>
-    <div class="header-container">
-      <button class="nav-btn" onclick="location.href='index.html'">🏠 Home</button>
-      <button class="nav-btn" onclick="location.href='shop.html'">🛒 Shop</button>
-      <button class="nav-btn" onclick="location.href='cart.html'">🛍 Cart</button>
-      <button class="nav-btn" onclick="location.href='tracking.html'">📦 Tracking</button>
-    </div>
-  </header>
-
-  <section class="banner">
-    <h1>Checkout</h1>
-    <p>Review your order and complete your purchase.</p>
-  </section>
-
-  <section class="checkout-container">
-    <!-- Order Summary -->
-    <div class="order-summary">
-      <h2>Order Summary</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Image</th>
-            <th>Product</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-        <tbody id="cart-items">
-          <!-- Cart items will be dynamically added here -->
-        </tbody>
-      </table>
-      <h3>Total Amount: ₹<span id="total-price">100</span></h3>
-    </div>
-
-    <!-- Shipping Details -->
-    <div class="customer-details">
-      <h2>Shipping Details</h2>
-      <form id="checkout-form">
-        <label for="name">Full Name</label>
-        <input type="text" id="name" placeholder="Enter your name" required>
-
-        <label for="phone">Phone Number</label>
-        <input type="text" id="phone" placeholder="Enter your phone number" required>
-
-        <label for="address">Shipping Address</label>
-        <textarea id="address" placeholder="Enter your full address" required></textarea>
-
-        <label for="saved-addresses">Saved Addresses</label>
-        <select id="saved-addresses">
-          <option value="">Select a saved address</option>
-        </select>
-        <button type="button" id="save-address">Save Address</button>
-      </form>
-    </div>
-
-    <!-- Coupon Section -->
-    <div class="coupon-section">
-      <h2>Apply Coupon</h2>
-      <input type="text" id="coupon-code" placeholder="Enter Coupon Code">
-      <button id="apply-coupon">Apply</button>
-    </div>
-
-    <!-- Payment Options -->
-    <div class="payment-section">
-      <h2>Payment Options</h2>
-      <div class="payment-icons">
-        <div class="payment-option" data-upi="googlepay">
-          <img src="images/gpay.png" alt="Google Pay">
-          <span>Google Pay</span>
+    <header>
+        <div class="header-container">
+            <button class="nav-btn" onclick="location.href='index.html'">🏠 Home</button>
+            <button class="nav-btn" onclick="location.href='shop.html'">🛒 Shop</button>
+            <button class="nav-btn" onclick="location.href='cart.html'">🛍 Cart</button>
+            <button class="nav-btn" onclick="location.href='tracking.html'">📦 Tracking</button>
         </div>
-        <div class="payment-option" data-upi="paytm">
-          <img src="images/paytm.png" alt="Paytm">
-          <span>Paytm</span>
-        </div>
-        <div class="payment-option" data-upi="amazonpay">
-          <img src="images/amazonpay.png" alt="Amazon Pay Later">
-          <span>Amazon Pay Later</span>
-        </div>
-        <div class="payment-option" data-upi="netbanking">
-          <img src="images/netbanking.png" alt="Net Banking">
-          <span>Net Banking</span>
-        </div>
-        <div class="payment-option" data-upi="lazypay">
-          <img src="images/lazypay.png" alt="LazyPay">
-          <span>LazyPay</span>
-        </div>
-        <div class="payment-option" data-upi="simpl">
-          <img src="images/simpl.png" alt="Simpl">
-          <span>Simpl</span>
-        </div>
-        <div class="payment-option" data-upi="cod">
-          <img src="images/cod.png" alt="Cash on Delivery">
-          <span>Cash on Delivery</span>
-        </div>
-      </div>
-    </div>
+    </header>
 
-    <button type="submit" class="checkout-btn">Place Order</button>
-  </section>
+    <section class="banner">
+        <h1>Checkout</h1>
+        <p>Review your order and complete your purchase.</p>
+    </section>
 
-  <footer>
-    <p>© 2025 ZeniaMed. All rights reserved.</p>
-  </footer>
+    <section class="checkout-container">
+        <!-- Order Summary -->
+        <div class="order-summary">
+            <h2>Order Summary</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Image</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody id="cart-items">
+                    <!-- Cart items will be dynamically added here -->
+                </tbody>
+            </table>
+            <h3>Total Amount: ₹<span id="total-price">0</span></h3>
+        </div>
 
-  <!-- Inline Script to handle Payment Option clicks and redirect to UPI apps -->
-  <script>
-    // Listen for clicks on all payment options
-    document.querySelectorAll('.payment-option').forEach(function(option) {
-      option.addEventListener('click', function() {
-        var method = this.getAttribute('data-upi');
-        var upiLink = '';
-        // Get the total amount from the page; if empty, default to 0
-        var amount = document.getElementById('total-price').innerText || '0';
-        var merchantName = 'ZeniaMed';
-        
-        // Set up deep link URL based on the selected payment method
-        switch(method) {
-          case 'googlepay':
-            // Replace with your actual Google Pay UPI ID
-            upiLink = 'upi://pay?pa=yourgpayid@okaxis&pn=' + encodeURIComponent(merchantName) + '&am=' + amount + '&cu=INR';
-            break;
-          case 'paytm':
-            // Replace with your actual Paytm UPI ID
-            upiLink = 'upi://pay?pa=yourpaytmid@paytm&pn=' + encodeURIComponent(merchantName) + '&am=' + amount + '&cu=INR';
-            break;
-          case 'netbanking':
-            alert("Net Banking is not available via UPI deep linking.");
-            return;
-          case 'amazonpay':
-            alert("Amazon Pay is not available via UPI deep linking.");
-            return;
-          case 'lazypay':
-            alert("LazyPay is not available via UPI deep linking.");
-            return;
-          case 'simpl':
-            alert("Simpl is not available via UPI deep linking.");
-            return;
-          case 'cod':
-            alert("Cash on Delivery selected. Please follow the instructions on the next page.");
-            return;
-          default:
-            alert("Payment method not available.");
-            return;
-        }
-        // Redirect to the UPI app using the constructed deep link
-        window.location.href = upiLink;
-      });
-    });
-  </script>
+        <!-- Shipping Details -->
+        <div class="customer-details">
+            <h2>Shipping Details</h2>
+            <form id="checkout-form">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" placeholder="Enter your name" required>
+
+                <label for="phone">Phone Number</label>
+                <input type="text" id="phone" placeholder="Enter your phone number" required>
+
+                <label for="address">Shipping Address</label>
+                <textarea id="address" placeholder="Enter your full address" required></textarea>
+
+                <label for="saved-addresses">Saved Addresses</label>
+                <select id="saved-addresses">
+                    <option value="">Select a saved address</option>
+                </select>
+                <button type="button" id="save-address">Save Address</button>
+            </form>
+        </div>
+
+        <!-- Coupon Section -->
+        <div class="coupon-section">
+            <h2>Apply Coupon</h2>
+            <input type="text" id="coupon-code" placeholder="Enter Coupon Code">
+            <button id="apply-coupon">Apply</button>
+        </div>
+
+        <!-- Payment Options -->
+        <div class="payment-section">
+            <h2>Payment Options</h2>
+            <div class="payment-icons">
+                <div class="payment-option" data-upi="googlepay">
+                    <img src="images/gpay.png" alt="Google Pay">
+                    <span>Google Pay</span>
+                </div>
+                <div class="payment-option" data-upi="paytm">
+                    <img src="images/paytm.png" alt="Paytm">
+                    <span>Paytm</span>
+                </div>
+                <div class="payment-option" data-upi="amazonpay">
+                    <img src="images/amazonpay.png" alt="Amazon Pay">
+                    <span>Amazon Pay Later</span>
+                </div>
+                <div class="payment-option" data-upi="netbanking">
+                    <img src="images/netbanking.png" alt="Net Banking">
+                    <span>Net Banking</span>
+                </div>
+                <div class="payment-option" data-upi="lazypay">
+                    <img src="images/lazypay.png" alt="LazyPay">
+                    <span>LazyPay</span>
+                </div>
+                <div class="payment-option" data-upi="simpl">
+                    <img src="images/simpl.png" alt="Simpl">
+                    <span>Simpl</span>
+                </div>
+                <div class="payment-option" data-upi="cod">
+                    <img src="images/cod.png" alt="Cash on Delivery">
+                    <span>Cash on Delivery</span>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="checkout-btn">Place Order</button>
+    </section>
+
+    <footer>
+        <p>© 2025 ZeniaMed. All rights reserved.</p>
+    </footer>
+
+    <script src="checkout.js"></script>
+
 </body>
 </html>
