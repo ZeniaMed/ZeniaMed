@@ -220,34 +220,34 @@ th, td {
     height: 50px;
 }
 
-/* Payment Section */
+/* ✅ Payment Section - Icons Now Horizontal */
 .payment-options {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
     margin-top: 20px;
 }
 
 .payment-option {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px;
+    gap: 6px;
+    padding: 8px 12px;
     border: 1px solid #ddd;
-    width: 220px;
-    text-align: left;
+    border-radius: 5px;
     background-color: white;
     cursor: pointer;
 }
 
 /* ✅ Small Icons Like Emoji */
 .payment-option img {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
     object-fit: contain;
 }
 
-/* Delivery Address Section */
+/* ✅ Delivery Address Section */
 .address-container {
     width: 80%;
     margin: auto;
