@@ -1,0 +1,50 @@
+.cart-container {
+    text-align: center;
+    padding: 50px;
+}
+
+.cart-icon {
+    width: 100px;
+    margin-bottom: 20px;
+}
+
+.cart-content h2 {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.go-to-shop {
+    background-color: #007b5e;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.go-to-shop:hover {
+    background-color: #005a46;
+}
+
+.before-you-leave {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.before-you-leave h3 {
+    font-size: 18px;
+    color: #444;
+}
+
+.before-you-leave .links a {
+    margin: 10px;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.before-you-leave .links a:hover {
+    text-decoration: underline;
+}
