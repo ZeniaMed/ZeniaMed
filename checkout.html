@@ -3,35 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout</title>
+    <title>Checkout - ZeniaMed</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Checkout</h1>
-    <div id="checkout-items"></div>
-    <button id="place-order">Place Order</button>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            let cart = JSON.parse(localStorage.getItem("cart")) || [];
-            let checkoutContainer = document.getElementById("checkout-items");
+    <header>
+        <div class="header-container">
+            <button class="nav-btn" onclick="location.href='index.html'">🏠 Home</button>
+            <button class="nav-btn" onclick="location.href='shop.html'">🛒 Shop</button>
+            <button class="nav-btn" onclick="location.href='cart.html'">🛍 Cart</button>
+            <button class="nav-btn" onclick="location.href='tracking.html'">📦 Tracking</button>
+        </div>
+    </header>
 
-            if (cart.length === 0) {
-                checkoutContainer.innerHTML = "<p>Your cart is empty.</p>";
-            } else {
-                cart.forEach(item => {
-                    let itemDiv = document.createElement("div");
-                    itemDiv.innerHTML = `${item.product} - ₹${item.price} x ${item.quantity}`;
-                    checkoutContainer.appendChild(itemDiv);
-                });
-            }
+    <section class="banner">
+        <h1>Checkout</h1>
+        <p>Review your order and complete your purchase.</p>
+    </section>
 
-            document.getElementById("place-order").addEventListener("click", function () {
-                alert("Your order has been placed!");
-                localStorage.removeItem("cart");
-                window.location.href = "index.html";
-            });
-        });
-    </script>
+    <section class="checkout-container">
+        <div class="order-summary">
+            <h2>Order Summary</h2>
+            <div id="cart-items"></div>
+            <p><strong>Total Amount: ₹<span id="total-price">0</span></strong></p>
+        </div>
+
+        <div class="customer-details">
+            <h2>Shipping Details</h2>
+            <form id="checkout-form">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" placeholder="Enter your name" required>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+
+                <label for="address">Shipping Address</label>
+                <textarea id="address" placeholder="Enter your full address" required></textarea>
+
+                <label for="phone">Phone Number</label>
+                <input type="text" id="phone" placeholder="Enter your phone number" required>
+
+                <button type="submit" class="checkout-btn">Place Order</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 ZeniaMed. All rights reserved.</p>
+    </footer>
+
+    <script src="checkout.js"></script>
+
 </body>
 </html>
