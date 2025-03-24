@@ -20,8 +20,32 @@ document.addEventListener("DOMContentLoaded", function () {
         medItem.innerHTML = `
             <h3>${med.name}</h3>
             <p>₹${med.price}</p>
-            <button class="add-to-cart">Add to Cart</button>
+            <button class="add-to-cart" data-name="${med.name}" data-price="${med.price}">Add to Cart</button>
         `;
         medicineList.appendChild(medItem);
     });
+
+    // ✅ Attach event listener to dynamically added buttons
+    document.querySelectorAll(".add-to-cart").forEach(button => {
+        button.addEventListener("click", function () {
+            let productName = this.getAttribute("data-name");
+            let productPrice = parseFloat(this.getAttribute("data-price"));
+
+            addToCart(productName, productPrice);
+        });
+    });
+
+    function addToCart(name, price) {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        let existingItem = cart.find(item => item.name === name);
+
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            cart.push({ name: name, price: price, quantity: 1 });
+        }
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+        alert(name + " added to cart!");
+    }
 });
