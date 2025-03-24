@@ -41,7 +41,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function addToCart(medicine) {
         let cart = JSON.parse(localStorage.getItem("cart")) || [];
-        cart.push(medicine);
+        
+        // Check if medicine is already in the cart
+        const existingItem = cart.find(item => item.name === medicine.name);
+
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            medicine.quantity = 1;
+            cart.push(medicine);
+        }
+
         localStorage.setItem("cart", JSON.stringify(cart));
         alert(`${medicine.name} added to cart!`);
     }
