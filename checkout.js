@@ -1,33 +1,91 @@
 document.addEventListener("DOMContentLoaded", function () {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    let cartItemsContainer = document.getElementById("cart-items");
-    let totalPrice = document.getElementById("total-price");
+    let checkoutItemsContainer = document.getElementById("checkout-items");
+    let totalPriceElement = document.getElementById("total-price");
 
     if (cart.length === 0) {
-        cartItemsContainer.innerHTML = "<p>Your cart is empty.</p>";
+        checkoutItemsContainer.innerHTML = "<tr><td colspan='5'>Your cart is empty.</td></tr>";
     } else {
-        cart.forEach(item => {
-            let cartItem = document.createElement("div");
-            cartItem.classList.add("cart-item");
-            cartItem.innerHTML = `
-                <img src="${item.image}" alt="${item.name}" class="cart-item-img">
-                <div class="cart-item-details">
-                    <h3>${item.name}</h3>
-                    <p>₹${item.price} x ${item.quantity}</p>
-                </div>
+        let totalAmount = 0;
+        cart.forEach((item, index) => {
+            let totalItemPrice = item.price * item.quantity;
+            totalAmount += totalItemPrice;
+
+            let row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${index + 1}</td>
+                <td><img src="${item.image}" class="checkout-img" alt="${item.name}"></td>
+                <td>${item.name}</td>
+                <td>${item.quantity}</td>
+                <td>₹${totalItemPrice}</td>
             `;
-            cartItemsContainer.appendChild(cartItem);
+            checkoutItemsContainer.appendChild(row);
         });
 
-        let totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        totalPrice.textContent = totalAmount;
+        totalPriceElement.textContent = totalAmount;
     }
 
-    // Handle Form Submission
-    document.getElementById("checkout-form").addEventListener("submit", function (e) {
-        e.preventDefault();
+    // Manage Address
+    let savedAddresses = JSON.parse(localStorage.getItem("addresses")) || [];
+    let addressSelect = document.getElementById("saved-address");
+    savedAddresses.forEach(address => {
+        let option = document.createElement("option");
+        option.value = address;
+        option.textContent = address;
+        addressSelect.appendChild(option);
+    });
+
+    document.getElementById("add-new-address").addEventListener("click", function () {
+        document.getElementById("new-address-form").style.display = "block";
+    });
+
+    document.getElementById("save-address").addEventListener("click", function () {
+        let fullName = document.getElementById("full-name").value;
+        let phone = document.getElementById("phone").value;
+        let address = document.getElementById("address").value;
+        let fullAddress = `${fullName}, ${phone}, ${address}`;
+
+        savedAddresses.push(fullAddress);
+        localStorage.setItem("addresses", JSON.stringify(savedAddresses));
+
+        let option = document.createElement("option");
+        option.value = fullAddress;
+        option.textContent = fullAddress;
+        addressSelect.appendChild(option);
+
+        alert("Address Saved!");
+        document.getElementById("new-address-form").reset();
+        document.getElementById("new-address-form").style.display = "none";
+    });
+
+    // Apply Coupon
+    document.getElementById("apply-coupon").addEventListener("click", function () {
+        let couponCode = document.getElementById("coupon-code").value;
+        if (couponCode === "DISCOUNT10") {
+            let newTotal = parseFloat(totalPriceElement.textContent) * 0.9;
+            totalPriceElement.textContent = newTotal.toFixed(2);
+            alert("Coupon Applied! 10% Discount Applied.");
+        } else {
+            alert("Invalid Coupon Code!");
+        }
+    });
+
+    // Place Order
+    document.getElementById("place-order").addEventListener("click", function () {
+        let selectedPayment = document.querySelector("input[name='payment-method']:checked");
+        if (!selectedPayment) {
+            alert("Please select a payment method!");
+            return;
+        }
+
+        let selectedAddress = document.getElementById("saved-address").value;
+        if (!selectedAddress) {
+            alert("Please select or add a delivery address!");
+            return;
+        }
+
         alert("Order Placed Successfully! ✅");
-        localStorage.removeItem("cart"); // Clear cart after order placement
-        window.location.href = "index.html"; // Redirect to home page
+        localStorage.removeItem("cart");
+        window.location.href = "index.html";
     });
 });
