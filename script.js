@@ -6,12 +6,27 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".add-to-cart").forEach(button => {
         button.addEventListener("click", function () {
             let productCard = this.closest(".product-card");
-            let productName = productCard.querySelector(".product-name").innerText;
-            let productPrice = productCard.querySelector(".product-price").innerText.replace("₹", "").trim();
-            let productImage = productCard.querySelector("img").src; // Get product image
 
-            if (!productName || !productPrice) {
-                alert("Error: Missing product details.");
+            if (!productCard) {
+                alert("Error: Product card not found.");
+                return;
+            }
+
+            let productNameElement = productCard.querySelector(".product-name");
+            let productPriceElement = productCard.querySelector(".product-price");
+            let productImageElement = productCard.querySelector("img");
+
+            if (!productNameElement || !productPriceElement || !productImageElement) {
+                alert("Error: Product details missing.");
+                return;
+            }
+
+            let productName = productNameElement.innerText.trim();
+            let productPrice = parseFloat(productPriceElement.innerText.replace("₹", "").trim());
+            let productImage = productImageElement.src;
+
+            if (!productName || isNaN(productPrice)) {
+                alert("Error: Invalid product details.");
                 return;
             }
 
@@ -22,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (existingItem) {
                 existingItem.quantity += 1;
             } else {
-                cart.push({ name: productName, price: parseFloat(productPrice), quantity: 1, image: productImage });
+                cart.push({ name: productName, price: productPrice, quantity: 1, image: productImage });
             }
 
             localStorage.setItem("cart", JSON.stringify(cart));
@@ -32,6 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+// Function to update cart count
 function loadCart() {
     let cartCount = document.getElementById("cart-count");
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
