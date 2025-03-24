@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let cartItemsContainer = document.getElementById("cart-items");
     let totalPrice = document.getElementById("total-price");
 
-    // Function to Display Cart Items in Checkout
     function displayCart() {
         if (cart.length === 0) {
             cartItemsContainer.innerHTML = "<tr><td colspan='6'>Your cart is empty.</td></tr>";
@@ -31,9 +30,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    displayCart(); // Call Function to Show Cart Items
+    displayCart();
 
-    // Function to Update Quantity
     window.updateQuantity = function (index, change) {
         let cart = JSON.parse(localStorage.getItem("cart"));
         cart[index].quantity += change;
@@ -41,10 +39,9 @@ document.addEventListener("DOMContentLoaded", function () {
             cart.splice(index, 1);
         }
         localStorage.setItem("cart", JSON.stringify(cart));
-        displayCart(); // Refresh cart without reloading
+        displayCart();
     };
 
-    // Handle Order Placement
     document.querySelector(".checkout-btn").addEventListener("click", function (e) {
         e.preventDefault();
 
@@ -73,11 +70,10 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("orders", JSON.stringify(orders));
 
         alert("Order Placed Successfully! ✅");
-        localStorage.removeItem("cart"); // Clear Cart
-        window.location.href = "index.html"; // Redirect to Home Page
+        localStorage.removeItem("cart");
+        window.location.href = "index.html";
     });
 
-    // Handle Saved Address Storage
     document.getElementById("save-address").addEventListener("click", function () {
         let newAddress = document.getElementById("address").value.trim();
         if (newAddress) {
@@ -89,7 +85,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Load Saved Addresses
     function loadSavedAddresses() {
         let savedAddresses = JSON.parse(localStorage.getItem("savedAddresses")) || [];
         let savedAddressesDropdown = document.getElementById("saved-addresses");
@@ -102,5 +97,38 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    loadSavedAddresses(); // Load saved addresses on page load
+    loadSavedAddresses();
+
+    // ✅ Payment Mode Handling: Redirect to UPI/Wallets
+    document.querySelectorAll(".payment-option").forEach(option => {
+        option.addEventListener("click", function () {
+            let paymentMethod = this.getAttribute("data-method");
+
+            switch (paymentMethod) {
+                case "gpay":
+                    window.location.href = "upi://pay?pa=your-merchant-vpa@okhdfcbank&pn=ZeniaMed&cu=INR"; // Replace with your actual UPI VPA
+                    break;
+                case "paytm":
+                    window.location.href = "https://paytm.com";
+                    break;
+                case "amazonpay":
+                    window.location.href = "https://www.amazon.in/gp/aws/cart/add.html";
+                    break;
+                case "netbanking":
+                    window.location.href = "https://netbanking.example.com"; // Replace with actual net banking URL
+                    break;
+                case "lazypay":
+                    window.location.href = "https://www.lazypay.in/";
+                    break;
+                case "simpl":
+                    window.location.href = "https://www.getsimpl.com/";
+                    break;
+                case "cod":
+                    alert("You have selected Cash on Delivery. Proceeding to Order Confirmation.");
+                    break;
+                default:
+                    alert("Payment method not available.");
+            }
+        });
+    });
 });
