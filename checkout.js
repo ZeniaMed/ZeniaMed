@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (cart.length === 0) {
             cartItemsContainer.innerHTML = "<tr><td colspan='6'>Your cart is empty.</td></tr>";
         } else {
-            cartItemsContainer.innerHTML = "";  
+            cartItemsContainer.innerHTML = "";
             cart.forEach((item, index) => {
                 let cartItem = document.createElement("tr");
                 cartItem.innerHTML = `
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <td>${item.name}</td>
                     <td>
                         <button class="qty-btn" onclick="updateQuantity(${index}, -1)">-</button>
-                        ${item.quantity}
+                        <span class="item-qty">${item.quantity}</span>
                         <button class="qty-btn" onclick="updateQuantity(${index}, 1)">+</button>
                     </td>
                     <td>₹${item.price}</td>
@@ -104,31 +104,35 @@ document.addEventListener("DOMContentLoaded", function () {
         option.addEventListener("click", function () {
             let paymentMethod = this.getAttribute("data-method");
 
+            let upiLink = "";
             switch (paymentMethod) {
                 case "gpay":
-                    window.location.href = "upi://pay?pa=your-merchant-vpa@okhdfcbank&pn=ZeniaMed&cu=INR"; // Replace with your actual UPI VPA
+                    upiLink = "upi://pay?pa=yourmerchant@okhdfcbank&pn=ZeniaMed&cu=INR";
                     break;
                 case "paytm":
-                    window.location.href = "https://paytm.com";
+                    upiLink = "https://paytm.com";
                     break;
                 case "amazonpay":
-                    window.location.href = "https://www.amazon.in/gp/aws/cart/add.html";
+                    upiLink = "https://www.amazon.in/gp/aws/cart/add.html";
                     break;
                 case "netbanking":
-                    window.location.href = "https://netbanking.example.com"; // Replace with actual net banking URL
+                    upiLink = "https://netbanking.example.com";
                     break;
                 case "lazypay":
-                    window.location.href = "https://www.lazypay.in/";
+                    upiLink = "https://www.lazypay.in/";
                     break;
                 case "simpl":
-                    window.location.href = "https://www.getsimpl.com/";
+                    upiLink = "https://www.getsimpl.com/";
                     break;
                 case "cod":
                     alert("You have selected Cash on Delivery. Proceeding to Order Confirmation.");
-                    break;
+                    return;
                 default:
                     alert("Payment method not available.");
+                    return;
             }
+
+            window.open(upiLink, "_blank");
         });
     });
 });
