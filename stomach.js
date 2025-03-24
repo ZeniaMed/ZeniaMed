@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
+    console.log("Stomach.js loaded successfully!"); // Debugging message
+
     const medicines = [
         { name: "GASOFAST", price: 75, image: "images/gasofast.png" },
         { name: "PANTOPRAZOLE 40MG", price: 95, image: "images/pantoprazole.png" },
@@ -13,6 +15,11 @@ document.addEventListener("DOMContentLoaded", function () {
     ];
 
     const medicineList = document.querySelector(".medicine-list");
+
+    if (!medicineList) {
+        console.error("Error: .medicine-list not found in stomach.html");
+        return;
+    }
 
     function renderMedicines() {
         medicineList.innerHTML = "";
@@ -56,5 +63,5 @@ document.addEventListener("DOMContentLoaded", function () {
         alert(`${medicine.name} added to cart!`);
     }
 
-    renderMedicines();
+    setTimeout(renderMedicines, 500); // Delay to ensure elements are loaded
 });
