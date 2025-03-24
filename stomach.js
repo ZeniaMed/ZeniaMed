@@ -42,13 +42,13 @@ document.addEventListener("DOMContentLoaded", function () {
     function addToCart(medicine) {
         let cart = JSON.parse(localStorage.getItem("cart")) || [];
         
-        // Check if medicine is already in the cart
-        const existingItem = cart.find(item => item.name === medicine.name);
+        // Check if the item already exists in the cart
+        let existingItem = cart.find(item => item.name === medicine.name);
 
         if (existingItem) {
-            existingItem.quantity += 1;
+            existingItem.quantity += 1; // Increase quantity
         } else {
-            medicine.quantity = 1;
+            medicine.quantity = 1; // Set default quantity to 1
             cart.push(medicine);
         }
 
