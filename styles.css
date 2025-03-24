@@ -162,3 +162,65 @@ button {
 html {
     scroll-behavior: smooth;
 }
+.cart-banner {
+    text-align: center;
+    padding: 20px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 24px;
+}
+
+.cart-container {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+}
+
+.cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.cart-info h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.remove-item {
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.checkout-btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: #ff9800;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.empty-cart {
+    text-align: center;
+    font-size: 18px;
+    color: grey;
+    margin-top: 50px;
+}
