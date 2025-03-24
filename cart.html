@@ -3,33 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Cart</title>
+    <title>Your Cart - ZeniaMed</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Your Cart</h1>
-    <div id="cart-items"></div>
-    <button id="checkout">Go to Checkout</button>
-    
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            let cart = JSON.parse(localStorage.getItem("cart")) || [];
-            let cartContainer = document.getElementById("cart-items");
 
-            if (cart.length === 0) {
-                cartContainer.innerHTML = "<p>Your cart is empty.</p>";
-            } else {
-                cart.forEach(item => {
-                    let itemDiv = document.createElement("div");
-                    itemDiv.innerHTML = `${item.product} - ₹${item.price} x ${item.quantity}`;
-                    cartContainer.appendChild(itemDiv);
-                });
-            }
+    <header>
+        <div class="header-container">
+            <button class="nav-btn" onclick="location.href='index.html'">🏠 Home</button>
+            <button class="nav-btn" onclick="location.href='shop.html'">🛒 Shop</button>
+            <button class="nav-btn" onclick="location.href='tracking.html'">📦 Tracking</button>
+        </div>
+    </header>
 
-            document.getElementById("checkout").addEventListener("click", function () {
-                window.location.href = "checkout.html";
-            });
-        });
-    </script>
+    <section class="cart-banner">
+        <h1>Your Shopping Cart 🛍️</h1>
+    </section>
+
+    <section class="cart-container">
+        <!-- Cart items will be displayed here -->
+    </section>
+
+    <footer>
+        <p>© 2025 ZeniaMed. All rights reserved.</p>
+    </footer>
+
+    <script src="cart.js"></script>
+
 </body>
 </html>
