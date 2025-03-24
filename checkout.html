@@ -9,44 +9,64 @@
 <body>
 
     <header>
-        <div class="header-container">
-            <button class="nav-btn" onclick="location.href='index.html'">🏠 Home</button>
-            <button class="nav-btn" onclick="location.href='shop.html'">🛒 Shop</button>
-            <button class="nav-btn" onclick="location.href='cart.html'">🛍 Cart</button>
-            <button class="nav-btn" onclick="location.href='tracking.html'">📦 Tracking</button>
-        </div>
+        <h1>🛍 Checkout</h1>
+        <a href="index.html" class="home-button">🏠 Home</a>
     </header>
 
-    <section class="banner">
-        <h1>Checkout</h1>
-        <p>Review your order and complete your purchase.</p>
-    </section>
-
     <section class="checkout-container">
+        <!-- Order Summary Table -->
         <div class="order-summary">
             <h2>Order Summary</h2>
-            <div id="cart-items"></div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>S. No.</th>
+                        <th>Product</th>
+                        <th>Medicine Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody id="checkout-items">
+                    <!-- Medicines will be dynamically added here -->
+                </tbody>
+            </table>
             <p><strong>Total Amount: ₹<span id="total-price">0</span></strong></p>
         </div>
 
-        <div class="customer-details">
-            <h2>Shipping Details</h2>
-            <form id="checkout-form">
-                <label for="name">Full Name</label>
-                <input type="text" id="name" placeholder="Enter your name" required>
+        <!-- Delivery Address Section -->
+        <div class="address-section">
+            <h2>Delivery Address</h2>
+            <select id="saved-address">
+                <option value="">Select a saved address</option>
+            </select>
+            <button id="add-new-address">➕ Add New Address</button>
 
-                <label for="email">Email</label>
-                <input type="email" id="email" placeholder="Enter your email" required>
-
-                <label for="address">Shipping Address</label>
+            <div id="new-address-form" style="display: none;">
+                <input type="text" id="full-name" placeholder="Full Name" required>
+                <input type="text" id="phone" placeholder="Phone Number" required>
                 <textarea id="address" placeholder="Enter your full address" required></textarea>
-
-                <label for="phone">Phone Number</label>
-                <input type="text" id="phone" placeholder="Enter your phone number" required>
-
-                <button type="submit" class="checkout-btn">Place Order</button>
-            </form>
+                <button id="save-address">💾 Save Address</button>
+            </div>
         </div>
+
+        <!-- Coupon Section -->
+        <div class="coupon-section">
+            <h2>Apply Coupon</h2>
+            <input type="text" id="coupon-code" placeholder="Enter Coupon Code">
+            <button id="apply-coupon">Apply</button>
+        </div>
+
+        <!-- Payment Section -->
+        <div class="payment-section">
+            <h2>Select Payment Method</h2>
+            <label><input type="radio" name="payment-method" value="upi"> UPI (Google Pay, Paytm)</label><br>
+            <label><input type="radio" name="payment-method" value="net-banking"> Net Banking</label><br>
+            <label><input type="radio" name="payment-method" value="wallets"> Wallets (Amazon Pay Later, LazyPay, Simpl)</label><br>
+            <label><input type="radio" name="payment-method" value="cod"> Cash on Delivery</label>
+        </div>
+
+        <button id="place-order">🛒 Place Order</button>
     </section>
 
     <footer>
