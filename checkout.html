@@ -7,17 +7,31 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Checkout</h1>
-    </header>
+    <h1>Checkout</h1>
+    <div id="checkout-items"></div>
+    <button id="place-order">Place Order</button>
 
-    <div class="checkout-details">
-        <h2>Order Summary</h2>
-        <div id="checkout-summary"></div>
-        <p>Grand Total: ₹<span id="final-total">0</span></p>
-        <button onclick="completeOrder()">Complete Order</button>
-    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let checkoutContainer = document.getElementById("checkout-items");
 
-    <script src="script.js"></script>
+            if (cart.length === 0) {
+                checkoutContainer.innerHTML = "<p>Your cart is empty.</p>";
+            } else {
+                cart.forEach(item => {
+                    let itemDiv = document.createElement("div");
+                    itemDiv.innerHTML = `${item.product} - ₹${item.price} x ${item.quantity}`;
+                    checkoutContainer.appendChild(itemDiv);
+                });
+            }
+
+            document.getElementById("place-order").addEventListener("click", function () {
+                alert("Your order has been placed!");
+                localStorage.removeItem("cart");
+                window.location.href = "index.html";
+            });
+        });
+    </script>
 </body>
 </html>
