@@ -25,11 +25,11 @@ document.addEventListener("DOMContentLoaded", function () {
             medicineList.appendChild(medItem);
         });
 
+        // Add event listeners to buttons
         document.querySelectorAll(".add-to-cart").forEach(button => {
             button.addEventListener("click", function () {
-                const index = this.getAttribute("data-index");
-                const selectedMedicine = medicines[index];
-                addToCart(selectedMedicine);
+                const index = parseInt(this.getAttribute("data-index"));
+                addToCart(medicines[index]);
             });
         });
     }
