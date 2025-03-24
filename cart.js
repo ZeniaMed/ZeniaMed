@@ -10,6 +10,8 @@ document.addEventListener("DOMContentLoaded", function () {
         cart.forEach((item, index) => {
             let row = document.createElement("tr");
 
+            if (!item.quantity) item.quantity = 1; // Default quantity to 1 if missing
+
             let itemTotal = item.price * item.quantity;
             totalAmount += itemTotal;
 
