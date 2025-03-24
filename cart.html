@@ -83,7 +83,7 @@
         }
 
         document.getElementById("checkout-btn").addEventListener("click", function () {
-            alert("Proceeding to checkout...");
+            window.location.href = "checkout.html"; // ✅ Redirects to checkout page
         });
 
         loadCart();
