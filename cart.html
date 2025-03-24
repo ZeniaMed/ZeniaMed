@@ -3,24 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Cart - ZeniaMed</title>
+    <title>Cart - ZeniaMed</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="cart.css"> <!-- Separate CSS for Cart Page -->
 </head>
 <body>
+
     <header>
-        <h1>Shopping Cart</h1>
+        <div class="header-container">
+            <button class="nav-btn" onclick="location.href='index.html'">🏠 Home</button>
+            <button class="nav-btn" onclick="location.href='shop.html'">🛒 Shop</button>
+            <button class="nav-btn" onclick="location.href='cart.html'">🛍 Cart</button>
+            <button class="nav-btn" onclick="location.href='tracking.html'">📦 Tracking</button>
+        </div>
     </header>
 
-    <main>
-        <div id="cartItems"></div>
-        <div id="cartTotal"></div>
-        <label for="discountCode">Enter Discount Code:</label>
-        <input type="text" id="discountCode">
-        <button onclick="applyDiscount()">Apply Discount</button>
-        <button onclick="checkout()">Checkout</button>
-        <a href="index.html" class="back-btn">⬅ Back to Home</a>
-    </main>
+    <section class="cart-container">
+        <div class="cart-content">
+            <img src="cart-icon.png" alt="Empty Cart" class="cart-icon">
+            <h2>Your Cart is Empty</h2>
+            <button class="go-to-shop" onclick="location.href='shop.html'">Go to Pharmacy</button>
+        </div>
+    </section>
 
-    <script src="script.js"></script>
+    <section class="before-you-leave">
+        <h3>Before You Leave</h3>
+        <div class="links">
+            <a href="#">Hot Sellers</a>
+            <a href="#">Minimum 50% Off</a>
+            <a href="#">Ayurvedic Wellness</a>
+            <a href="#">Diapering & Baby Care</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 ZeniaMed. All rights reserved.</p>
+    </footer>
+
 </body>
 </html>
