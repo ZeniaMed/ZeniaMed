@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (cart.length === 0) {
         cartItemsContainer.innerHTML = "<tr><td colspan='6'>Your cart is empty.</td></tr>";
     } else {
+        cartItemsContainer.innerHTML = "";  // Clear existing content
         cart.forEach((item, index) => {
             let cartItem = document.createElement("tr");
             cartItem.innerHTML = `
@@ -35,6 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+// ✅ Fix Quantity Update on Checkout Page
 function updateQuantity(index, change) {
     let cart = JSON.parse(localStorage.getItem("cart"));
     cart[index].quantity += change;
@@ -42,5 +44,5 @@ function updateQuantity(index, change) {
         cart.splice(index, 1);
     }
     localStorage.setItem("cart", JSON.stringify(cart));
-    location.reload();
+    location.reload();  // Refresh the page to show updates
 }
