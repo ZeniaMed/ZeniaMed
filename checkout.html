@@ -23,10 +23,10 @@
     </section>
 
     <section class="checkout-container">
-        <!-- 🛒 Order Summary Section -->
+        <!-- Order Summary -->
         <div class="order-summary">
             <h2>Order Summary</h2>
-            <table id="cart-items">
+            <table>
                 <thead>
                     <tr>
                         <th>#</th>
@@ -37,47 +37,75 @@
                         <th>Total</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="cart-items">
                     <!-- Cart items will be dynamically added here -->
                 </tbody>
             </table>
             <h3>Total Amount: ₹<span id="total-price">0</span></h3>
         </div>
 
-        <!-- 📍 Delivery Address Section -->
-        <div class="address-section">
-            <h2>Delivery Address</h2>
-            <div id="saved-addresses">
-                <label>
-                    <input type="radio" name="address" value="saved" checked>
-                    <span id="saved-address">123, Green Street, Mumbai, India</span>
-                </label>
-            </div>
-            <button id="add-new-address-btn">+ Add New Address</button>
-            <div id="new-address-form" style="display: none;">
-                <input type="text" id="new-address" placeholder="Enter New Address">
-                <button id="save-address-btn">Save Address</button>
-            </div>
+        <!-- Shipping Details -->
+        <div class="customer-details">
+            <h2>Shipping Details</h2>
+            <form id="checkout-form">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" placeholder="Enter your name" required>
+
+                <label for="phone">Phone Number</label>
+                <input type="text" id="phone" placeholder="Enter your phone number" required>
+
+                <label for="address">Shipping Address</label>
+                <textarea id="address" placeholder="Enter your full address" required></textarea>
+
+                <label for="saved-addresses">Saved Addresses</label>
+                <select id="saved-addresses">
+                    <option value="">Select a saved address</option>
+                </select>
+                <button type="button" id="save-address">Save Address</button>
+            </form>
         </div>
 
-        <!-- 🎟 Apply Coupon Section -->
+        <!-- Coupon Section -->
         <div class="coupon-section">
             <h2>Apply Coupon</h2>
             <input type="text" id="coupon-code" placeholder="Enter Coupon Code">
-            <button id="apply-coupon-btn">Apply</button>
-            <p>Discount: ₹<span id="discount-amount">0</span></p>
+            <button id="apply-coupon">Apply</button>
         </div>
 
-        <!-- 💳 Payment Methods -->
+        <!-- Payment Options -->
         <div class="payment-section">
-            <h2>Payment Method</h2>
-            <label><input type="radio" name="payment" value="gpay"><img src="images/gpay.png" alt="Google Pay"> Google Pay</label>
-            <label><input type="radio" name="payment" value="paytm"><img src="images/paytm.png" alt="Paytm"> Paytm</label>
-            <label><input type="radio" name="payment" value="amazon"><img src="images/amazonpay.png" alt="Amazon Pay"> Amazon Pay</label>
-            <label><input type="radio" name="payment" value="cod" checked> Cash on Delivery</label>
+            <h2>Payment Options</h2>
+            <div class="payment-option">
+                <img src="images/gpay.png" alt="Google Pay">
+                <span>Google Pay</span>
+            </div>
+            <div class="payment-option">
+                <img src="images/paytm.png" alt="Paytm">
+                <span>Paytm</span>
+            </div>
+            <div class="payment-option">
+                <img src="images/netbanking.png" alt="Net Banking">
+                <span>Net Banking</span>
+            </div>
+            <div class="payment-option">
+                <img src="images/amazon.png" alt="Amazon Pay">
+                <span>Amazon Pay Later</span>
+            </div>
+            <div class="payment-option">
+                <img src="images/lazypay.png" alt="LazyPay">
+                <span>LazyPay</span>
+            </div>
+            <div class="payment-option">
+                <img src="images/simpl.png" alt="Simpl">
+                <span>Simpl</span>
+            </div>
+            <div class="payment-option">
+                <img src="images/cod.png" alt="Cash on Delivery">
+                <span>Cash on Delivery</span>
+            </div>
         </div>
 
-        <button id="place-order-btn">Place Order</button>
+        <button type="submit" class="checkout-btn">Place Order</button>
     </section>
 
     <footer>
