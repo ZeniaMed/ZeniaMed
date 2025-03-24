@@ -7,28 +7,144 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
     <header>
-        <div class="header-container">
-            <button class="nav-btn" onclick="location.href='index.html'">🏠 Home</button>
-            <button class="nav-btn" onclick="location.href='shop.html'">🛒 Shop</button>
-            <button class="nav-btn" onclick="location.href='tracking.html'">📦 Tracking</button>
-        </div>
+        <h1>🛒 Your Shopping Cart</h1>
+        <a href="index.html" class="home-button">🏠 Home</a>
     </header>
 
-    <section class="cart-banner">
-        <h1>Your Shopping Cart 🛍️</h1>
+    <section id="cart-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody id="cart-items">
+                <!-- Cart items will be injected here -->
+            </tbody>
+        </table>
+        <div id="cart-total">
+            <h3>Total: ₹<span id="total-price">0</span></h3>
+            <button id="checkout-btn">Proceed to Checkout</button>
+        </div>
     </section>
 
-    <section class="cart-container">
-        <!-- Cart items will be displayed here -->
-    </section>
+    <script>
+        function loadCart() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let cartItems = document.getElementById("cart-items");
+            let totalPrice = 0;
+            cartItems.innerHTML = "";
 
-    <footer>
-        <p>© 2025 ZeniaMed. All rights reserved.</p>
-    </footer>
+            cart.forEach((item, index) => {
+                let totalItemPrice = item.price * item.quantity;
+                totalPrice += totalItemPrice;
+                cartItems.innerHTML += `
+                    <tr>
+                        <td><img src="${item.image}" alt="${item.name}" class="cart-img"></td>
+                        <td>${item.name}</td>
+                        <td>₹${item.price.toFixed(2)}</td>
+                        <td>
+                            <button class="qty-btn" onclick="updateQuantity(${index}, -1)">-</button>
+                            ${item.quantity}
+                            <button class="qty-btn" onclick="updateQuantity(${index}, 1)">+</button>
+                        </td>
+                        <td>₹${totalItemPrice.toFixed(2)}</td>
+                        <td><button class="remove-btn" onclick="removeItem(${index})">❌</button></td>
+                    </tr>
+                `;
+            });
 
-    <script src="cart.js"></script>
+            document.getElementById("total-price").innerText = totalPrice.toFixed(2);
+        }
 
+        function updateQuantity(index, change) {
+            let cart = JSON.parse(localStorage.getItem("cart"));
+            cart[index].quantity += change;
+
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+            loadCart();
+        }
+
+        function removeItem(index) {
+            let cart = JSON.parse(localStorage.getItem("cart"));
+            cart.splice(index, 1);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            loadCart();
+        }
+
+        document.getElementById("checkout-btn").addEventListener("click", function () {
+            alert("Proceeding to checkout...");
+        });
+
+        loadCart();
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        header {
+            background: green;
+            padding: 15px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .home-button {
+            background: yellow;
+            padding: 10px;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid black;
+        }
+        .cart-img {
+            width: 50px;
+            height: 50px;
+        }
+        .qty-btn {
+            padding: 5px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        .remove-btn {
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        #cart-total {
+            margin: 20px;
+        }
+        #checkout-btn {
+            background: blue;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
 </body>
 </html>
