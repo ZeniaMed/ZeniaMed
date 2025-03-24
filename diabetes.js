@@ -20,23 +20,29 @@ document.addEventListener("DOMContentLoaded", function () {
         medItem.innerHTML = `
             <h3>${med.name}</h3>
             <p>₹${med.price}</p>
-            <button class="add-to-cart" data-index="${index}">Add to Cart</button>
+            <button class="add-to-cart" data-name="${med.name}" data-price="${med.price}">Add to Cart</button>
         `;
         medicineList.appendChild(medItem);
     });
 
-    // ✅ Fix: Ensure correct item is stored in localStorage when clicking "Add to Cart"
+    // ✅ Fix: Ensure correct item is stored in localStorage
     document.querySelectorAll(".add-to-cart").forEach(button => {
         button.addEventListener("click", function () {
-            const index = this.getAttribute("data-index");
-            const selectedMed = medicines[index];
+            const name = this.getAttribute("data-name");
+            const price = parseFloat(this.getAttribute("data-price"));
 
             let cart = JSON.parse(localStorage.getItem("cart")) || [];
-            cart.push({ name: selectedMed.name, price: selectedMed.price, quantity: 1 });
+            
+            let existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ name, price, quantity: 1 });
+            }
 
             localStorage.setItem("cart", JSON.stringify(cart));
 
-            alert(selectedMed.name + " added to cart!");
+            alert(name + " added to cart!");
         });
     });
 });
