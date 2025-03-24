@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Orders</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <h1>📦 Customer Orders</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Items</th>
+                <th>Total</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody id="order-list"></tbody>
+    </table>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let orders = JSON.parse(localStorage.getItem("orders")) || [];
+            let orderList = document.getElementById("order-list");
+
+            if (orders.length === 0) {
+                orderList.innerHTML = "<tr><td colspan='7'>No orders found.</td></tr>";
+                return;
+            }
+
+            orders.forEach((order, index) => {
+                let row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${order.customerName}</td>
+                    <td>${order.phoneNumber}</td>
+                    <td>${order.address}</td>
+                    <td>${order.items.map(item => item.name + " x " + item.quantity).join("<br>")}</td>
+                    <td>₹${order.totalAmount}</td>
+                    <td>${order.date}</td>
+                `;
+                orderList.appendChild(row);
+            });
+        });
+    </script>
+
+</body>
+</html>
