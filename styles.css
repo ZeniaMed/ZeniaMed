@@ -1,3 +1,4 @@
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -6,9 +7,11 @@ body {
     text-align: center;
 }
 
+/* Header */
 header {
     background-color: green;
     padding: 10px;
+    color: white;
 }
 
 .header-container {
@@ -18,6 +21,7 @@ header {
     padding: 10px;
 }
 
+/* Navigation Buttons */
 .nav-buttons {
     display: flex;
     gap: 15px;
@@ -26,18 +30,19 @@ header {
 .nav-btn {
     background-color: blue;
     color: white;
-    padding: 18px 25px; /* Increased button size */
+    padding: 18px 25px;
     font-size: 18px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
+/* Search Bar */
 .search-bar {
     display: flex;
     align-items: center;
-    gap: 8px; /* Increased spacing */
-    margin-left: 20px; /* More space after tracking */
+    gap: 8px;
+    margin-left: 20px;
 }
 
 .search-bar input {
@@ -57,19 +62,16 @@ header {
     cursor: pointer;
 }
 
+/* Logo */
 .logo-container {
     margin-left: auto;
 }
 
 .logo-container img {
-    width: 180px; /* Increased logo size */
+    width: 150px;
 }
 
-.banner {
-    background-color: lightgreen;
-    padding: 20px;
-}
-
+/* Categories */
 .categories {
     background-color: white;
     padding: 20px;
@@ -86,31 +88,20 @@ header {
     background-color: blue;
     color: white;
     border: none;
-    padding: 18px 25px; /* Increased button size */
+    padding: 18px 25px;
     font-size: 18px;
     border-radius: 5px;
     cursor: pointer;
 }
 
+/* Footer */
 footer {
     background-color: black;
     color: white;
     padding: 10px;
 }
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-}
 
-header {
-    background: green;
-    padding: 15px;
-    color: white;
-    font-size: 20px;
-}
-
+/* Medicine List */
 .medicine-list {
     display: flex;
     flex-wrap: wrap;
@@ -125,6 +116,7 @@ header {
     width: 250px;
     background: white;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
 }
 
 .medicine-item h3 {
@@ -144,24 +136,8 @@ button {
     padding: 8px;
     cursor: pointer;
 }
-.medicine-item {
-    border: 1px solid #ddd;
-    padding: 10px;
-    width: 250px;
-    background: white;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-    text-align: center;
-}
 
-.medicine-img {
-    width: 120px;
-    height: 120px;
-    object-fit: contain;
-    margin-bottom: 10px;
-}
-html {
-    scroll-behavior: smooth;
-}
+/* Cart Page */
 .cart-banner {
     text-align: center;
     padding: 20px;
@@ -218,12 +194,7 @@ html {
     margin-top: 20px;
 }
 
-.empty-cart {
-    text-align: center;
-    font-size: 18px;
-    color: grey;
-    margin-top: 50px;
-}
+/* Checkout Page */
 .checkout-container {
     width: 80%;
     margin: auto;
@@ -231,28 +202,42 @@ html {
     padding: 20px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
+
+/* Checkout Table */
 table {
     width: 100%;
     border-collapse: collapse;
 }
+
 th, td {
     padding: 12px;
     border: 1px solid #ddd;
     text-align: center;
 }
+
 .checkout-img {
     width: 50px;
     height: 50px;
 }
-input, textarea, select {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0;
+
+/* Payment Section */
+.payment-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
 }
-button {
-    background: green;
-    color: white;
+
+.payment-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     padding: 10px;
-    border: none;
+    border: 1px solid #ddd;
+    width: 250px;
+    text-align: left;
+    background-color: white;
     cursor: pointer;
 }
+
+/* ✅ Updated:
