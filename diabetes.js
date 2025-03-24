@@ -14,38 +14,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const medicineList = document.querySelector(".medicine-list");
 
-    medicines.forEach(med => {
+    medicines.forEach((med, index) => {
         let medItem = document.createElement("div");
         medItem.classList.add("medicine-item");
         medItem.innerHTML = `
             <h3>${med.name}</h3>
             <p>₹${med.price}</p>
-            <button class="add-to-cart" data-name="${med.name}" data-price="${med.price}">Add to Cart</button>
+            <button class="add-to-cart" data-index="${index}">Add to Cart</button>
         `;
         medicineList.appendChild(medItem);
     });
 
-    // ✅ Attach event listener to dynamically added buttons
+    // ✅ Fix: Ensure correct item is stored in localStorage when clicking "Add to Cart"
     document.querySelectorAll(".add-to-cart").forEach(button => {
         button.addEventListener("click", function () {
-            let productName = this.getAttribute("data-name");
-            let productPrice = parseFloat(this.getAttribute("data-price"));
+            const index = this.getAttribute("data-index");
+            const selectedMed = medicines[index];
 
-            addToCart(productName, productPrice);
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart.push({ name: selectedMed.name, price: selectedMed.price, quantity: 1 });
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            alert(selectedMed.name + " added to cart!");
         });
     });
-
-    function addToCart(name, price) {
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-        let existingItem = cart.find(item => item.name === name);
-
-        if (existingItem) {
-            existingItem.quantity += 1;
-        } else {
-            cart.push({ name: name, price: price, quantity: 1 });
-        }
-
-        localStorage.setItem("cart", JSON.stringify(cart));
-        alert(name + " added to cart!");
-    }
 });
