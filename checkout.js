@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             let totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            totalPrice.textContent = `₹${totalAmount.toFixed(2)}`;
+            totalPrice.textContent = totalAmount.toFixed(2);
         }
     }
 
@@ -62,16 +62,18 @@ document.addEventListener("DOMContentLoaded", function () {
             address: finalAddress,
             items: cart,
             totalAmount: document.getElementById("total-price").textContent,
-            orderDate: new Date().toLocaleString()
+            orderDate: new Date().toLocaleString(),
+            status: "Order Placed"
         };
 
-        let orders = JSON.parse(localStorage.getItem("orders")) || [];
-        orders.push(orderDetails);
-        localStorage.setItem("orders", JSON.stringify(orders));
-
-        alert("✅ Order Placed Successfully!");
-        localStorage.removeItem("cart");
-        window.location.href = "index.html";
+        // Save Order in Firebase
+        db.collection("orders").add(orderDetails).then((docRef) => {
+            alert("✅ Order Placed Successfully!");
+            localStorage.removeItem("cart");
+            window.location.href = `tracking.html?orderId=${docRef.id}`; // Redirect to tracking page
+        }).catch(error => {
+            console.error("Error placing order: ", error);
+        });
     });
 
     document.getElementById("save-address").addEventListener("click", function () {
@@ -98,82 +100,31 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     loadSavedAddresses();
-
-    // ✅ Handle Payment Clicks and Redirection
-    document.querySelectorAll(".payment-option").forEach(option => {
-        option.addEventListener("click", function () {
-            let paymentMethod = this.getAttribute("data-upi");
-            let amount = totalPrice.textContent.replace("₹", "");
-
-            switch (paymentMethod) {
-                case "googlepay":
-                    window.location.href = `upi://pay?pa=yourupi@okhdfcbank&pn=ZeniaMed&mc=1234&tid=TXN${Date.now()}&tr=ORDER${Date.now()}&tn=ZeniaMed Payment&am=${amount}&cu=INR`;
-                    break;
-                case "paytm":
-                    window.open("https://paytm.com", "_blank");
-                    break;
-                case "amazonpay":
-                    window.open("https://www.amazon.in/gp/aws/cart/add.html", "_blank");
-                    break;
-                case "netbanking":
-                    window.open("https://www.yourbank.com/netbanking", "_blank");
-                    break;
-                case "lazypay":
-                    window.open("https://www.lazypay.in/", "_blank");
-                    break;
-                case "simpl":
-                    window.open("https://www.getsimpl.com/", "_blank");
-                    break;
-                case "cod":
-                    alert("💰 You have selected Cash on Delivery. Your order will be processed.");
-                    break;
-                default:
-                    alert("⚠️ Payment method not available.");
-            }
-        });
-    });
 });
 
-// ✅ Firebase Integration (Order Saving)
+// ✅ Firebase Setup for Order Tracking
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
-import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBvjzms_g3GAfpSspsstO36A7eal7fuD7I",
-    authDomain: "zeniamed.firebaseapp.com",
-    projectId: "zeniamed",
-    storageBucket: "zeniamed.appspot.com",
-    messagingSenderId: "795153300011",
-    appId: "1:795153300011:web:bda2f2edd0cfe451b2486e"
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// ✅ Function to save order in Firebase
-async function placeOrder() {
-    let name = document.getElementById("name").value;
-    let phone = document.getElementById("phone").value;
-    let address = document.getElementById("address").value;
-    let total = document.getElementById("total-price").textContent.replace("₹", "");
-
-    try {
-        await addDoc(collection(db, "orders"), {
-            name: name,
-            phone: phone,
-            address: address,
-            total: total,
-            status: "Order Placed",
-            timestamp: serverTimestamp()
-        });
-
-        alert("✅ Order Placed Successfully!");
-        window.location.href = "tracking.html"; // Redirect to tracking page
-    } catch (error) {
-        console.error("Error placing order: ", error);
-    }
+// ✅ Live Order Tracking
+const orderId = new URLSearchParams(window.location.search).get("orderId");
+if (orderId) {
+    onSnapshot(doc(db, "orders", orderId), (doc) => {
+        if (doc.exists()) {
+            document.getElementById("order-status").textContent = `Status: ${doc.data().status}`;
+        }
+    });
 }
-
-// Attach function to "Place Order" button
-document.querySelector(".checkout-btn").addEventListener("click", placeOrder);
