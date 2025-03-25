@@ -46,7 +46,13 @@
         // ✅ Get order ID from URL
         const urlParams = new URLSearchParams(window.location.search);
         const orderId = urlParams.get("id");
-        document.getElementById("orderId").innerText = orderId;
+
+        if (!orderId) {
+            alert("⚠️ No order ID found!");
+            window.location.href = "index.html"; // Redirect to home if no ID
+        } else {
+            document.getElementById("orderId").innerText = orderId;
+        }
 
         // ✅ Initialize Google Maps
         let map;
@@ -67,13 +73,15 @@
         }
 
         // ✅ Fetch live location updates from Firestore
-        if (orderId) {
+        function trackOrder() {
+            if (!orderId) return;
+
             const orderRef = doc(db, "orders", orderId);
 
             onSnapshot(orderRef, (docSnap) => {
                 if (docSnap.exists()) {
                     const orderData = docSnap.data();
-                    const lat = orderData.lat || 30.7333;  // Default lat
+                    const lat = orderData.lat || 30.7333;  // Default lat (Chandigarh)
                     const lng = orderData.lng || 76.7794; // Default lng
 
                     if (!map) {
@@ -87,10 +95,10 @@
                     if (userLat && userLng) {
                         checkProximity(userLat, userLng, lat, lng);
                     }
+                } else {
+                    alert("⚠️ Order not found in database!");
                 }
             });
-        } else {
-            alert("⚠️ No order ID found!");
         }
 
         // ✅ Get User's Location
@@ -135,8 +143,9 @@
             }
         }
 
-        // ✅ Start tracking user's location
+        // ✅ Start tracking
         getUserLocation();
+        trackOrder();
     </script>
 
 </body>
