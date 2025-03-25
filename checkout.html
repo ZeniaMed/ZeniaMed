@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout - ZeniaMed</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY"></script>
 </head>
 <body>
 
@@ -23,7 +24,6 @@
     </section>
 
     <section class="checkout-container">
-        <!-- Order Summary -->
         <div class="order-summary">
             <h2>Order Summary</h2>
             <table>
@@ -38,13 +38,11 @@
                     </tr>
                 </thead>
                 <tbody id="cart-items">
-                    <!-- Cart items will be dynamically added here -->
                 </tbody>
             </table>
             <h3>Total Amount: ₹<span id="total-price">0</span></h3>
         </div>
 
-        <!-- Shipping Details -->
         <div class="customer-details">
             <h2>Shipping Details</h2>
             <form id="checkout-form">
@@ -65,14 +63,12 @@
             </form>
         </div>
 
-        <!-- Coupon Section -->
         <div class="coupon-section">
             <h2>Apply Coupon</h2>
             <input type="text" id="coupon-code" placeholder="Enter Coupon Code">
             <button id="apply-coupon">Apply</button>
         </div>
 
-        <!-- Payment Options -->
         <div class="payment-section">
             <h2>Payment Options</h2>
             <div class="payment-icons">
@@ -83,22 +79,6 @@
                 <div class="payment-option" data-upi="paytm">
                     <img src="images/paytm.png" alt="Paytm">
                     <span>Paytm</span>
-                </div>
-                <div class="payment-option" data-upi="amazonpay">
-                    <img src="images/amazonpay.png" alt="Amazon Pay">
-                    <span>Amazon Pay Later</span>
-                </div>
-                <div class="payment-option" data-upi="netbanking">
-                    <img src="images/netbanking.png" alt="Net Banking">
-                    <span>Net Banking</span>
-                </div>
-                <div class="payment-option" data-upi="lazypay">
-                    <img src="images/lazypay.png" alt="LazyPay">
-                    <span>LazyPay</span>
-                </div>
-                <div class="payment-option" data-upi="simpl">
-                    <img src="images/simpl.png" alt="Simpl">
-                    <span>Simpl</span>
                 </div>
                 <div class="payment-option" data-upi="cod">
                     <img src="images/cod.png" alt="Cash on Delivery">
@@ -114,6 +94,8 @@
         <p>© 2025 ZeniaMed. All rights reserved.</p>
     </footer>
 
+    <script src="https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js"></script>
     <script src="checkout.js"></script>
 
 </body>
