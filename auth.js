@@ -29,6 +29,11 @@ document.addEventListener("DOMContentLoaded", function () {
     // Sign Up Form Submission
     document.getElementById("signup-form").addEventListener("submit", function (event) {
         event.preventDefault();
+        document.getElementById("logout-btn").addEventListener("click", function () {
+    localStorage.clear();  // Clears login data
+    window.location.href = "index.html";  // Redirects back to login page
+});
+
 
         let name = document.getElementById("signup-name").value;
         let phone = document.getElementById("signup-phone").value;
