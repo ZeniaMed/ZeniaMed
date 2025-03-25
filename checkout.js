@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let totalPrice = document.getElementById("total-price");
 
     function displayCart() {
+        cart = JSON.parse(localStorage.getItem("cart")) || [];
         if (cart.length === 0) {
             cartItemsContainer.innerHTML = "<tr><td colspan='6'>Your cart is empty.</td></tr>";
         } else {
@@ -55,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        let finalAddress = address ? address : selectedAddress;
+        let finalAddress = selectedAddress ? selectedAddress : address;
         let orderDetails = {
             customerName: name,
             phone: phone,
@@ -66,11 +67,11 @@ document.addEventListener("DOMContentLoaded", function () {
             status: "Order Placed"
         };
 
-        // Save Order in Firebase
+        // ✅ Save Order in Firebase
         db.collection("orders").add(orderDetails).then((docRef) => {
             alert("✅ Order Placed Successfully!");
             localStorage.removeItem("cart");
-            window.location.href = `tracking.html?orderId=${docRef.id}`; // Redirect to tracking page
+            window.location.href = `./tracking.html?orderId=${docRef.id}`;
         }).catch(error => {
             console.error("Error placing order: ", error);
         });
@@ -103,9 +104,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ✅ Firebase Setup for Order Tracking
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
-import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
-
 const firebaseConfig = {
     apiKey: "YOUR_API_KEY",
     authDomain: "YOUR_PROJECT.firebaseapp.com",
@@ -116,14 +114,14 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
 // ✅ Live Order Tracking
 const orderId = new URLSearchParams(window.location.search).get("orderId");
 if (orderId) {
-    onSnapshot(doc(db, "orders", orderId), (doc) => {
-        if (doc.exists()) {
+    db.collection("orders").doc(orderId).onSnapshot((doc) => {
+        if (doc.exists) {
             document.getElementById("order-status").textContent = `Status: ${doc.data().status}`;
         }
     });
