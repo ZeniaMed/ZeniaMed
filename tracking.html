@@ -51,6 +51,7 @@
         // ✅ Initialize Google Maps
         let map;
         let marker;
+        let userLat, userLng; // User's current location
 
         function initMap(lat, lng) {
             map = new google.maps.Map(document.getElementById("map"), {
@@ -81,11 +82,61 @@
                         marker.setPosition({ lat, lng });
                         map.setCenter({ lat, lng });
                     }
+
+                    // ✅ Check if delivery is near the user
+                    if (userLat && userLng) {
+                        checkProximity(userLat, userLng, lat, lng);
+                    }
                 }
             });
         } else {
             alert("⚠️ No order ID found!");
         }
+
+        // ✅ Get User's Location
+        function getUserLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.watchPosition(
+                    (position) => {
+                        userLat = position.coords.latitude;
+                        userLng = position.coords.longitude;
+                    },
+                    (error) => {
+                        console.error("Error getting user location:", error);
+                    }
+                );
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        // ✅ Function to Calculate Distance
+        function getDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371; // Earth's radius in km
+            const dLat = (lat2 - lat1) * (Math.PI / 180);
+            const dLon = (lon2 - lon1) * (Math.PI / 180);
+            const a =
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1 * (Math.PI / 180)) *
+                Math.cos(lat2 * (Math.PI / 180)) *
+                Math.sin(dLon / 2) *
+                Math.sin(dLon / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c; // Distance in km
+        }
+
+        // ✅ Check Proximity and Show Notification
+        function checkProximity(userLat, userLng, deliveryLat, deliveryLng) {
+            const distance = getDistance(userLat, userLng, deliveryLat, deliveryLng);
+            console.log(`Distance: ${distance.toFixed(2)} km`);
+
+            if (distance < 1) {
+                alert("🚀 Your order is nearby! Get ready to receive it.");
+            }
+        }
+
+        // ✅ Start tracking user's location
+        getUserLocation();
     </script>
 
 </body>
