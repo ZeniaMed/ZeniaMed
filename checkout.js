@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (cart.length === 0) {
             cartItemsContainer.innerHTML = "<tr><td colspan='6'>Your cart is empty.</td></tr>";
         } else {
-            cartItemsContainer.innerHTML = "";  
+            cartItemsContainer.innerHTML = "";
             cart.forEach((item, index) => {
                 let cartItem = document.createElement("tr");
                 cartItem.innerHTML = `
@@ -53,28 +53,6 @@ document.addEventListener("DOMContentLoaded", function () {
         totalPrice.textContent = `₹${totalAmount.toFixed(2)}`;
     };
 
-    const paymentLinks = {
-        googlepay: "upi://pay?pa=YOUR_UPI_ID@upi&pn=ZeniaMed&am=500&cu=INR",
-        paytm: "https://paytm.com/link-to-payment",
-        amazonpay: "https://www.amazon.in/gp/pay",
-        netbanking: "https://razorpay.com/payment-link",
-        lazypay: "https://www.lazypay.in/",
-        simpl: "https://www.getsimpl.com/",
-        cod: "COD"
-    };
-
-    document.querySelectorAll(".payment-option").forEach(option => {
-        option.addEventListener("click", function () {
-            const paymentMethod = this.getAttribute("data-upi");
-
-            if (paymentMethod === "cod") {
-                alert("You have selected Cash on Delivery. No payment needed now.");
-            } else {
-                window.location.href = paymentLinks[paymentMethod];
-            }
-        });
-    });
-
     document.querySelector(".checkout-btn").addEventListener("click", function () {
         let name = document.getElementById("name").value.trim();
         let phone = document.getElementById("phone").value.trim();
@@ -100,12 +78,11 @@ document.addEventListener("DOMContentLoaded", function () {
             customerName: name,
             phoneNumber: phone,
             address: address,
-            items: cart, // Keeping items exactly as they are
+            items: cart.map(item => ({ name: item.name, quantity: item.quantity })), // Store only name & quantity
             totalAmount: totalAmount,
             date: new Date().toLocaleString()
         };
 
-        // ✅ Only Added Order Saving Feature (Everything else remains the same)
         let orders = JSON.parse(localStorage.getItem("orders")) || [];
         orders.push(order);
         localStorage.setItem("orders", JSON.stringify(orders));
@@ -114,6 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         localStorage.removeItem("cart");
 
-        window.location.href = "tracking.html";
+        window.location.href = "admin.html";  // Redirect to admin page to see the order
     });
+
 });
