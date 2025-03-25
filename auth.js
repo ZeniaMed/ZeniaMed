@@ -1,59 +1,67 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const signInForm = document.getElementById("signin-form");
-    const signUpForm = document.getElementById("signup-form");
+    // Check if user is already logged in
+    if (localStorage.getItem("isLoggedIn") === "true") {
+        window.location.href = "home.html"; // Redirect to home page if logged in
+    }
 
-    const signInEmail = document.getElementById("signin-email");
-    const signInPassword = document.getElementById("signin-password");
-
-    const signUpName = document.getElementById("name");
-    const signUpPhone = document.getElementById("phone");
-    const signUpEmail = document.getElementById("email");
-    const signUpPassword = document.getElementById("password");
-
-    const switchToSignUp = document.getElementById("switch-to-signup");
-    const switchToSignIn = document.getElementById("switch-to-signin");
-
-    // Toggle between sign-in and sign-up
-    switchToSignUp.addEventListener("click", function () {
-        signInForm.classList.add("hidden");
-        signUpForm.classList.remove("hidden");
+    // Toggle between Sign In and Sign Up forms
+    document.getElementById("show-signin").addEventListener("click", function () {
+        document.getElementById("signin-form").classList.remove("hidden");
+        document.getElementById("signup-form").classList.add("hidden");
     });
 
-    switchToSignIn.addEventListener("click", function () {
-        signUpForm.classList.add("hidden");
-        signInForm.classList.remove("hidden");
+    document.getElementById("show-signup").addEventListener("click", function () {
+        document.getElementById("signup-form").classList.remove("hidden");
+        document.getElementById("signin-form").classList.add("hidden");
     });
 
-    // Handle Sign-Up
-    signUpForm.addEventListener("submit", function (event) {
+    // Switch between Sign In and Sign Up from text links
+    document.getElementById("switch-to-signup").addEventListener("click", function () {
+        document.getElementById("signup-form").classList.remove("hidden");
+        document.getElementById("signin-form").classList.add("hidden");
+    });
+
+    document.getElementById("switch-to-signin").addEventListener("click", function () {
+        document.getElementById("signin-form").classList.remove("hidden");
+        document.getElementById("signup-form").classList.add("hidden");
+    });
+
+    // Sign Up Form Submission
+    document.getElementById("signup-form").addEventListener("submit", function (event) {
         event.preventDefault();
 
-        if (signUpName.value && signUpPhone.value && signUpEmail.value && signUpPassword.value) {
-            localStorage.setItem("isLoggedIn", "true");
-            localStorage.setItem("userEmail", signUpEmail.value);
+        let name = document.getElementById("signup-name").value;
+        let phone = document.getElementById("signup-phone").value;
+        let email = document.getElementById("signup-email").value;
+        let password = document.getElementById("signup-password").value;
 
-            alert("Sign-up successful! Redirecting to home...");
-            window.location.href = "home.html"; // Redirect to home page (make sure the filename is correct)
+        if (name && phone && email && password) {
+            localStorage.setItem("userEmail", email);
+            localStorage.setItem("userPassword", password);
+            localStorage.setItem("isLoggedIn", "true");
+
+            alert("Sign Up successful! Redirecting to home page...");
+            window.location.href = "home.html"; // Redirect to home page after successful sign-up
         } else {
             alert("Please fill in all fields!");
         }
     });
 
-    // Handle Sign-In
-    signInForm.addEventListener("submit", function (event) {
+    // Sign In Form Submission
+    document.getElementById("signin-form").addEventListener("submit", function (event) {
         event.preventDefault();
 
-        if (signInEmail.value && signInPassword.value) {
+        let email = document.getElementById("signin-email").value;
+        let password = document.getElementById("signin-password").value;
+        let storedEmail = localStorage.getItem("userEmail");
+        let storedPassword = localStorage.getItem("userPassword");
+
+        if (email === storedEmail && password === storedPassword) {
             localStorage.setItem("isLoggedIn", "true");
-            alert("Sign-in successful! Redirecting to home...");
-            window.location.href = "home.html"; // Redirect to home page (change if needed)
+            alert("Sign In successful! Redirecting to home page...");
+            window.location.href = "home.html"; // Redirect to home page
         } else {
-            alert("Invalid login credentials!");
+            alert("Invalid email or password. Please try again.");
         }
     });
-
-    // Check if user is already logged in
-    if (localStorage.getItem("isLoggedIn") === "true") {
-        window.location.href = "home.html"; // Redirect to home if already logged in
-    }
 });
