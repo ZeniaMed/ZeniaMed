@@ -1,36 +1,44 @@
-let map;
-let marker;
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+let map, marker;
 
 function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 28.6139, lng: 77.2090 },  // Default location (New Delhi)
-        zoom: 12
+        center: { lat: 28.6139, lng: 77.2090 }, // Default location (Delhi)
+        zoom: 15,
     });
 
     marker = new google.maps.Marker({
-        position: { lat: 28.6139, lng: 77.2090 }, 
+        position: { lat: 28.6139, lng: 77.2090 },
         map: map,
-        title: "Delivery Partner"
+        title: "Delivery Location",
     });
 
-    updateLocation();
-}
-
-function updateLocation() {
-    // Simulated GPS coordinates (replace with real GPS data)
-    let locations = [
-        { lat: 28.6140, lng: 77.2091 },
-        { lat: 28.6150, lng: 77.2100 },
-        { lat: 28.6160, lng: 77.2110 },
-        { lat: 28.6170, lng: 77.2120 }
-    ];
-
-    let index = 0;
-    setInterval(() => {
-        if (index < locations.length) {
-            marker.setPosition(locations[index]);
-            map.setCenter(locations[index]);
-            index++;
-        }
-    }, 5000); // Updates every 5 seconds
+    const orderId = new URLSearchParams(window.location.search).get("orderId");
+    if (orderId) {
+        onSnapshot(doc(db, "orders", orderId), (doc) => {
+            if (doc.exists()) {
+                document.getElementById("order-status").textContent = `Status: ${doc.data().status}`;
+                if (doc.data().location) {
+                    let { lat, lng } = doc.data().location;
+                    marker.setPosition({ lat, lng });
+                    map.setCenter({ lat, lng });
+                }
+            }
+        });
+    }
 }
