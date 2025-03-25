@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <td>${item.name}</td>
                     <td>
                         <button class="qty-btn" onclick="updateQuantity(${index}, -1)">-</button>
-                        ${item.quantity}
+                        <span id="qty-${index}">${item.quantity}</span>
                         <button class="qty-btn" onclick="updateQuantity(${index}, 1)">+</button>
                     </td>
                     <td>₹${item.price}</td>
@@ -26,12 +26,13 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             let totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            totalPrice.textContent = totalAmount.toFixed(2);
+            totalPrice.textContent = `₹${totalAmount.toFixed(2)}`;
         }
     }
 
     displayCart();
 
+    // ✅ Quantity Update Function
     window.updateQuantity = function (index, change) {
         let cart = JSON.parse(localStorage.getItem("cart"));
         cart[index].quantity += change;
@@ -41,90 +42,4 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("cart", JSON.stringify(cart));
         displayCart();
     };
-
-    document.querySelector(".checkout-btn").addEventListener("click", function (e) {
-        e.preventDefault();
-
-        let name = document.getElementById("name").value.trim();
-        let phone = document.getElementById("phone").value.trim();
-        let address = document.getElementById("address").value.trim();
-        let selectedAddress = document.getElementById("saved-addresses").value;
-
-        if (!name || !phone || (!address && !selectedAddress)) {
-            alert("⚠️ Please fill in all required fields.");
-            return;
-        }
-
-        let finalAddress = address ? address : selectedAddress;
-        let orderDetails = {
-            customerName: name,
-            phone: phone,
-            address: finalAddress,
-            items: cart,
-            totalAmount: document.getElementById("total-price").textContent,
-            orderDate: new Date().toLocaleString(),
-            status: "Order Placed"
-        };
-
-        // Save Order in Firebase
-        db.collection("orders").add(orderDetails).then((docRef) => {
-            alert("✅ Order Placed Successfully!");
-            localStorage.removeItem("cart");
-            window.location.href = `tracking.html?orderId=${docRef.id}`; // Redirect to tracking page
-        }).catch(error => {
-            console.error("Error placing order: ", error);
-        });
-    });
-
-    document.getElementById("save-address").addEventListener("click", function () {
-        let newAddress = document.getElementById("address").value.trim();
-        if (newAddress) {
-            let savedAddresses = JSON.parse(localStorage.getItem("savedAddresses")) || [];
-            savedAddresses.push(newAddress);
-            localStorage.setItem("savedAddresses", JSON.stringify(savedAddresses));
-            alert("🏠 Address Saved Successfully!");
-            loadSavedAddresses();
-        }
-    });
-
-    function loadSavedAddresses() {
-        let savedAddresses = JSON.parse(localStorage.getItem("savedAddresses")) || [];
-        let savedAddressesDropdown = document.getElementById("saved-addresses");
-        savedAddressesDropdown.innerHTML = "<option value=''>Select a saved address</option>";
-        savedAddresses.forEach(address => {
-            let option = document.createElement("option");
-            option.value = address;
-            option.textContent = address;
-            savedAddressesDropdown.appendChild(option);
-        });
-    }
-
-    loadSavedAddresses();
 });
-
-// ✅ Firebase Setup for Order Tracking
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
-import { getFirestore, collection, addDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
-
-const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-// ✅ Live Order Tracking
-const orderId = new URLSearchParams(window.location.search).get("orderId");
-if (orderId) {
-    onSnapshot(doc(db, "orders", orderId), (docSnap) => {
-        if (docSnap.exists()) {
-            document.getElementById("order-status").textContent = `Status: ${docSnap.data().status}`;
-        }
-    });
-}
