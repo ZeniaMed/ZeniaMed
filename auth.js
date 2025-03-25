@@ -1,4 +1,4 @@
-
+// Firebase SDK ko import karna (Ensure Firebase is included in your HTML)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { 
     getAuth, 
@@ -13,7 +13,7 @@ const firebaseConfig = {
     apiKey: "AIzaSyBvjzms_g3GAfpSspsstO36A7eal7fuD7I",
     authDomain: "zeniamed.firebaseapp.com",
     projectId: "zeniamed",
-    storageBucket: "zeniamed.appspot.com",  // ✅ Corrected storage bucket
+    storageBucket: "zeniamed.appspot.com",
     messagingSenderId: "795153300011",
     appId: "1:795153300011:web:bda2f2edd0cfe451b2486e",
     measurementId: "G-7Y0JNRYVDB"
@@ -28,10 +28,12 @@ document.addEventListener("DOMContentLoaded", function () {
     // ✅ Check if user is logged in and redirect accordingly
     onAuthStateChanged(auth, (user) => {
         if (user) {
+            console.log("✅ User logged in: ", user.email);
             if (window.location.pathname.includes("index.html")) {
                 window.location.href = "home.html"; // Redirect to home if logged in
             }
         } else {
+            console.log("❌ No user logged in");
             if (!window.location.pathname.includes("index.html")) {
                 window.location.href = "index.html"; // Redirect to login if logged out
             }
@@ -81,16 +83,23 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     });
 
-    // ✅ Log Out Functionality
-    let logoutButton = document.getElementById("logout-btn");
-    if (logoutButton) {
-        logoutButton.addEventListener("click", function () {
-            signOut(auth).then(() => {
-                alert("✅ You have been logged out!");
-                window.location.href = "index.html"; // Redirect to login page
-            }).catch((error) => {
-                alert("❌ Error while logging out: " + error.message);
+    // ✅ Log Out Functionality (Proper Fix)
+    setTimeout(() => { // Ensure the button exists before adding event listener
+        let logoutButton = document.getElementById("logout-btn");
+        if (logoutButton) {
+            logoutButton.addEventListener("click", function () {
+                signOut(auth)
+                    .then(() => {
+                        alert("✅ You have been logged out!");
+                        console.log("User successfully logged out.");
+                        window.location.href = "index.html"; // Redirect to login page
+                    })
+                    .catch((error) => {
+                        alert("❌ Error while logging out: " + error.message);
+                    });
             });
-        });
-    }
+        } else {
+            console.log("❌ Logout button not found!");
+        }
+    }, 1000); // Delay ensures the DOM is fully loaded before adding event listener
 });
