@@ -54,7 +54,9 @@
             <button class="category-btn" onclick="location.href='skin-care.html'">🧴 Skin Care</button>
         </div>
     </section>
-<button id="logout-btn">Log Out</button>
+
+    <!-- ✅ Logout Button -->
+    <button id="logout-btn">Log Out</button>
 
     <footer>
         <p>© 2025 ZeniaMed. All rights reserved.</p>
@@ -64,6 +66,13 @@
     <script>
         document.getElementById('shopBtn').addEventListener('click', function() {
             document.getElementById('categories').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // ✅ Logout Functionality
+        document.getElementById("logout-btn").addEventListener("click", function () {
+            localStorage.clear();  // Clears login data
+            alert("✅ You have been logged out!");
+            window.location.href = "index.html";  // Redirects to login page
         });
     </script>
 
