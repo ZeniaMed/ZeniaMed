@@ -109,7 +109,47 @@
 
         <button type="submit" class="checkout-btn">Place Order</button>
     </section>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
 
+    // ✅ Firebase Configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyBvjzms_g3GAfpSspsstO36A7eal7fuD7I",
+        authDomain: "zeniamed.firebaseapp.com",
+        projectId: "zeniamed",
+        storageBucket: "zeniamed.firebasestorage.app",
+        messagingSenderId: "795153300011",
+        appId: "1:795153300011:web:bda2f2edd0cfe451b2486e",
+        measurementId: "G-7Y0JNRYVDB"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // ✅ Place Order Button Click
+    document.getElementById("placeOrderBtn").addEventListener("click", async () => {
+        try {
+            // ✅ Create new order in Firestore
+            const docRef = await addDoc(collection(db, "orders"), {
+                status: "Placed",
+                lat: 30.7333, // Default Chandigarh lat (Update dynamically if needed)
+                lng: 76.7794, // Default Chandigarh lng
+                timestamp: new Date()
+            });
+
+            const orderId = docRef.id; // Get the auto-generated order ID
+
+            // ✅ Redirect to tracking page with Order ID
+            window.location.href = `tracking.html?id=${orderId}`;
+        } catch (error) {
+            console.error("Error placing order:", error);
+            alert("❌ Failed to place order. Try again!");
+        }
+    });
+    
+</script>
     <footer>
         <p>© 2025 ZeniaMed. All rights reserved.</p>
     </footer>
