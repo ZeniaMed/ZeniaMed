@@ -1,21 +1,19 @@
-document.getElementById("show-signin").addEventListener("click", function() {
-    document.getElementById("signin-form").classList.remove("hidden");
-    document.getElementById("signup-form").classList.add("hidden");
-    this.classList.add("active");
-    document.getElementById("show-signup").classList.remove("active");
-});
+document.getElementById("signup-form").addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent default form submission
 
-document.getElementById("show-signup").addEventListener("click", function() {
-    document.getElementById("signup-form").classList.remove("hidden");
-    document.getElementById("signin-form").classList.add("hidden");
-    this.classList.add("active");
-    document.getElementById("show-signin").classList.remove("active");
-});
+    // Get user input values
+    let name = document.getElementById("name").value;
+    let phone = document.getElementById("phone").value;
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
 
-document.getElementById("switch-to-signup").addEventListener("click", function() {
-    document.getElementById("show-signup").click();
-});
+    if (name && phone && email && password) {
+        // Save login state
+        localStorage.setItem("isLoggedIn", "true");
 
-document.getElementById("switch-to-signin").addEventListener("click", function() {
-    document.getElementById("show-signin").click();
+        // Redirect to home page after successful sign-up
+        window.location.href = "index.html"; 
+    } else {
+        alert("Please fill in all fields!");
+    }
 });
