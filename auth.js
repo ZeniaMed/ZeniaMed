@@ -1,4 +1,4 @@
-// Firebase SDK ko import karna (Ensure Firebase is included in your HTML)
+// Firebase SDK ko import karna
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { 
     getAuth, 
@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     });
 
-    // ✅ Log Out Functionality (Proper Fix)
+    // ✅ Log Out Functionality (Auto-login Issue Fix)
     setTimeout(() => { // Ensure the button exists before adding event listener
         let logoutButton = document.getElementById("logout-btn");
         if (logoutButton) {
@@ -92,6 +92,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     .then(() => {
                         alert("✅ You have been logged out!");
                         console.log("User successfully logged out.");
+
+                        // **Important Fix: Remove user session completely**
+                        localStorage.clear();  // Clear local storage
+                        sessionStorage.clear(); // Clear session storage
+
                         window.location.href = "index.html"; // Redirect to login page
                     })
                     .catch((error) => {
