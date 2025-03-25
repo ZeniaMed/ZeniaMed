@@ -1,19 +1,59 @@
-document.getElementById("signup-form").addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevent default form submission
+document.addEventListener("DOMContentLoaded", function () {
+    const signInForm = document.getElementById("signin-form");
+    const signUpForm = document.getElementById("signup-form");
 
-    // Get user input values
-    let name = document.getElementById("name").value;
-    let phone = document.getElementById("phone").value;
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
+    const signInEmail = document.getElementById("signin-email");
+    const signInPassword = document.getElementById("signin-password");
 
-    if (name && phone && email && password) {
-        // Save login state
-        localStorage.setItem("isLoggedIn", "true");
+    const signUpName = document.getElementById("name");
+    const signUpPhone = document.getElementById("phone");
+    const signUpEmail = document.getElementById("email");
+    const signUpPassword = document.getElementById("password");
 
-        // Redirect to home page after successful sign-up
-        window.location.href = "index.html"; 
-    } else {
-        alert("Please fill in all fields!");
+    const switchToSignUp = document.getElementById("switch-to-signup");
+    const switchToSignIn = document.getElementById("switch-to-signin");
+
+    // Toggle between sign-in and sign-up
+    switchToSignUp.addEventListener("click", function () {
+        signInForm.classList.add("hidden");
+        signUpForm.classList.remove("hidden");
+    });
+
+    switchToSignIn.addEventListener("click", function () {
+        signUpForm.classList.add("hidden");
+        signInForm.classList.remove("hidden");
+    });
+
+    // Handle Sign-Up
+    signUpForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        if (signUpName.value && signUpPhone.value && signUpEmail.value && signUpPassword.value) {
+            localStorage.setItem("isLoggedIn", "true");
+            localStorage.setItem("userEmail", signUpEmail.value);
+
+            alert("Sign-up successful! Redirecting to home...");
+            window.location.href = "home.html"; // Redirect to home page (make sure the filename is correct)
+        } else {
+            alert("Please fill in all fields!");
+        }
+    });
+
+    // Handle Sign-In
+    signInForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        if (signInEmail.value && signInPassword.value) {
+            localStorage.setItem("isLoggedIn", "true");
+            alert("Sign-in successful! Redirecting to home...");
+            window.location.href = "home.html"; // Redirect to home page (change if needed)
+        } else {
+            alert("Invalid login credentials!");
+        }
+    });
+
+    // Check if user is already logged in
+    if (localStorage.getItem("isLoggedIn") === "true") {
+        window.location.href = "home.html"; // Redirect to home if already logged in
     }
 });
