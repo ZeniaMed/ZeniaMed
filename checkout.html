@@ -58,13 +58,15 @@
 
         <div class="payment-section">
             <h2>Payment Options</h2>
-            <button class="payment-option" onclick="processPayment('gpay')">Google Pay</button>
-            <button class="payment-option" onclick="processPayment('paytm')">Paytm</button>
-            <button class="payment-option" onclick="processPayment('amazonpay')">Amazon Pay</button>
-            <button class="payment-option" onclick="processPayment('netbanking')">Net Banking</button>
-            <button class="payment-option" onclick="processPayment('lazypay')">LazyPay</button>
-            <button class="payment-option" onclick="processPayment('simpl')">Simpl</button>
-            <button class="payment-option" onclick="processPayment('cod')">Cash on Delivery</button>
+            <div class="payment-buttons">
+                <button onclick="processPayment('gpay')"><img src="images/gpay.png" alt="Google Pay"> Google Pay</button>
+                <button onclick="processPayment('paytm')"><img src="images/paytm.png" alt="Paytm"> Paytm</button>
+                <button onclick="processPayment('amazonpay')"><img src="images/amazonpay.png" alt="Amazon Pay"> Amazon Pay</button>
+                <button onclick="processPayment('netbanking')"><img src="images/netbanking.png" alt="Net Banking"> Net Banking</button>
+                <button onclick="processPayment('lazypay')"><img src="images/lazypay.png" alt="LazyPay"> LazyPay</button>
+                <button onclick="processPayment('simpl')"><img src="images/simpl.png" alt="Simpl"> Simpl</button>
+                <button onclick="processPayment('cod')"><img src="images/cod.png" alt="Cash on Delivery"> Cash on Delivery</button>
+            </div>
         </div>
 
         <div class="qr-payment">
