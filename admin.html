@@ -3,51 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Orders</title>
+    <title>Admin - Order Tracking</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <h1>📦 Customer Orders</h1>
+    <h1>🛠 Admin Panel - Update Live Location</h1>
+
     <table border="1">
         <thead>
             <tr>
                 <th>#</th>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Address</th>
-                <th>Items</th>
-                <th>Total</th>
-                <th>Date</th>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Status</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Update Location</th>
             </tr>
         </thead>
         <tbody id="order-list"></tbody>
     </table>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            let orders = JSON.parse(localStorage.getItem("orders")) || [];
-            let orderList = document.getElementById("order-list");
+    <script type="module">
+        // Import Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, updateDoc, doc } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
 
-            if (orders.length === 0) {
+        // ✅ Your Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBvjzms_g3GAfpSspsstO36A7eal7fuD7I",
+            authDomain: "zeniamed.firebaseapp.com",
+            projectId: "zeniamed",
+            storageBucket: "zeniamed.firebasestorage.app",
+            messagingSenderId: "795153300011",
+            appId: "1:795153300011:web:bda2f2edd0cfe451b2486e",
+            measurementId: "G-7Y0JNRYVDB"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function loadOrders() {
+            const orderList = document.getElementById("order-list");
+            const querySnapshot = await getDocs(collection(db, "orders"));
+
+            if (querySnapshot.empty) {
                 orderList.innerHTML = "<tr><td colspan='7'>No orders found.</td></tr>";
                 return;
             }
 
-            orders.forEach((order, index) => {
-                let row = document.createElement("tr");
+            let index = 1;
+            querySnapshot.forEach(docSnap => {
+                const order = docSnap.data();
+                const row = document.createElement("tr");
+
                 row.innerHTML = `
-                    <td>${index + 1}</td>
-                    <td>${order.customerName}</td>
-                    <td>${order.phoneNumber}</td>
-                    <td>${order.address}</td>
-                    <td>${order.items.map(item => item.name + " x " + item.quantity).join("<br>")}</td>
-                    <td>₹${order.totalAmount}</td>
-                    <td>${order.date}</td>
+                    <td>${index++}</td>
+                    <td>${docSnap.id}</td>
+                    <td>${order.customerName || "N/A"}</td>
+                    <td>${order.status || "Pending"}</td>
+                    <td><input type="text" id="lat-${docSnap.id}" placeholder="Enter Latitude"></td>
+                    <td><input type="text" id="lng-${docSnap.id}" placeholder="Enter Longitude"></td>
+                    <td><button onclick="updateLocation('${docSnap.id}')">Update</button></td>
                 `;
+
                 orderList.appendChild(row);
             });
-        });
+        }
+
+        window.updateLocation = async function(orderId) {
+            const lat = document.getElementById(`lat-${orderId}`).value.trim();
+            const lng = document.getElementById(`lng-${orderId}`).value.trim();
+
+            if (!lat || !lng || isNaN(lat) || isNaN(lng)) {
+                alert("⚠️ Please enter valid latitude and longitude.");
+                return;
+            }
+
+            const orderRef = doc(db, "orders", orderId);
+            await updateDoc(orderRef, { lat: parseFloat(lat), lng: parseFloat(lng) });
+
+            alert("✅ Location updated successfully!");
+        };
+
+        // Load orders when the page loads
+        loadOrders();
     </script>
 
 </body>
