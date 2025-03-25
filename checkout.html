@@ -23,6 +23,7 @@
     </section>
 
     <section class="checkout-container">
+        <!-- Order Summary -->
         <div class="order-summary">
             <h2>Order Summary</h2>
             <table>
@@ -37,11 +38,13 @@
                     </tr>
                 </thead>
                 <tbody id="cart-items">
+                    <!-- Cart items will be dynamically added here -->
                 </tbody>
             </table>
             <h3>Total Amount: ₹<span id="total-price">0</span></h3>
         </div>
 
+        <!-- Shipping Details -->
         <div class="customer-details">
             <h2>Shipping Details</h2>
             <form id="checkout-form">
@@ -53,25 +56,55 @@
 
                 <label for="address">Shipping Address</label>
                 <textarea id="address" placeholder="Enter your full address" required></textarea>
+
+                <label for="saved-addresses">Saved Addresses</label>
+                <select id="saved-addresses">
+                    <option value="">Select a saved address</option>
+                </select>
+                <button type="button" id="save-address">Save Address</button>
             </form>
         </div>
 
-        <div class="payment-section">
-            <h2>Payment Options</h2>
-            <div class="payment-buttons">
-                <button onclick="processPayment('gpay')"><img src="images/gpay.png" alt="Google Pay"> Google Pay</button>
-                <button onclick="processPayment('paytm')"><img src="images/paytm.png" alt="Paytm"> Paytm</button>
-                <button onclick="processPayment('amazonpay')"><img src="images/amazonpay.png" alt="Amazon Pay"> Amazon Pay</button>
-                <button onclick="processPayment('netbanking')"><img src="images/netbanking.png" alt="Net Banking"> Net Banking</button>
-                <button onclick="processPayment('lazypay')"><img src="images/lazypay.png" alt="LazyPay"> LazyPay</button>
-                <button onclick="processPayment('simpl')"><img src="images/simpl.png" alt="Simpl"> Simpl</button>
-                <button onclick="processPayment('cod')"><img src="images/cod.png" alt="Cash on Delivery"> Cash on Delivery</button>
-            </div>
+        <!-- Coupon Section -->
+        <div class="coupon-section">
+            <h2>Apply Coupon</h2>
+            <input type="text" id="coupon-code" placeholder="Enter Coupon Code">
+            <button id="apply-coupon">Apply</button>
         </div>
 
-        <div class="qr-payment">
-            <h2>Scan QR to Pay</h2>
-            <img id="qr-code" src="" alt="UPI QR Code">
+        <!-- Payment Options -->
+        <div class="payment-section">
+            <h2>Payment Options</h2>
+            <div class="payment-icons">
+                <div class="payment-option" data-upi="googlepay">
+                    <img src="images/gpay.png" alt="Google Pay">
+                    <span>Google Pay</span>
+                </div>
+                <div class="payment-option" data-upi="paytm">
+                    <img src="images/paytm.png" alt="Paytm">
+                    <span>Paytm</span>
+                </div>
+                <div class="payment-option" data-upi="amazonpay">
+                    <img src="images/amazonpay.png" alt="Amazon Pay">
+                    <span>Amazon Pay Later</span>
+                </div>
+                <div class="payment-option" data-upi="netbanking">
+                    <img src="images/netbanking.png" alt="Net Banking">
+                    <span>Net Banking</span>
+                </div>
+                <div class="payment-option" data-upi="lazypay">
+                    <img src="images/lazypay.png" alt="LazyPay">
+                    <span>LazyPay</span>
+                </div>
+                <div class="payment-option" data-upi="simpl">
+                    <img src="images/simpl.png" alt="Simpl">
+                    <span>Simpl</span>
+                </div>
+                <div class="payment-option" data-upi="cod">
+                    <img src="images/cod.png" alt="Cash on Delivery">
+                    <span>Cash on Delivery</span>
+                </div>
+            </div>
         </div>
 
         <button type="submit" class="checkout-btn">Place Order</button>
