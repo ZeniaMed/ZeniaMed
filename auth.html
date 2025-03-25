@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZeniaMed - Sign In & Sign Up</title>
+    <link rel="stylesheet" href="auth.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <div class="container">
+        <div class="form-box">
+            <h2 class="logo">🩺 ZeniaMed</h2>
+
+            <div class="toggle-buttons">
+                <button id="show-signin" class="active">Sign In</button>
+                <button id="show-signup">Sign Up</button>
+            </div>
+
+            <!-- Sign In Form -->
+            <form id="signin-form" class="form">
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" placeholder="Email or Phone" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Password" required>
+                </div>
+                <button class="submit-btn">Sign In</button>
+                <p class="switch-text">New user? <span id="switch-to-signup">Create an account</span></p>
+            </form>
+
+            <!-- Sign Up Form -->
+            <form id="signup-form" class="form hidden">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" placeholder="Full Name" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-phone"></i>
+                    <input type="tel" placeholder="Phone Number" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" placeholder="Email" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Password" required>
+                </div>
+                <button class="submit-btn">Sign Up</button>
+                <p class="switch-text">Already have an account? <span id="switch-to-signin">Sign In</span></p>
+            </form>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+
+</body>
+</html>
