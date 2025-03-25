@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         localStorage.removeItem("cart");
 
-        window.location.href = "admin.html";  // Redirect to admin page to see the order
+        window.location.href = `tracking.html?id=${orderId}`;
     });
 
 });
