@@ -32,32 +32,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
     displayCart();
 
-    // ✅ Real-time Quantity Update
     window.updateQuantity = function (index, change) {
         let cart = JSON.parse(localStorage.getItem("cart"));
         cart[index].quantity += change;
 
-        // 🛑 If quantity is 0, remove the item
         if (cart[index].quantity <= 0) {
             cart.splice(index, 1);
         }
 
         localStorage.setItem("cart", JSON.stringify(cart));
 
-        // 🟢 **Update Only Affected Elements Instead of Refreshing**
         if (cart.length > 0 && cart[index]) {
             document.getElementById(`qty-${index}`).textContent = cart[index].quantity;
             document.getElementById(`total-${index}`).textContent = `₹${(cart[index].price * cart[index].quantity).toFixed(2)}`;
         } else {
-            displayCart(); // Refresh if item removed
+            displayCart();
         }
 
-        // 🟢 Update Total Amount
         let totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         totalPrice.textContent = `₹${totalAmount.toFixed(2)}`;
     };
 
-    // ✅ Payment Links Mapping
     const paymentLinks = {
         googlepay: "upi://pay?pa=YOUR_UPI_ID@upi&pn=ZeniaMed&am=500&cu=INR",
         paytm: "https://paytm.com/link-to-payment",
@@ -65,10 +60,9 @@ document.addEventListener("DOMContentLoaded", function () {
         netbanking: "https://razorpay.com/payment-link",
         lazypay: "https://www.lazypay.in/",
         simpl: "https://www.getsimpl.com/",
-        cod: "COD" // Special case for Cash on Delivery
+        cod: "COD"
     };
 
-    // ✅ Redirect to Payment Page on Click
     document.querySelectorAll(".payment-option").forEach(option => {
         option.addEventListener("click", function () {
             const paymentMethod = this.getAttribute("data-upi");
@@ -81,13 +75,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // ✅ "Place Order" Button Functionality
     document.querySelector(".checkout-btn").addEventListener("click", function () {
         let name = document.getElementById("name").value.trim();
         let phone = document.getElementById("phone").value.trim();
         let address = document.getElementById("address").value.trim();
 
-        // 🛑 Validate Name, Phone, and Address
         if (name === "" || phone === "" || address === "") {
             alert("⚠️ Please fill in all the shipping details.");
             return;
@@ -103,14 +95,25 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // ✅ Order Success Message
+        let totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        let order = {
+            customerName: name,
+            phoneNumber: phone,
+            address: address,
+            items: cart, // Keeping items exactly as they are
+            totalAmount: totalAmount,
+            date: new Date().toLocaleString()
+        };
+
+        // ✅ Only Added Order Saving Feature (Everything else remains the same)
+        let orders = JSON.parse(localStorage.getItem("orders")) || [];
+        orders.push(order);
+        localStorage.setItem("orders", JSON.stringify(orders));
+
         alert("🎉 Order placed successfully! You will receive an update soon.");
 
-        // 🟢 Clear Cart After Order
         localStorage.removeItem("cart");
 
-        // 🔄 Redirect to Order Tracking Page (Change to your tracking page)
         window.location.href = "tracking.html";
     });
-
 });
