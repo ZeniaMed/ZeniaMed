@@ -56,4 +56,29 @@ document.addEventListener("DOMContentLoaded", function () {
         let totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         totalPrice.textContent = `₹${totalAmount.toFixed(2)}`;
     };
+
+    // ✅ Payment Links Mapping
+    const paymentLinks = {
+        googlepay: "upi://pay?pa=YOUR_UPI_ID@upi&pn=ZeniaMed&am=500&cu=INR",
+        paytm: "https://paytm.com/link-to-payment",
+        amazonpay: "https://www.amazon.in/gp/pay",
+        netbanking: "https://razorpay.com/payment-link",
+        lazypay: "https://www.lazypay.in/",
+        simpl: "https://www.getsimpl.com/",
+        cod: "COD" // Special case for Cash on Delivery
+    };
+
+    // ✅ Redirect to Payment Page on Click
+    document.querySelectorAll(".payment-option").forEach(option => {
+        option.addEventListener("click", function () {
+            const paymentMethod = this.getAttribute("data-upi");
+
+            if (paymentMethod === "cod") {
+                alert("You have selected Cash on Delivery. No payment needed now.");
+            } else {
+                window.location.href = paymentLinks[paymentMethod];
+            }
+        });
+    });
+
 });
