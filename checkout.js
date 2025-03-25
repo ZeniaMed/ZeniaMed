@@ -155,3 +155,45 @@ document.addEventListener("DOMContentLoaded", function () {
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
 </script>
+// Firebase Configuration (Paste your own config here)
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// Function to save order details in Firestore
+function placeOrder() {
+    let name = document.getElementById("name").value;
+    let phone = document.getElementById("phone").value;
+    let address = document.getElementById("address").value;
+    let totalPrice = document.getElementById("total-price").innerText;
+
+    // Create an order object
+    let orderData = {
+        name: name,
+        phone: phone,
+        address: address,
+        total: totalPrice,
+        status: "Order Placed",
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    };
+
+    // Save to Firestore
+    db.collection("orders").add(orderData).then(() => {
+        alert("Order Placed Successfully!");
+        window.location.href = "tracking.html"; // Redirect to tracking page
+    }).catch(error => {
+        console.error("Error placing order: ", error);
+    });
+}
+
+// Attach the function to the "Place Order" button
+document.querySelector(".checkout-btn").addEventListener("click", placeOrder);
