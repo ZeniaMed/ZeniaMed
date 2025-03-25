@@ -22,13 +22,13 @@
             <form id="signin-form" class="form">
                 <div class="input-group">
                     <i class="fas fa-envelope"></i>
-                    <input type="email" placeholder="Email or Phone" required>
+                    <input type="email" id="signin-email" placeholder="Email or Phone" required>
                 </div>
                 <div class="input-group">
                     <i class="fas fa-lock"></i>
-                    <input type="password" placeholder="Password" required>
+                    <input type="password" id="signin-password" placeholder="Password" required>
                 </div>
-                <button class="submit-btn">Sign In</button>
+                <button type="submit" class="submit-btn">Sign In</button>
                 <p class="switch-text">New user? <span id="switch-to-signup">Create an account</span></p>
             </form>
 
@@ -36,21 +36,21 @@
             <form id="signup-form" class="form hidden">
                 <div class="input-group">
                     <i class="fas fa-user"></i>
-                    <input type="text" placeholder="Full Name" required>
+                    <input type="text" id="name" placeholder="Full Name" required>
                 </div>
                 <div class="input-group">
                     <i class="fas fa-phone"></i>
-                    <input type="tel" placeholder="Phone Number" required>
+                    <input type="tel" id="phone" placeholder="Phone Number" required>
                 </div>
                 <div class="input-group">
                     <i class="fas fa-envelope"></i>
-                    <input type="email" placeholder="Email" required>
+                    <input type="email" id="email" placeholder="Email" required>
                 </div>
                 <div class="input-group">
                     <i class="fas fa-lock"></i>
-                    <input type="password" placeholder="Password" required>
+                    <input type="password" id="password" placeholder="Password" required>
                 </div>
-                <button class="submit-btn">Sign Up</button>
+                <button type="submit" class="submit-btn">Sign Up</button>
                 <p class="switch-text">Already have an account? <span id="switch-to-signin">Sign In</span></p>
             </form>
         </div>
