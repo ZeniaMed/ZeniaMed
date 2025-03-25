@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
     window.processPayment = function (method) {
         let totalAmount = document.getElementById("total-price").textContent;
         
-        let upiId = "merchant@upi"; 
+        let upiId = "merchant@upi"; // Apna UPI ID yaha dalein
         let qrCodeImage = `https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=upi://pay?pa=${upiId}&pn=ZeniaMed&am=${totalAmount}&cu=INR`;
 
         let paymentLinks = {
