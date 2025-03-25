@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let totalPrice = document.getElementById("total-price");
 
     function displayCart() {
-        cart = JSON.parse(localStorage.getItem("cart")) || [];
         if (cart.length === 0) {
             cartItemsContainer.innerHTML = "<tr><td colspan='6'>Your cart is empty.</td></tr>";
         } else {
@@ -33,96 +32,50 @@ document.addEventListener("DOMContentLoaded", function () {
 
     displayCart();
 
-    window.updateQuantity = function (index, change) {
-        let cart = JSON.parse(localStorage.getItem("cart"));
-        cart[index].quantity += change;
-        if (cart[index].quantity <= 0) {
-            cart.splice(index, 1);
-        }
-        localStorage.setItem("cart", JSON.stringify(cart));
-        displayCart();
-    };
-
-    document.querySelector(".checkout-btn").addEventListener("click", function (e) {
-        e.preventDefault();
-
+    window.processPayment = function (method) {
+        let totalAmount = document.getElementById("total-price").textContent;
         let name = document.getElementById("name").value.trim();
         let phone = document.getElementById("phone").value.trim();
         let address = document.getElementById("address").value.trim();
-        let selectedAddress = document.getElementById("saved-addresses").value;
 
-        if (!name || !phone || (!address && !selectedAddress)) {
+        if (!name || !phone || !address) {
             alert("⚠️ Please fill in all required fields.");
             return;
         }
 
-        let finalAddress = selectedAddress ? selectedAddress : address;
+        let paymentLinks = {
+            "gpay": `upi://pay?pa=merchant@upi&pn=ZeniaMed&mc=1234&tid=9876543210&tr=TXN1234&tn=Medicine%20Payment&am=${totalAmount}&cu=INR`,
+            "paytm": `https://paytm.com/pay?pa=merchant@paytm&pn=ZeniaMed&am=${totalAmount}&cu=INR`,
+            "amazonpay": `https://www.amazon.in/gp/payments/${totalAmount}`,
+            "netbanking": `https://www.bankwebsite.com/netbanking?amount=${totalAmount}`,
+            "lazypay": `https://lazypay.in/pay?amount=${totalAmount}`,
+            "simpl": `https://getsimpl.com/pay?amount=${totalAmount}`,
+            "cod": "Thank you! Your order will be delivered via Cash on Delivery."
+        };
+
+        if (method === "cod") {
+            alert(paymentLinks[method]);
+            placeOrder(name, phone, address, totalAmount, "Cash on Delivery");
+        } else {
+            window.location.href = paymentLinks[method];
+            placeOrder(name, phone, address, totalAmount, method);
+        }
+    };
+
+    function placeOrder(name, phone, address, totalAmount, paymentMethod) {
         let orderDetails = {
             customerName: name,
             phone: phone,
-            address: finalAddress,
+            address: address,
             items: cart,
-            totalAmount: document.getElementById("total-price").textContent,
+            totalAmount: totalAmount,
+            paymentMethod: paymentMethod,
             orderDate: new Date().toLocaleString(),
             status: "Order Placed"
         };
 
-        // ✅ Save Order in Firebase
-        db.collection("orders").add(orderDetails).then((docRef) => {
-            alert("✅ Order Placed Successfully!");
-            localStorage.removeItem("cart");
-            window.location.href = `./tracking.html?orderId=${docRef.id}`;
-        }).catch(error => {
-            console.error("Error placing order: ", error);
-        });
-    });
-
-    document.getElementById("save-address").addEventListener("click", function () {
-        let newAddress = document.getElementById("address").value.trim();
-        if (newAddress) {
-            let savedAddresses = JSON.parse(localStorage.getItem("savedAddresses")) || [];
-            savedAddresses.push(newAddress);
-            localStorage.setItem("savedAddresses", JSON.stringify(savedAddresses));
-            alert("🏠 Address Saved Successfully!");
-            loadSavedAddresses();
-        }
-    });
-
-    function loadSavedAddresses() {
-        let savedAddresses = JSON.parse(localStorage.getItem("savedAddresses")) || [];
-        let savedAddressesDropdown = document.getElementById("saved-addresses");
-        savedAddressesDropdown.innerHTML = "<option value=''>Select a saved address</option>";
-        savedAddresses.forEach(address => {
-            let option = document.createElement("option");
-            option.value = address;
-            option.textContent = address;
-            savedAddressesDropdown.appendChild(option);
-        });
+        localStorage.removeItem("cart");
+        alert("✅ Order Placed Successfully!");
+        window.location.href = "tracking.html";
     }
-
-    loadSavedAddresses();
 });
-
-// ✅ Firebase Setup for Order Tracking
-const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
-};
-
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
-// ✅ Live Order Tracking
-const orderId = new URLSearchParams(window.location.search).get("orderId");
-if (orderId) {
-    db.collection("orders").doc(orderId).onSnapshot((doc) => {
-        if (doc.exists) {
-            document.getElementById("order-status").textContent = `Status: ${doc.data().status}`;
-        }
-    });
-}
