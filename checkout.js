@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             switch (paymentMethod) {
                 case "googlepay":
-                    window.location.href = "upi://pay?pa=your-merchant-vpa@okhdfcbank&pn=ZeniaMed&cu=INR"; // Replace with actual UPI ID
+                    window.location.href = "https://pay.google.com/intl/en_in/about/"; // Replace with actual UPI ID
                     break;
                 case "paytm":
                     window.open("https://paytm.com", "_blank");
