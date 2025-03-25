@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Track Your Order - ZeniaMed</title>
+    <title>Order Tracking - ZeniaMed</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places"></script>
 </head>
 <body>
 
@@ -14,19 +14,102 @@
             <button class="nav-btn" onclick="location.href='index.html'">🏠 Home</button>
             <button class="nav-btn" onclick="location.href='shop.html'">🛒 Shop</button>
             <button class="nav-btn" onclick="location.href='cart.html'">🛍 Cart</button>
-            <button class="nav-btn" onclick="location.href='tracking.html'">📦 Tracking</button>
+            <button class="nav-btn" onclick="location.href='admin.html'">🛠 Admin</button>
         </div>
     </header>
 
-      <section class="tracking-container">
-        <h1>Live Order Tracking</h1>
-        <p id="order-status">Loading order status...</p>
-        
-        <div id="map" style="height: 400px;"></div>
+    <section class="banner">
+        <h1>Order Tracking</h1>
+        <p>Track your order in real-time</p>
     </section>
 
-    <script src="tracking.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap"></script>
+    <section class="tracking-container">
+        <h2>Order Details</h2>
+        <p><strong>Order ID:</strong> <span id="order-id">Loading...</span></p>
+        <p><strong>Status:</strong> <span id="order-status">Loading...</span></p>
+        <p><strong>Location:</strong> <span id="order-location">Loading...</span></p>
+
+        <div id="map" style="width: 100%; height: 400px; margin-top: 20px;"></div>
+    </section>
+
+    <footer>
+        <p>© 2025 ZeniaMed. All rights reserved.</p>
+    </footer>
+
+    <script type="module">
+        // Import Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+        import { getFirestore, doc, getDoc, onSnapshot, updateDoc } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+
+        // ✅ Your Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBvjzms_g3GAfpSspsstO36A7eal7fuD7I",
+            authDomain: "zeniamed.firebaseapp.com",
+            projectId: "zeniamed",
+            storageBucket: "zeniamed.firebasestorage.app",
+            messagingSenderId: "795153300011",
+            appId: "1:795153300011:web:bda2f2edd0cfe451b2486e",
+            measurementId: "G-7Y0JNRYVDB"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Get Order ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get("orderId");
+
+        if (!orderId) {
+            alert("⚠️ No Order ID found! Redirecting...");
+            window.location.href = "index.html";
+        }
+
+        document.getElementById("order-id").textContent = orderId;
+
+        // Function to Load Order Data
+        async function loadOrder() {
+            const orderRef = doc(db, "orders", orderId);
+            onSnapshot(orderRef, (docSnap) => {
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    document.getElementById("order-status").textContent = data.status || "Pending";
+                    document.getElementById("order-location").textContent = data.location || "Updating...";
+
+                    if (data.lat && data.lng) {
+                        updateMap(data.lat, data.lng);
+                    }
+                } else {
+                    alert("❌ Order not found!");
+                }
+            });
+        }
+
+        // Google Maps Setup
+        let map, marker;
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 28.7041, lng: 77.1025 }, // Default: Delhi
+                zoom: 12
+            });
+
+            marker = new google.maps.Marker({
+                map: map,
+                position: { lat: 28.7041, lng: 77.1025 }
+            });
+        }
+
+        function updateMap(lat, lng) {
+            const newPos = { lat: parseFloat(lat), lng: parseFloat(lng) };
+            marker.setPosition(newPos);
+            map.setCenter(newPos);
+        }
+
+        window.onload = function () {
+            initMap();
+            loadOrder();
+        };
+    </script>
 
 </body>
 </html>
