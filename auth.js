@@ -26,14 +26,9 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("signup-form").classList.add("hidden");
     });
 
-    // Sign Up Form Submission
+    // ✅ Sign Up Form Submission
     document.getElementById("signup-form").addEventListener("submit", function (event) {
         event.preventDefault();
-        document.getElementById("logout-btn").addEventListener("click", function () {
-    localStorage.clear();  // Clears login data
-    window.location.href = "index.html";  // Redirects back to login page
-});
-
 
         let name = document.getElementById("signup-name").value;
         let phone = document.getElementById("signup-phone").value;
@@ -45,14 +40,14 @@ document.addEventListener("DOMContentLoaded", function () {
             localStorage.setItem("userPassword", password);
             localStorage.setItem("isLoggedIn", "true");
 
-            alert("Sign Up successful! Redirecting to home page...");
+            alert("✅ Sign Up successful! Redirecting to home page...");
             window.location.href = "home.html"; // Redirect to home page after successful sign-up
         } else {
-            alert("Please fill in all fields!");
+            alert("⚠️ Please fill in all fields!");
         }
     });
 
-    // Sign In Form Submission
+    // ✅ Sign In Form Submission
     document.getElementById("signin-form").addEventListener("submit", function (event) {
         event.preventDefault();
 
@@ -63,10 +58,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (email === storedEmail && password === storedPassword) {
             localStorage.setItem("isLoggedIn", "true");
-            alert("Sign In successful! Redirecting to home page...");
+            alert("✅ Sign In successful! Redirecting to home page...");
             window.location.href = "home.html"; // Redirect to home page
         } else {
-            alert("Invalid email or password. Please try again.");
+            alert("❌ Invalid email or password. Please try again.");
         }
     });
+
+    // ✅ Log Out Functionality (Add to home page)
+    if (document.getElementById("logout-btn")) {
+        document.getElementById("logout-btn").addEventListener("click", function () {
+            localStorage.clear();  // Clears login data
+            alert("✅ You have been logged out!");
+            window.location.href = "index.html";  // Redirects back to login page
+        });
+    }
 });
