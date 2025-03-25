@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
             cartItemsContainer.innerHTML = "";  
             cart.forEach((item, index) => {
                 let cartItem = document.createElement("tr");
-                cartItem.innerHTML = 
+                cartItem.innerHTML = `
                     <td>${index + 1}</td>
                     <td><img src="${item.image}" alt="${item.name}" class="checkout-img"></td>
                     <td>${item.name}</td>
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     </td>
                     <td>₹${item.price}</td>
                     <td>₹${(item.price * item.quantity).toFixed(2)}</td>
-                ;
+                `;
                 cartItemsContainer.appendChild(cartItem);
             });
 
@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
         db.collection("orders").add(orderDetails).then((docRef) => {
             alert("✅ Order Placed Successfully!");
             localStorage.removeItem("cart");
-            window.location.href = tracking.html?orderId=${docRef.id}; // Redirect to tracking page
+            window.location.href = `tracking.html?orderId=${docRef.id}`; // Redirect to tracking page
         }).catch(error => {
             console.error("Error placing order: ", error);
         });
@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // ✅ Firebase Setup for Order Tracking
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
-import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "YOUR_API_KEY",
@@ -122,11 +122,9 @@ const db = getFirestore(app);
 // ✅ Live Order Tracking
 const orderId = new URLSearchParams(window.location.search).get("orderId");
 if (orderId) {
-    onSnapshot(doc(db, "orders", orderId), (doc) => {
-        if (doc.exists()) {
-            document.getElementById("order-status").textContent = Status: ${doc.data().status};
+    onSnapshot(doc(db, "orders", orderId), (docSnap) => {
+        if (docSnap.exists()) {
+            document.getElementById("order-status").textContent = `Status: ${docSnap.data().status}`;
         }
     });
 }
-
-
