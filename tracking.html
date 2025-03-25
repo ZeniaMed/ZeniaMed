@@ -18,21 +18,15 @@
         </div>
     </header>
 
-    <section class="banner">
-        <h1>Track Your Order</h1>
-        <p>Track your delivery partner's location in real-time.</p>
+      <section class="tracking-container">
+        <h1>Live Order Tracking</h1>
+        <p id="order-status">Loading order status...</p>
+        
+        <div id="map" style="height: 400px;"></div>
     </section>
-
-    <section class="tracking-container">
-        <h2>Live Order Tracking</h2>
-        <div id="map" style="height: 400px; width: 100%;"></div>
-    </section>
-
-    <footer>
-        <p>© 2025 ZeniaMed. All rights reserved.</p>
-    </footer>
 
     <script src="tracking.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap"></script>
 
 </body>
 </html>
