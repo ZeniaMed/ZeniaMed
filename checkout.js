@@ -132,3 +132,26 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyBvjzms_g3GAfpSspsstO36A7eal7fuD7I",
+    authDomain: "zeniamed.firebaseapp.com",
+    projectId: "zeniamed",
+    storageBucket: "zeniamed.firebasestorage.app",
+    messagingSenderId: "795153300011",
+    appId: "1:795153300011:web:bda2f2edd0cfe451b2486e",
+    measurementId: "G-7Y0JNRYVDB"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
