@@ -93,11 +93,13 @@ document.addEventListener("DOMContentLoaded", function () {
                         alert("✅ You have been logged out!");
                         console.log("User successfully logged out.");
 
-                        // **Important Fix: Remove user session completely**
+                        // ✅ **Important Fix: Firebase Session Destroy**
+                        auth.currentUser = null; // Forcefully remove current session
                         localStorage.clear();  // Clear local storage
                         sessionStorage.clear(); // Clear session storage
 
-                        window.location.href = "index.html"; // Redirect to login page
+                        // ✅ **Manually Reload Page** to Ensure Logout
+                        window.location.replace("index.html"); 
                     })
                     .catch((error) => {
                         alert("❌ Error while logging out: " + error.message);
