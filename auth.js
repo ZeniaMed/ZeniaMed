@@ -1,10 +1,31 @@
-document.addEventListener("DOMContentLoaded", function () {
-    // Check if user is already logged in
-    if (localStorage.getItem("isLoggedIn") === "true") {
-        window.location.href = "home.html"; // Redirect to home page if logged in
-    }
+// Firebase SDK ko import karna (Ensure Firebase is included in your HTML)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
-    // Toggle between Sign In and Sign Up forms
+// ✅ Firebase Configuration (Replace with your details)
+const firebaseConfig = {
+  apiKey: "AIzaSyBvjzms_g3GAfpSspsstO36A7eal7fuD7I",
+  authDomain: "zeniamed.firebaseapp.com",
+  projectId: "zeniamed",
+  storageBucket: "zeniamed.firebasestorage.app",
+  messagingSenderId: "795153300011",
+  appId: "1:795153300011:web:bda2f2edd0cfe451b2486e",
+  measurementId: "G-7Y0JNRYVDB"
+};
+
+// ✅ Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+document.addEventListener("DOMContentLoaded", function () {
+    // ✅ Check if user is already logged in
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            window.location.href = "home.html"; // Redirect if user is logged in
+        }
+    });
+
+    // ✅ Toggle between Sign In and Sign Up forms
     document.getElementById("show-signin").addEventListener("click", function () {
         document.getElementById("signin-form").classList.remove("hidden");
         document.getElementById("signup-form").classList.add("hidden");
@@ -15,62 +36,49 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("signin-form").classList.add("hidden");
     });
 
-    // Switch between Sign In and Sign Up from text links
-    document.getElementById("switch-to-signup").addEventListener("click", function () {
-        document.getElementById("signup-form").classList.remove("hidden");
-        document.getElementById("signin-form").classList.add("hidden");
-    });
-
-    document.getElementById("switch-to-signin").addEventListener("click", function () {
-        document.getElementById("signin-form").classList.remove("hidden");
-        document.getElementById("signup-form").classList.add("hidden");
-    });
-
-    // ✅ Sign Up Form Submission
+    // ✅ Sign Up Functionality
     document.getElementById("signup-form").addEventListener("submit", function (event) {
         event.preventDefault();
 
-        let name = document.getElementById("signup-name").value;
-        let phone = document.getElementById("signup-phone").value;
         let email = document.getElementById("signup-email").value;
         let password = document.getElementById("signup-password").value;
 
-        if (name && phone && email && password) {
-            localStorage.setItem("userEmail", email);
-            localStorage.setItem("userPassword", password);
-            localStorage.setItem("isLoggedIn", "true");
-
-            alert("✅ Sign Up successful! Redirecting to home page...");
-            window.location.href = "home.html"; // Redirect to home page after successful sign-up
-        } else {
-            alert("⚠️ Please fill in all fields!");
-        }
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                alert("✅ Sign Up successful! Redirecting to home page...");
+                window.location.href = "home.html"; // Redirect after sign-up
+            })
+            .catch((error) => {
+                alert("❌ Error: " + error.message);
+            });
     });
 
-    // ✅ Sign In Form Submission
+    // ✅ Sign In Functionality
     document.getElementById("signin-form").addEventListener("submit", function (event) {
         event.preventDefault();
 
         let email = document.getElementById("signin-email").value;
         let password = document.getElementById("signin-password").value;
-        let storedEmail = localStorage.getItem("userEmail");
-        let storedPassword = localStorage.getItem("userPassword");
 
-        if (email === storedEmail && password === storedPassword) {
-            localStorage.setItem("isLoggedIn", "true");
-            alert("✅ Sign In successful! Redirecting to home page...");
-            window.location.href = "home.html"; // Redirect to home page
-        } else {
-            alert("❌ Invalid email or password. Please try again.");
-        }
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                alert("✅ Sign In successful! Redirecting to home page...");
+                window.location.href = "home.html"; // Redirect after sign-in
+            })
+            .catch((error) => {
+                alert("❌ Invalid email or password. Please try again.");
+            });
     });
 
-    // ✅ Log Out Functionality (Add to home page)
+    // ✅ Log Out Functionality (Add this on home page)
     if (document.getElementById("logout-btn")) {
         document.getElementById("logout-btn").addEventListener("click", function () {
-            localStorage.clear();  // Clears login data
-            alert("✅ You have been logged out!");
-            window.location.href = "index.html";  // Redirects back to login page
+            signOut(auth).then(() => {
+                alert("✅ You have been logged out!");
+                window.location.href = "index.html"; // Redirect to login page
+            }).catch((error) => {
+                alert("❌ Error while logging out: " + error.message);
+            });
         });
     }
 });
