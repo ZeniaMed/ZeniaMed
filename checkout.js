@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (cart.length === 0) {
             cartItemsContainer.innerHTML = "<tr><td colspan='6'>Your cart is empty.</td></tr>";
         } else {
-            cartItemsContainer.innerHTML = "";
+            cartItemsContainer.innerHTML = "";  
             cart.forEach((item, index) => {
                 let cartItem = document.createElement("tr");
                 cartItem.innerHTML = `
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <td>${item.name}</td>
                     <td>
                         <button class="qty-btn" onclick="updateQuantity(${index}, -1)">-</button>
-                        <span class="item-qty">${item.quantity}</span>
+                        ${item.quantity}
                         <button class="qty-btn" onclick="updateQuantity(${index}, 1)">+</button>
                     </td>
                     <td>₹${item.price}</td>
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let selectedAddress = document.getElementById("saved-addresses").value;
 
         if (!name || !phone || (!address && !selectedAddress)) {
-            alert("Please fill in all required fields.");
+            alert("⚠️ Please fill in all required fields.");
             return;
         }
 
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
         orders.push(orderDetails);
         localStorage.setItem("orders", JSON.stringify(orders));
 
-        alert("Order Placed Successfully! ✅");
+        alert("✅ Order Placed Successfully!");
         localStorage.removeItem("cart");
         window.location.href = "index.html";
     });
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let savedAddresses = JSON.parse(localStorage.getItem("savedAddresses")) || [];
             savedAddresses.push(newAddress);
             localStorage.setItem("savedAddresses", JSON.stringify(savedAddresses));
-            alert("Address Saved Successfully!");
+            alert("🏠 Address Saved Successfully!");
             loadSavedAddresses();
         }
     });
@@ -99,40 +99,36 @@ document.addEventListener("DOMContentLoaded", function () {
 
     loadSavedAddresses();
 
-    // ✅ Payment Mode Handling: Redirect to UPI/Wallets
+    // ✅ Handle Payment Clicks and Redirection
     document.querySelectorAll(".payment-option").forEach(option => {
         option.addEventListener("click", function () {
-            let paymentMethod = this.getAttribute("data-method");
+            let paymentMethod = this.getAttribute("data-upi");
 
-            let upiLink = "";
             switch (paymentMethod) {
-                case "gpay":
-                    upiLink = "upi://pay?pa=yourmerchant@okhdfcbank&pn=ZeniaMed&cu=INR";
+                case "googlepay":
+                    window.location.href = "upi://pay?pa=your-merchant-vpa@okhdfcbank&pn=ZeniaMed&cu=INR"; // Replace with actual UPI ID
                     break;
                 case "paytm":
-                    upiLink = "https://paytm.com";
+                    window.open("https://paytm.com", "_blank");
                     break;
                 case "amazonpay":
-                    upiLink = "https://www.amazon.in/gp/aws/cart/add.html";
+                    window.open("https://www.amazon.in/gp/aws/cart/add.html", "_blank");
                     break;
                 case "netbanking":
-                    upiLink = "https://netbanking.example.com";
+                    window.open("https://www.yourbank.com/netbanking", "_blank"); // Replace with actual net banking URL
                     break;
                 case "lazypay":
-                    upiLink = "https://www.lazypay.in/";
+                    window.open("https://www.lazypay.in/", "_blank");
                     break;
                 case "simpl":
-                    upiLink = "https://www.getsimpl.com/";
+                    window.open("https://www.getsimpl.com/", "_blank");
                     break;
                 case "cod":
-                    alert("You have selected Cash on Delivery. Proceeding to Order Confirmation.");
-                    return;
+                    alert("💰 You have selected Cash on Delivery. Your order will be processed.");
+                    break;
                 default:
-                    alert("Payment method not available.");
-                    return;
+                    alert("⚠️ Payment method not available.");
             }
-
-            window.open(upiLink, "_blank");
         });
     });
 });
