@@ -81,4 +81,36 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    // ✅ "Place Order" Button Functionality
+    document.querySelector(".checkout-btn").addEventListener("click", function () {
+        let name = document.getElementById("name").value.trim();
+        let phone = document.getElementById("phone").value.trim();
+        let address = document.getElementById("address").value.trim();
+
+        // 🛑 Validate Name, Phone, and Address
+        if (name === "" || phone === "" || address === "") {
+            alert("⚠️ Please fill in all the shipping details.");
+            return;
+        }
+
+        if (!/^\d{10}$/.test(phone)) {
+            alert("⚠️ Please enter a valid 10-digit phone number.");
+            return;
+        }
+
+        if (cart.length === 0) {
+            alert("⚠️ Your cart is empty! Add items before placing an order.");
+            return;
+        }
+
+        // ✅ Order Success Message
+        alert("🎉 Order placed successfully! You will receive an update soon.");
+
+        // 🟢 Clear Cart After Order
+        localStorage.removeItem("cart");
+
+        // 🔄 Redirect to Order Tracking Page (Change to your tracking page)
+        window.location.href = "tracking.html";
+    });
+
 });
