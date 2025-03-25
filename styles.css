@@ -31,9 +31,9 @@ header {
     background-color: blue;
     color: white;
     padding: 15px 20px;
-    font-size: 18px;
+    font-size: 16px;
     border: none;
-    border-radius: 8px;
+    border-radius: 5px;
     cursor: pointer;
 }
 
@@ -101,32 +101,225 @@ footer {
     padding: 10px;
 }
 
-/* ✅ Payment Options - Small & Horizontal */
+/* Medicine List */
+.medicine-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    padding: 20px;
+}
+
+.medicine-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    width: 230px;
+    background: white;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.medicine-item h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.medicine-item p {
+    color: green;
+    font-weight: bold;
+}
+
+button {
+    background: blue;
+    color: white;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+}
+
+/* Cart Page */
+.cart-banner {
+    text-align: center;
+    padding: 20px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 22px;
+}
+
+.cart-container {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+}
+
+.cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 5px;
+}
+
+.cart-info h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.remove-item {
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.checkout-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #ff9800;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+/* Checkout Page */
+.checkout-container {
+    width: 80%;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Checkout Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.checkout-img {
+    width: 50px;
+    height: 50px;
+}
+
+/* ✅ Payment Section - Icons Now Horizontal */
 .payment-options {
     display: flex;
     justify-content: center;
-    align-items: center;
+    flex-wrap: wrap;
     gap: 15px;
     margin-top: 20px;
 }
 
-/* ✅ Small Icon Buttons */
 .payment-option {
-    background: white;
-    border: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: white;
     cursor: pointer;
-    padding: 5px;
-    transition: transform 0.2s ease-in-out;
 }
 
-/* ✅ Resize Icons to Emoji Size */
+/* ✅ Small Icons Like Emoji */
 .payment-option img {
-    width: 32px; /* Same as emoji size */
-    height: 32px;
+    width: 18px;
+    height: 18px;
     object-fit: contain;
 }
 
-/* ✅ Hover Effect */
-.payment-option:hover {
-    transform: scale(1.1);
+/* ✅ Delivery Address Section */
+.address-container {
+    width: 80%;
+    margin: auto;
+    text-align: left;
+    background: white;
+    padding: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.saved-address {
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.address-btn {
+    background: blue;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+/* Input Fields */
+input, textarea, select {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+}
+
+/* Checkout Button */
+.checkout-btn {
+    background: green;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 15px;
+}
+.payment-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.pay-btn {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 2px solid #ddd;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 180px;  /* Fix button width */
+    justify-content: center;
+    transition: 0.3s;
+}
+
+.pay-btn img {
+    width: 40px;  /* Fixed size for icons */
+    height: 40px;
+    margin-right: 10px;
+}
+
+.pay-btn:hover {
+    background: #eee;
 }
