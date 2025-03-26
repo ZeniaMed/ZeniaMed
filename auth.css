@@ -1,4 +1,4 @@
-/* ✅ Background Image with Sea Green on Left */
+/* ✅ Full Aqua Background with Image on Right */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -7,9 +7,20 @@ body {
     display: flex;
     justify-content: flex-end; /* ✅ Form right side pe aayega */
     align-items: center;
-    background: linear-gradient(to right, #2E8B57 50%, transparent 50%), 
-                url('images/image.png') no-repeat center center fixed;
-    background-size: cover;
+    background-color: aqua; /* ✅ Full Aqua Background */
+}
+
+/* ✅ Background Image Correctly Positioned */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 55%; /* ✅ Image ko right side adjust karne ke liye */
+    height: 100%;
+    background: url('images/image.png') no-repeat center center;
+    background-size: contain;
+    z-index: -1;
 }
 
 /* ✅ White Box with Border */
