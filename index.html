@@ -12,9 +12,9 @@
     <!-- ✅ Firebase SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
 
-        // ✅ Firebase Configuration (Fixed)
+        // ✅ Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyBvjzms_g3GAfpSspsstO36A7eal7fuD7I",
             authDomain: "zeniamed.firebaseapp.com",
@@ -28,29 +28,53 @@
         // ✅ Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
 
-        // ✅ Login Button Functionality
+        // ✅ Login Functionality
         document.addEventListener("DOMContentLoaded", function () {
-            document.getElementById("login-btn").addEventListener("click", () => {
-                signInWithPopup(auth, provider)
-                    .then((result) => {
-                        console.log("User Logged In:", result.user);
-                        window.location.href = "dashboard.html"; // ✅ Redirect After Login
+            document.getElementById("login-btn").addEventListener("click", (e) => {
+                e.preventDefault();
+                let email = document.getElementById("login-email").value;
+                let password = document.getElementById("login-password").value;
+
+                signInWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        console.log("Logged in:", userCredential.user);
+                        alert("Login Successful!");
+                        window.location.href = "dashboard.html";
                     })
                     .catch((error) => {
                         console.error("Login Error:", error);
+                        alert(error.message);
                     });
             });
 
-            document.getElementById("signup-btn").addEventListener("click", () => {
-                signInWithPopup(auth, provider)
-                    .then((result) => {
-                        console.log("User Signed Up:", result.user);
-                        window.location.href = "dashboard.html"; // ✅ Redirect After Sign Up
+            // ✅ Sign Up Functionality
+            document.getElementById("signup-btn").addEventListener("click", (e) => {
+                e.preventDefault();
+                let email = document.getElementById("signup-email").value;
+                let password = document.getElementById("signup-password").value;
+
+                createUserWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        console.log("Signed Up:", userCredential.user);
+                        alert("Account Created Successfully!");
+                        window.location.href = "dashboard.html";
                     })
                     .catch((error) => {
                         console.error("Signup Error:", error);
+                        alert(error.message);
+                    });
+            });
+
+            // ✅ Logout Functionality
+            document.getElementById("logout-btn").addEventListener("click", () => {
+                signOut(auth)
+                    .then(() => {
+                        alert("Logged out successfully!");
+                        window.location.href = "index.html";
+                    })
+                    .catch((error) => {
+                        console.error("Logout Error:", error);
                     });
             });
         });
@@ -61,10 +85,40 @@
     <div class="auth-container">
         <!-- ✅ Login & Sign Up Buttons Shifted to Top -->
         <div class="auth-buttons">
-            <button id="login-btn"><i class="fas fa-sign-in-alt"></i> Login</button>
-            <button id="signup-btn"><i class="fas fa-user-plus"></i> Sign Up</button>
+            <button id="toggle-login">Login</button>
+            <button id="toggle-signup">Sign Up</button>
         </div>
+
+        <!-- ✅ Login Form -->
+        <form id="login-form">
+            <input type="email" id="login-email" placeholder="Enter Email" required>
+            <input type="password" id="login-password" placeholder="Enter Password" required>
+            <button id="login-btn">Login</button>
+        </form>
+
+        <!-- ✅ Sign Up Form -->
+        <form id="signup-form" style="display: none;">
+            <input type="email" id="signup-email" placeholder="Enter Email" required>
+            <input type="password" id="signup-password" placeholder="Enter Password" required>
+            <button id="signup-btn">Sign Up</button>
+        </form>
+
+        <!-- ✅ Logout Button -->
+        <button id="logout-btn" style="display: none; background: red; color: white; padding: 10px; border: none; cursor: pointer;">Logout</button>
     </div>
+
+    <script>
+        // ✅ Toggle Forms
+        document.getElementById("toggle-login").addEventListener("click", function () {
+            document.getElementById("login-form").style.display = "block";
+            document.getElementById("signup-form").style.display = "none";
+        });
+
+        document.getElementById("toggle-signup").addEventListener("click", function () {
+            document.getElementById("login-form").style.display = "none";
+            document.getElementById("signup-form").style.display = "block";
+        });
+    </script>
 
 </body>
 </html>
