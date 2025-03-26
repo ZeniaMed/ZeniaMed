@@ -1,4 +1,4 @@
-// Firebase SDK ko import karna
+// Firebase SDK Import
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { 
     getAuth, 
@@ -8,7 +8,7 @@ import {
     onAuthStateChanged 
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
-// ✅ Firebase Configuration (Replace with your details)
+// ✅ Firebase Configuration
 const firebaseConfig = {
     apiKey: "AIzaSyBvjzms_g3GAfpSspsstO36A7eal7fuD7I",
     authDomain: "zeniamed.firebaseapp.com",
@@ -25,33 +25,22 @@ const auth = getAuth(app);
 
 document.addEventListener("DOMContentLoaded", function () {
     
-    // ✅ Check if user is logged in and redirect accordingly
+    // ✅ Firebase Authentication Check
     onAuthStateChanged(auth, (user) => {
         if (user) {
             console.log("✅ User logged in: ", user.email);
             if (window.location.pathname.includes("index.html")) {
-                window.location.href = "home.html"; // Redirect to home if logged in
+                window.location.href = "home.html"; 
             }
         } else {
             console.log("❌ No user logged in");
             if (!window.location.pathname.includes("index.html")) {
-                window.location.href = "index.html"; // Redirect to login if logged out
+                window.location.href = "index.html"; 
             }
         }
     });
 
-    // ✅ Toggle between Sign In and Sign Up forms
-    document.getElementById("show-signin")?.addEventListener("click", function () {
-        document.getElementById("signin-form").classList.remove("hidden");
-        document.getElementById("signup-form").classList.add("hidden");
-    });
-
-    document.getElementById("show-signup")?.addEventListener("click", function () {
-        document.getElementById("signup-form").classList.remove("hidden");
-        document.getElementById("signin-form").classList.add("hidden");
-    });
-
-    // ✅ Sign Up Functionality
+    // ✅ Sign Up with Auto-Creation if User Deleted
     document.getElementById("signup-form")?.addEventListener("submit", function (event) {
         event.preventDefault();
         let email = document.getElementById("signup-email").value;
@@ -59,15 +48,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                alert("✅ Sign Up successful! Redirecting to home page...");
-                window.location.href = "home.html"; // Redirect after sign-up
+                alert("✅ Account created successfully!");
+                window.location.href = "home.html";
             })
             .catch((error) => {
-                alert("❌ Error: " + error.message);
+                if (error.code === "auth/email-already-in-use") {
+                    alert("❌ This email is already in use. Try signing in.");
+                } else {
+                    alert("❌ Error: " + error.message);
+                }
             });
     });
 
-    // ✅ Sign In Functionality
+    // ✅ Sign In with Auto-Account Creation
     document.getElementById("signin-form")?.addEventListener("submit", function (event) {
         event.preventDefault();
         let email = document.getElementById("signin-email").value;
@@ -75,38 +68,50 @@ document.addEventListener("DOMContentLoaded", function () {
 
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                alert("✅ Sign In successful! Redirecting to home page...");
-                window.location.href = "home.html"; // Redirect after sign-in
+                alert("✅ Login successful!");
+                window.location.href = "home.html";
             })
             .catch((error) => {
-                alert("❌ Invalid email or password. Please try again.");
+                console.error("Sign-in error:", error);
+                if (error.code === "auth/user-not-found") {
+                    // ✅ Automatically Register If User Not Found
+                    let confirmCreate = confirm("User not found. Do you want to create a new account?");
+                    if (confirmCreate) {
+                        createUserWithEmailAndPassword(auth, email, password)
+                            .then(() => {
+                                alert("✅ Account created and logged in!");
+                                window.location.href = "home.html";
+                            })
+                            .catch((err) => {
+                                alert("❌ Account creation failed: " + err.message);
+                            });
+                    }
+                } else {
+                    alert("❌ Invalid email or password.");
+                }
             });
     });
 
-    // ✅ Log Out Functionality (Auto-login Issue Fix)
-    setTimeout(() => { // Ensure the button exists before adding event listener
+    // ✅ Logout with Session Clear
+    setTimeout(() => { 
         let logoutButton = document.getElementById("logout-btn");
         if (logoutButton) {
             logoutButton.addEventListener("click", function () {
                 signOut(auth)
                     .then(() => {
                         alert("✅ You have been logged out!");
-                        console.log("User successfully logged out.");
 
-                        // ✅ **Important Fix: Firebase Session Destroy**
-                        auth.currentUser = null; // Forcefully remove current session
-                        localStorage.clear();  // Clear local storage
-                        sessionStorage.clear(); // Clear session storage
+                        // ✅ Session Clear
+                        localStorage.clear();  
+                        sessionStorage.clear(); 
 
-                        // ✅ **Manually Reload Page** to Ensure Logout
+                        // ✅ Hard Redirect to Ensure Logout
                         window.location.replace("index.html"); 
                     })
                     .catch((error) => {
-                        alert("❌ Error while logging out: " + error.message);
+                        alert("❌ Logout Error: " + error.message);
                     });
             });
-        } else {
-            console.log("❌ Logout button not found!");
         }
-    }, 1000); // Delay ensures the DOM is fully loaded before adding event listener
+    }, 1000);
 });
