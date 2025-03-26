@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZeniaMed - Sign In & Sign Up</title>
+    <title>ZeniaMed - Login & Sign Up</title>
     <link rel="stylesheet" href="auth.css">
     
     <!-- ✅ FontAwesome for Icons -->
@@ -19,7 +19,7 @@
             apiKey: "AIzaSyBvjzms_g3GAfpSspsstO36A7eal7fuD7I",
             authDomain: "zeniamed.firebaseapp.com",
             projectId: "zeniamed",
-            storageBucket: "zeniamed.appspot.com",  // 🔄 Fixed storage bucket
+            storageBucket: "zeniamed.appspot.com",
             messagingSenderId: "795153300011",
             appId: "1:795153300011:web:bda2f2edd0cfe451b2486e",
             measurementId: "G-7Y0JNRYVDB"
@@ -39,59 +39,71 @@
 </head>
 <body>
 
-    <div class="container">
-        <div class="form-box">
-            <h2 class="logo">🩺 ZeniaMed</h2>
+    <!-- ✅ Login & Sign Up Buttons on Right Side -->
+    <div class="auth-buttons">
+        <button onclick="openPopup('login-popup')">Login</button>
+        <button onclick="openPopup('signup-popup')">Sign Up</button>
+    </div>
 
-            <div class="toggle-buttons">
-                <button id="show-signin" class="active">Sign In</button>
-                <button id="show-signup">Sign Up</button>
+    <!-- ✅ Login Popup Box -->
+    <div class="popup" id="login-popup">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup('login-popup')">&times;</span>
+            <h2>Login</h2>
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="signin-email" placeholder="Email or Phone" required>
             </div>
-
-            <!-- ✅ Sign In Form -->
-            <form id="signin-form" class="form">
-                <div class="input-group">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" id="signin-email" placeholder="Email or Phone" required>
-                </div>
-                <div class="input-group">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="signin-password" placeholder="Password" required>
-                </div>
-                <button type="submit" class="submit-btn">Sign In</button>
-                <p class="switch-text">New user? <span id="switch-to-signup">Create an account</span></p>
-            </form>
-
-            <!-- ✅ Sign Up Form -->
-            <form id="signup-form" class="form hidden">
-                <div class="input-group">
-                    <i class="fas fa-user"></i>
-                    <input type="text" id="signup-name" placeholder="Full Name" required>
-                </div>
-                <div class="input-group">
-                    <i class="fas fa-phone"></i>
-                    <input type="tel" id="signup-phone" placeholder="Phone Number" required>
-                </div>
-                <div class="input-group">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" id="signup-email" placeholder="Email" required>
-                </div>
-                <div class="input-group">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="signup-password" placeholder="Password" required>
-                </div>
-                <button type="submit" class="submit-btn">Sign Up</button>
-                <p class="switch-text">Already have an account? <span id="switch-to-signin">Sign In</span></p>
-            </form>
-            <button id="logout-btn" style="display: none; background: red; color: white; padding: 10px; border: none; cursor: pointer;">
-    Logout
-</button>
-
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="signin-password" placeholder="Password" required>
+            </div>
+            <button class="submit-btn">Login</button>
         </div>
     </div>
 
+    <!-- ✅ Sign Up Popup Box -->
+    <div class="popup" id="signup-popup">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup('signup-popup')">&times;</span>
+            <h2>Sign Up</h2>
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" id="signup-name" placeholder="Full Name" required>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-phone"></i>
+                <input type="tel" id="signup-phone" placeholder="Phone Number" required>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="signup-email" placeholder="Email" required>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="signup-password" placeholder="Password" required>
+            </div>
+            <button class="submit-btn">Sign Up</button>
+        </div>
+    </div>
+
+    <button id="logout-btn" style="display: none; background: red; color: white; padding: 10px; border: none; cursor: pointer;">
+        Logout
+    </button>
+
     <!-- ✅ Authentication Script -->
     <script type="module" src="auth.js"></script>
+
+    <!-- ✅ Popup Script -->
+    <script>
+        function openPopup(popupId) {
+            document.getElementById(popupId).style.display = 'block';
+        }
+
+        function closePopup(popupId) {
+            document.getElementById(popupId).style.display = 'none';
+        }
+    </script>
 
 </body>
 </html>
