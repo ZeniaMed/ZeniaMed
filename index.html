@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZeniaMed - Authentication</title>
+    <title>ZeniaMed - Sign In & Sign Up</title>
     <link rel="stylesheet" href="auth.css">
     
     <!-- ✅ FontAwesome for Icons -->
@@ -12,14 +12,14 @@
     <!-- ✅ Firebase SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
 
-        // ✅ Firebase Configuration
+        // ✅ Firebase Configuration (Fixed)
         const firebaseConfig = {
             apiKey: "AIzaSyBvjzms_g3GAfpSspsstO36A7eal7fuD7I",
             authDomain: "zeniamed.firebaseapp.com",
             projectId: "zeniamed",
-            storageBucket: "zeniamed.appspot.com",
+            storageBucket: "zeniamed.appspot.com",  // 🔄 Fixed storage bucket
             messagingSenderId: "795153300011",
             appId: "1:795153300011:web:bda2f2edd0cfe451b2486e",
             measurementId: "G-7Y0JNRYVDB"
@@ -29,96 +29,69 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // ✅ Login Functionality
-        document.addEventListener("DOMContentLoaded", function () {
-            document.getElementById("login-btn").addEventListener("click", (e) => {
-                e.preventDefault();
-                let email = document.getElementById("login-email").value;
-                let password = document.getElementById("login-password").value;
-
-                signInWithEmailAndPassword(auth, email, password)
-                    .then((userCredential) => {
-                        console.log("Logged in:", userCredential.user);
-                        alert("Login Successful!");
-                        window.location.href = "dashboard.html";
-                    })
-                    .catch((error) => {
-                        console.error("Login Error:", error);
-                        alert(error.message);
-                    });
-            });
-
-            // ✅ Sign Up Functionality
-            document.getElementById("signup-btn").addEventListener("click", (e) => {
-                e.preventDefault();
-                let email = document.getElementById("signup-email").value;
-                let password = document.getElementById("signup-password").value;
-
-                createUserWithEmailAndPassword(auth, email, password)
-                    .then((userCredential) => {
-                        console.log("Signed Up:", userCredential.user);
-                        alert("Account Created Successfully!");
-                        window.location.href = "dashboard.html";
-                    })
-                    .catch((error) => {
-                        console.error("Signup Error:", error);
-                        alert(error.message);
-                    });
-            });
-
-            // ✅ Logout Functionality
-            document.getElementById("logout-btn").addEventListener("click", () => {
-                signOut(auth)
-                    .then(() => {
-                        alert("Logged out successfully!");
-                        window.location.href = "index.html";
-                    })
-                    .catch((error) => {
-                        console.error("Logout Error:", error);
-                    });
-            });
+        // ✅ Redirect if user is already logged in
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                window.location.href = "home.html";  // Redirect to home if logged in
+            }
         });
     </script>
 </head>
 <body>
 
-    <div class="auth-container">
-        <!-- ✅ Login & Sign Up Buttons Shifted to Top -->
-        <div class="auth-buttons">
-            <button id="toggle-login">Login</button>
-            <button id="toggle-signup">Sign Up</button>
+    <div class="container">
+        <div class="form-box">
+            <h2 class="logo">🩺 ZeniaMed</h2>
+
+            <div class="toggle-buttons">
+                <button id="show-signin" class="active">Sign In</button>
+                <button id="show-signup">Sign Up</button>
+            </div>
+
+            <!-- ✅ Sign In Form -->
+            <form id="signin-form" class="form">
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="signin-email" placeholder="Email or Phone" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="signin-password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="submit-btn">Sign In</button>
+                <p class="switch-text">New user? <span id="switch-to-signup">Create an account</span></p>
+            </form>
+
+            <!-- ✅ Sign Up Form -->
+            <form id="signup-form" class="form hidden">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="signup-name" placeholder="Full Name" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-phone"></i>
+                    <input type="tel" id="signup-phone" placeholder="Phone Number" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="signup-email" placeholder="Email" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="signup-password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="submit-btn">Sign Up</button>
+                <p class="switch-text">Already have an account? <span id="switch-to-signin">Sign In</span></p>
+            </form>
+            <button id="logout-btn" style="display: none; background: red; color: white; padding: 10px; border: none; cursor: pointer;">
+    Logout
+</button>
+
         </div>
-
-        <!-- ✅ Login Form -->
-        <form id="login-form">
-            <input type="email" id="login-email" placeholder="Enter Email" required>
-            <input type="password" id="login-password" placeholder="Enter Password" required>
-            <button id="login-btn">Login</button>
-        </form>
-
-        <!-- ✅ Sign Up Form -->
-        <form id="signup-form" style="display: none;">
-            <input type="email" id="signup-email" placeholder="Enter Email" required>
-            <input type="password" id="signup-password" placeholder="Enter Password" required>
-            <button id="signup-btn">Sign Up</button>
-        </form>
-
-        <!-- ✅ Logout Button -->
-        <button id="logout-btn" style="display: none; background: red; color: white; padding: 10px; border: none; cursor: pointer;">Logout</button>
     </div>
 
-    <script>
-        // ✅ Toggle Forms
-        document.getElementById("toggle-login").addEventListener("click", function () {
-            document.getElementById("login-form").style.display = "block";
-            document.getElementById("signup-form").style.display = "none";
-        });
-
-        document.getElementById("toggle-signup").addEventListener("click", function () {
-            document.getElementById("login-form").style.display = "none";
-            document.getElementById("signup-form").style.display = "block";
-        });
-    </script>
+    <!-- ✅ Authentication Script -->
+    <script type="module" src="auth.js"></script>
 
 </body>
 </html>
