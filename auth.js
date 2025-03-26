@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
 
 // ✅ Firebase Configuration
 const firebaseConfig = {
@@ -16,15 +16,31 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// ✅ Sign Up Event
+// ✅ Check If User is Remembered (Auto-Login)
+window.onload = () => {
+    const rememberedEmail = localStorage.getItem("email");
+    const rememberedPassword = localStorage.getItem("password");
+
+    if (rememberedEmail && rememberedPassword) {
+        signInWithEmailAndPassword(auth, rememberedEmail, rememberedPassword)
+            .then(() => {
+                window.location.href = "home.html";
+            })
+            .catch((error) => {
+                console.error("Auto-login failed:", error.message);
+            });
+    }
+};
+
+// ✅ Sign Up Event Listener
 document.getElementById("signup-form").addEventListener("submit", (e) => {
     e.preventDefault();
     
     const email = document.getElementById("signup-email").value;
     const password = document.getElementById("signup-password").value;
-    
+
     createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
+        .then(() => {
             alert("Sign-up Successful! Redirecting to Home...");
             window.location.href = "home.html";
         })
@@ -33,15 +49,22 @@ document.getElementById("signup-form").addEventListener("submit", (e) => {
         });
 });
 
-// ✅ Sign In Event
+// ✅ Sign In Event with Remember Me
 document.getElementById("signin-form").addEventListener("submit", (e) => {
     e.preventDefault();
     
     const email = document.getElementById("signin-email").value;
     const password = document.getElementById("signin-password").value;
-    
+    const rememberMe = document.getElementById("remember-me").checked;
+
     signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
+        .then(() => {
+            // ✅ Save Credentials in Local Storage if "Remember Me" is checked
+            if (rememberMe) {
+                localStorage.setItem("email", email);
+                localStorage.setItem("password", password);
+            }
+
             alert("Sign-in Successful! Redirecting to Home...");
             window.location.href = "home.html";
         })
@@ -50,13 +73,13 @@ document.getElementById("signin-form").addEventListener("submit", (e) => {
         });
 });
 
-// ✅ Toggle Sign In / Sign Up
-document.getElementById("show-signup").addEventListener("click", () => {
+// ✅ Toggle Between Sign-In & Sign-Up Forms
+document.getElementById("switch-to-signup").addEventListener("click", () => {
     document.getElementById("signup-form").classList.remove("hidden");
     document.getElementById("signin-form").classList.add("hidden");
 });
 
-document.getElementById("show-signin").addEventListener("click", () => {
+document.getElementById("switch-to-signin").addEventListener("click", () => {
     document.getElementById("signin-form").classList.remove("hidden");
     document.getElementById("signup-form").classList.add("hidden");
 });
