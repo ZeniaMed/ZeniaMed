@@ -1,4 +1,4 @@
-/* ✅ Background Image */
+/* ✅ Background Styling */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -9,6 +9,7 @@ body {
     align-items: center;
     background: url('images/image.png') no-repeat center center fixed; 
     background-size: contain; 
+    background-color: #4CAF50; /* ✅ Left side green background */
 }
 
 /* ✅ White Box with Border */
