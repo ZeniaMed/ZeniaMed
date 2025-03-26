@@ -27,8 +27,12 @@ onAuthStateChanged(auth, (user) => {
     if (user) {
         console.log("✅ User is logged in:", user.email);
         document.getElementById("logout-btn").style.display = "block"; // Show Logout button
-        if (window.location.pathname.includes("index.html")) {
-            window.location.href = "home.html"; // Redirect to home if already logged in
+
+        // 🛑 Prevent auto-login after logout
+        if (!sessionStorage.getItem("loggedOut")) {
+            if (window.location.pathname.includes("index.html")) {
+                window.location.href = "home.html"; // Redirect to home if already logged in
+            }
         }
     } else {
         console.log("⚠️ No user logged in.");
@@ -45,6 +49,7 @@ document.getElementById("signup-form").addEventListener("submit", (e) => {
 
     createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
+            sessionStorage.removeItem("loggedOut"); // Remove logout flag
             alert("🎉 Sign-up Successful! Redirecting to Home...");
             window.location.href = "home.html";
         })
@@ -62,6 +67,7 @@ document.getElementById("signin-form").addEventListener("submit", (e) => {
 
     signInWithEmailAndPassword(auth, email, password)
         .then(() => {
+            sessionStorage.removeItem("loggedOut"); // Remove logout flag
             alert("✅ Sign-in Successful! Redirecting to Home...");
             window.location.href = "home.html";
         })
@@ -72,6 +78,7 @@ document.getElementById("signin-form").addEventListener("submit", (e) => {
 
 // ✅ Logout Function (Fixed)
 document.getElementById("logout-btn").addEventListener("click", () => {
+    sessionStorage.setItem("loggedOut", "true"); // Set logout flag
     signOut(auth)
         .then(() => {
             alert("🚪 Logged out successfully!");
