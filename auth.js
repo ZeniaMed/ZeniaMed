@@ -1,4 +1,4 @@
-// Firebase SDK Import
+// ✅ Firebase SDK Import
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { 
     getAuth, 
@@ -23,9 +23,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+// ✅ Ensure Buttons are Loaded Before Adding Event Listeners
 document.addEventListener("DOMContentLoaded", function () {
-    
-    // ✅ Firebase Authentication Check
+
+    // ✅ Firebase Authentication State Check
     onAuthStateChanged(auth, (user) => {
         if (user) {
             console.log("✅ User logged in: ", user.email);
@@ -40,59 +41,63 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // ✅ Sign Up with Auto-Creation if User Deleted
-    document.getElementById("signup-form")?.addEventListener("submit", function (event) {
-        event.preventDefault();
-        let email = document.getElementById("signup-email").value;
-        let password = document.getElementById("signup-password").value;
+    // ✅ Sign-Up Button Event Listener
+    setTimeout(() => {
+        let signupForm = document.getElementById("signup-form");
+        if (signupForm) {
+            signupForm.addEventListener("submit", function (event) {
+                event.preventDefault();
+                let email = document.getElementById("signup-email").value;
+                let password = document.getElementById("signup-password").value;
 
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                alert("✅ Account created successfully!");
-                window.location.href = "home.html";
-            })
-            .catch((error) => {
-                if (error.code === "auth/email-already-in-use") {
-                    alert("❌ This email is already in use. Try signing in.");
-                } else {
-                    alert("❌ Error: " + error.message);
-                }
+                createUserWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        alert("✅ Account created successfully!");
+                        window.location.href = "home.html";
+                    })
+                    .catch((error) => {
+                        alert("❌ Sign-Up Error: " + error.message);
+                    });
             });
-    });
+        }
+    }, 1000);
 
-    // ✅ Sign In with Auto-Account Creation
-    document.getElementById("signin-form")?.addEventListener("submit", function (event) {
-        event.preventDefault();
-        let email = document.getElementById("signin-email").value;
-        let password = document.getElementById("signin-password").value;
+    // ✅ Sign-In Button Event Listener
+    setTimeout(() => {
+        let signinForm = document.getElementById("signin-form");
+        if (signinForm) {
+            signinForm.addEventListener("submit", function (event) {
+                event.preventDefault();
+                let email = document.getElementById("signin-email").value;
+                let password = document.getElementById("signin-password").value;
 
-        signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                alert("✅ Login successful!");
-                window.location.href = "home.html";
-            })
-            .catch((error) => {
-                console.error("Sign-in error:", error);
-                if (error.code === "auth/user-not-found") {
-                    // ✅ Automatically Register If User Not Found
-                    let confirmCreate = confirm("User not found. Do you want to create a new account?");
-                    if (confirmCreate) {
-                        createUserWithEmailAndPassword(auth, email, password)
-                            .then(() => {
-                                alert("✅ Account created and logged in!");
-                                window.location.href = "home.html";
-                            })
-                            .catch((err) => {
-                                alert("❌ Account creation failed: " + err.message);
-                            });
-                    }
-                } else {
-                    alert("❌ Invalid email or password.");
-                }
+                signInWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        alert("✅ Login successful!");
+                        window.location.href = "home.html";
+                    })
+                    .catch((error) => {
+                        if (error.code === "auth/user-not-found") {
+                            let confirmCreate = confirm("User not found. Do you want to create a new account?");
+                            if (confirmCreate) {
+                                createUserWithEmailAndPassword(auth, email, password)
+                                    .then(() => {
+                                        alert("✅ Account created and logged in!");
+                                        window.location.href = "home.html";
+                                    })
+                                    .catch((err) => {
+                                        alert("❌ Account creation failed: " + err.message);
+                                    });
+                            }
+                        } else {
+                            alert("❌ Invalid email or password.");
+                        }
+                    });
             });
-    });
+        }
+    }, 1000);
 
-    // ✅ Logout with Session Clear
+    // ✅ Logout Button Event Listener
     setTimeout(() => { 
         let logoutButton = document.getElementById("logout-btn");
         if (logoutButton) {
@@ -100,12 +105,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 signOut(auth)
                     .then(() => {
                         alert("✅ You have been logged out!");
-
-                        // ✅ Session Clear
-                        localStorage.clear();  
-                        sessionStorage.clear(); 
-
-                        // ✅ Hard Redirect to Ensure Logout
+                        localStorage.clear();
+                        sessionStorage.clear();
                         window.location.replace("index.html"); 
                     })
                     .catch((error) => {
