@@ -26,18 +26,18 @@ body::before {
 
 /* ✅ Main Sign In Box */
 .auth-container {
-    width: 420px; /* ✅ Increased width */
+    width: 420px;
     background: white;
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
     position: absolute;
-    right: 5%; /* ✅ Fully shifted to the right */
+    right: 2%; /* ✅ MOST RIGHT SHIFT */
     top: 50%;
     transform: translateY(-50%);
     text-align: center;
+    z-index: 1000; /* ✅ Ensures it's above the image */
 }
-
 /* ✅ Decorative Title */
 .auth-container h2 {
     font-size: 24px;
