@@ -38,6 +38,7 @@ body::before {
     text-align: center;
     z-index: 1000; /* ✅ Ensures it's above everything */
 }
+
 /* ✅ Decorative Title */
 .auth-container h2 {
     font-size: 24px;
@@ -94,23 +95,19 @@ body::before {
     background: #388E3C;
 }
 
-/* ✅ Divider Line */
-.divider {
-    height: 1px;
-    background: #ddd;
-    margin: 20px 0;
-}
-
-/* ✅ Already Have an Account? */
-.auth-container .alt-option {
-    font-size: 14px;
-    color: #555;
-}
-.auth-container .alt-option a {
-    color: #007BFF;
-    text-decoration: none;
+/* ✅ Logout Button */
+.logout-btn {
+    width: 100%;
+    padding: 12px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
     font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
 }
-.auth-container .alt-option a:hover {
-    text-decoration: underline;
+.logout-btn:hover {
+    background: darkred;
 }
