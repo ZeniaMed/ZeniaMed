@@ -8,6 +8,9 @@ body {
     justify-content: flex-end; /* ✅ Form right side pe aayega */
     align-items: center;
     background: aqua; /* ✅ Pure background aqua color */
+      background: url('images/image.png') no-repeat center center fixed; 
+    background-size: contain; 
+
 }
 
 /* ✅ White Box with Border */
