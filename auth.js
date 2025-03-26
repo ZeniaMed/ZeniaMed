@@ -22,22 +22,23 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// ✅ Logout ke Baad Redirect Fix
-let isLoggingOut = false; // 🔥 Logout ke time prevent re-login
+// ✅ Prevent Auto Login After Logout
+let isLoggingOut = sessionStorage.getItem("isLoggingOut") === "true";
 
-// ✅ Keep user logged in, but prevent auto-login after logout
+// ✅ Check Authentication State
 onAuthStateChanged(auth, (user) => {
-    if (isLoggingOut) return; // ⚠️ Agar user logout kar raha hai, toh kuch mat karo
+    if (isLoggingOut) {
+        console.log("✅ User manually logged out. Ignoring auto-login.");
+        return; // Prevent auto-login
+    }
 
     if (user) {
         console.log("✅ User is logged in:", user.email);
         document.getElementById("logout-btn").style.display = "block"; // Show Logout button
         
-        // ✅ Logout ke Baad Auto Login Na Ho
-        if (!sessionStorage.getItem("loggedOut")) {
-            if (window.location.pathname.includes("index.html")) {
-                setTimeout(() => { window.location.href = "home.html"; }, 500); // Delay to prevent flash login
-            }
+        // ✅ Redirect only if not on home page already
+        if (window.location.pathname.includes("index.html")) {
+            setTimeout(() => { window.location.href = "home.html"; }, 500);
         }
     } else {
         console.log("⚠️ No user logged in.");
@@ -54,7 +55,7 @@ document.getElementById("signup-form").addEventListener("submit", (e) => {
 
     createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
-            sessionStorage.removeItem("loggedOut"); // Logout flag hatana
+            sessionStorage.removeItem("isLoggingOut");
             alert("🎉 Sign-up Successful! Redirecting...");
             window.location.href = "home.html";
         })
@@ -72,7 +73,7 @@ document.getElementById("signin-form").addEventListener("submit", (e) => {
 
     signInWithEmailAndPassword(auth, email, password)
         .then(() => {
-            sessionStorage.removeItem("loggedOut"); // Logout flag hatana
+            sessionStorage.removeItem("isLoggingOut");
             alert("✅ Sign-in Successful! Redirecting...");
             window.location.href = "home.html";
         })
@@ -81,17 +82,17 @@ document.getElementById("signin-form").addEventListener("submit", (e) => {
         });
 });
 
-// ✅ Logout Function (100% Fixed)
+// ✅ Logout (100% Fixed)
 document.getElementById("logout-btn").addEventListener("click", () => {
-    isLoggingOut = true; // 🔥 Prevent re-login immediately after logout
-    sessionStorage.setItem("loggedOut", "true"); // Logout flag set karna
+    sessionStorage.setItem("isLoggingOut", "true"); // Prevent re-login
 
     signOut(auth)
         .then(() => {
             alert("🚪 Logged out successfully!");
             setTimeout(() => {
-                window.location.href = "index.html"; // Redirect with delay to prevent auto login
-            }, 1000); // 1 second delay so Firebase doesn't instantly trigger login
+                sessionStorage.removeItem("isLoggingOut");
+                window.location.href = "index.html"; // Redirect to login page
+            }, 2000); // 2 seconds delay to ensure logout is complete
         })
         .catch((error) => {
             alert("❌ Error: " + error.message);
