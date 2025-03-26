@@ -1,74 +1,63 @@
-/* ✅ Background Image */
+/* Full-page green background */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    height: 100vh;
     display: flex;
-    justify-content: flex-end; /* ✅ Form right side pe aayega */
+    justify-content: center;
     align-items: center;
-    background: url('images/image.png') no-repeat center center fixed; 
-    background-size: contain; 
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #1abc9c; /* Green background */
 }
 
-/* ✅ White Box with Border */
-.auth-container {
-    width: 350px;
-    background: white;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    margin-right: 50px; /* ✅ Right side spacing */
-    position: relative;
-}
-
-/* ✅ Green Border */
-.auth-container::before {
-    content: "";
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    width: 100%;
-    height: 100%;
-    border: 4px solid #4CAF50;
-    border-radius: 10px;
-    z-index: -1;
-}
-
-/* ✅ Button Styling */
-.button-container {
+/* Main container */
+.main-container {
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    max-width: 1000px;
 }
 
-.button-container button {
-    width: 48%;
-    background: #4CAF50;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-/* ✅ Input Fields */
-.auth-container input {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin: 8px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+/* Image section */
+.center-section img {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
     display: block;
 }
 
-/* ✅ Submit Buttons */
+/* Sign-in box */
+.auth-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    text-align: center;
+    margin-left: 20px;
+    border: 3px solid #0f766e;
+}
+
+/* Input styling */
+.auth-container input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Buttons */
 .auth-container button {
     width: 100%;
-    background: #4CAF50;
+    padding: 10px;
+    background-color: #0f766e;
     color: white;
-    padding: 12px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.auth-container button:hover {
+    background-color: #0d5c5a;
 }
