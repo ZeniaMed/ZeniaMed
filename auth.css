@@ -1,74 +1,85 @@
-/* ✅ Background Image */
+/* Background color change */
 body {
+    background-color: #1abc9c; /* Green background */
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    height: 100vh;
     display: flex;
-    justify-content: flex-end; /* ✅ Form right side pe aayega */
+    justify-content: center;
     align-items: center;
-    background: url('images/image.png') no-repeat center center fixed; 
-    background-size: contain; 
+    height: 100vh;
+    margin: 0;
 }
 
-/* ✅ White Box with Border */
+/* Centering the sign-in/sign-up box */
 .auth-container {
-    width: 350px;
-    background: white;
-    padding: 25px;
+    background-color: white;
+    padding: 20px;
     border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    margin-right: 50px; /* ✅ Right side spacing */
-    position: relative;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    border: 3px solid #0f766e; /* Dark green border */
 }
 
-/* ✅ Green Border */
-.auth-container::before {
-    content: "";
-    position: absolute;
-    top: -10px;
-    left: -10px;
+/* ZeniaMed logo and heading */
+.auth-container h2 {
+    color: #0f766e;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Input fields */
+.auth-container input {
     width: 100%;
-    height: 100%;
-    border: 4px solid #4CAF50;
-    border-radius: 10px;
-    z-index: -1;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
-/* ✅ Button Styling */
-.button-container {
+/* Buttons */
+.auth-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #0f766e;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.auth-container button:hover {
+    background-color: #0d5c5a;
+}
+
+/* Sign-in and Sign-up toggle buttons */
+.toggle-buttons {
     display: flex;
     justify-content: space-between;
     margin-bottom: 15px;
 }
 
-.button-container button {
+.toggle-buttons button {
     width: 48%;
-    background: #4CAF50;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
 }
 
-/* ✅ Input Fields */
-.auth-container input {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin: 8px 0;
-    border: 1px solid #ccc;
+/* Icons inside input fields */
+.auth-container .input-group {
+    display: flex;
+    align-items: center;
+    background: #f5f5f5;
+    padding: 5px;
     border-radius: 5px;
-    display: block;
 }
 
-/* ✅ Submit Buttons */
-.auth-container button {
-    width: 100%;
-    background: #4CAF50;
-    color: white;
-    padding: 12px;
+.auth-container .input-group i {
+    padding: 10px;
+    color: #0f766e;
+}
+
+.auth-container .input-group input {
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    outline: none;
+    background: none;
+    flex: 1;
 }
