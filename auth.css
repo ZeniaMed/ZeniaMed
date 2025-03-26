@@ -1,28 +1,25 @@
-/* ✅ Full Screen Layout */
+/* ✅ Background Image */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     height: 100vh;
     display: flex;
-    justify-content: center; /* ✅ Box ko center me laane ke liye */
+    justify-content: flex-end; /* ✅ Form right side pe aayega */
     align-items: center;
     background: url('images/image.png') no-repeat center center fixed; 
-    background-size: cover; /* ✅ Image pura background fill kare */
-    position: relative;
+    background-size: contain; 
 }
 
-/* ✅ Auth Box Center */
+/* ✅ White Box with Border */
 .auth-container {
     width: 350px;
-    background: rgba(255, 255, 255, 0.9); /* ✅ Semi-transparent white */
+    background: white;
     padding: 25px;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    position: absolute;
-    right: 5%; /* ✅ Box ko right side laane ke liye */
-    top: 50%;
-    transform: translateY(-50%);
+    margin-right: 50px; /* ✅ Right side spacing */
+    position: relative;
 }
 
 /* ✅ Green Border */
