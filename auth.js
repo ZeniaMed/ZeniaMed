@@ -1,5 +1,11 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+import { 
+    getAuth, 
+    createUserWithEmailAndPassword, 
+    signInWithEmailAndPassword, 
+    signOut, 
+    onAuthStateChanged 
+} from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
 
 // ✅ Firebase Configuration
 const firebaseConfig = {
@@ -16,13 +22,16 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// ✅ Check If User is Logged In
+// ✅ Keep user logged in (Even after page refresh)
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        console.log("User is logged in:", user.email);
+        console.log("✅ User is logged in:", user.email);
         document.getElementById("logout-btn").style.display = "block"; // Show Logout button
+        if (window.location.pathname.includes("index.html")) {
+            window.location.href = "home.html"; // Redirect to home if already logged in
+        }
     } else {
-        console.log("No user logged in.");
+        console.log("⚠️ No user logged in.");
         document.getElementById("logout-btn").style.display = "none"; // Hide Logout button
     }
 });
@@ -36,11 +45,11 @@ document.getElementById("signup-form").addEventListener("submit", (e) => {
 
     createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
-            alert("Sign-up Successful! Redirecting to Home...");
+            alert("🎉 Sign-up Successful! Redirecting to Home...");
             window.location.href = "home.html";
         })
         .catch((error) => {
-            alert(error.message);
+            alert("❌ Error: " + error.message);
         });
 });
 
@@ -50,32 +59,40 @@ document.getElementById("signin-form").addEventListener("submit", (e) => {
     
     const email = document.getElementById("signin-email").value;
     const password = document.getElementById("signin-password").value;
-    const rememberMe = document.getElementById("remember-me").checked;
 
     signInWithEmailAndPassword(auth, email, password)
         .then(() => {
-            if (rememberMe) {
-                localStorage.setItem("email", email);
-                localStorage.setItem("password", password);
-            }
-            alert("Sign-in Successful! Redirecting to Home...");
+            alert("✅ Sign-in Successful! Redirecting to Home...");
             window.location.href = "home.html";
         })
         .catch((error) => {
-            alert(error.message);
+            alert("❌ Error: " + error.message);
         });
 });
 
-// ✅ Logout Function
+// ✅ Logout Function (Fixed)
 document.getElementById("logout-btn").addEventListener("click", () => {
     signOut(auth)
         .then(() => {
-            alert("Logged out successfully!");
-            localStorage.removeItem("email"); // Remove saved credentials
-            localStorage.removeItem("password");
+            alert("🚪 Logged out successfully!");
             window.location.href = "index.html"; // Redirect to login page
         })
         .catch((error) => {
-            alert(error.message);
+            alert("❌ Error: " + error.message);
         });
+});
+
+// ✅ Toggle Between Sign In & Sign Up Forms
+document.getElementById("show-signin").addEventListener("click", () => {
+    document.getElementById("signin-form").classList.remove("hidden");
+    document.getElementById("signup-form").classList.add("hidden");
+    document.getElementById("show-signin").classList.add("active");
+    document.getElementById("show-signup").classList.remove("active");
+});
+
+document.getElementById("show-signup").addEventListener("click", () => {
+    document.getElementById("signup-form").classList.remove("hidden");
+    document.getElementById("signin-form").classList.add("hidden");
+    document.getElementById("show-signup").classList.add("active");
+    document.getElementById("show-signin").classList.remove("active");
 });
