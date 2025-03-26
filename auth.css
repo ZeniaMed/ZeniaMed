@@ -1,4 +1,4 @@
-/* ✅ Background Image with Left Sea Green Panel */
+/* ✅ Background Image with Aqua Color */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -7,20 +7,7 @@ body {
     display: flex;
     justify-content: flex-end; /* ✅ Form right side pe aayega */
     align-items: center;
-    background: url('images/image.png') no-repeat center center fixed; 
-    background-size: contain;
-    position: relative;
-}
-
-/* ✅ Left Side Sea Green Background */
-body::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 20%;  /* ✅ Adjust this percentage if needed */
-    height: 100%;
-    background-color: #2E8B57; /* ✅ Sea Green */
+    background: aqua; /* ✅ Pure background aqua color */
 }
 
 /* ✅ White Box with Border */
@@ -32,7 +19,6 @@ body::before {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     margin-right: 50px; /* ✅ Right side spacing */
     position: relative;
-    z-index: 1;
 }
 
 /* ✅ Green Border */
