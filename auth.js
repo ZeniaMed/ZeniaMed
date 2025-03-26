@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
 
 // ✅ Firebase Configuration
 const firebaseConfig = {
@@ -16,21 +16,16 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// ✅ Check If User is Remembered (Auto-Login)
-window.onload = () => {
-    const rememberedEmail = localStorage.getItem("email");
-    const rememberedPassword = localStorage.getItem("password");
-
-    if (rememberedEmail && rememberedPassword) {
-        signInWithEmailAndPassword(auth, rememberedEmail, rememberedPassword)
-            .then(() => {
-                window.location.href = "home.html";
-            })
-            .catch((error) => {
-                console.error("Auto-login failed:", error.message);
-            });
+// ✅ Check If User is Logged In
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        console.log("User is logged in:", user.email);
+        document.getElementById("logout-btn").style.display = "block"; // Show Logout button
+    } else {
+        console.log("No user logged in.");
+        document.getElementById("logout-btn").style.display = "none"; // Hide Logout button
     }
-};
+});
 
 // ✅ Sign Up Event Listener
 document.getElementById("signup-form").addEventListener("submit", (e) => {
@@ -49,7 +44,7 @@ document.getElementById("signup-form").addEventListener("submit", (e) => {
         });
 });
 
-// ✅ Sign In Event with Remember Me
+// ✅ Sign In Event Listener
 document.getElementById("signin-form").addEventListener("submit", (e) => {
     e.preventDefault();
     
@@ -59,12 +54,10 @@ document.getElementById("signin-form").addEventListener("submit", (e) => {
 
     signInWithEmailAndPassword(auth, email, password)
         .then(() => {
-            // ✅ Save Credentials in Local Storage if "Remember Me" is checked
             if (rememberMe) {
                 localStorage.setItem("email", email);
                 localStorage.setItem("password", password);
             }
-
             alert("Sign-in Successful! Redirecting to Home...");
             window.location.href = "home.html";
         })
@@ -73,13 +66,16 @@ document.getElementById("signin-form").addEventListener("submit", (e) => {
         });
 });
 
-// ✅ Toggle Between Sign-In & Sign-Up Forms
-document.getElementById("switch-to-signup").addEventListener("click", () => {
-    document.getElementById("signup-form").classList.remove("hidden");
-    document.getElementById("signin-form").classList.add("hidden");
-});
-
-document.getElementById("switch-to-signin").addEventListener("click", () => {
-    document.getElementById("signin-form").classList.remove("hidden");
-    document.getElementById("signup-form").classList.add("hidden");
+// ✅ Logout Function
+document.getElementById("logout-btn").addEventListener("click", () => {
+    signOut(auth)
+        .then(() => {
+            alert("Logged out successfully!");
+            localStorage.removeItem("email"); // Remove saved credentials
+            localStorage.removeItem("password");
+            window.location.href = "index.html"; // Redirect to login page
+        })
+        .catch((error) => {
+            alert(error.message);
+        });
 });
