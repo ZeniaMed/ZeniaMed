@@ -22,21 +22,23 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// ✅ Prevent Auto Login After Logout
-let isLoggingOut = sessionStorage.getItem("isLoggingOut") === "true";
+// ✅ Fix Auto-Login Issue
+auth.setPersistence("none").then(() => {
+    console.log("Persistence set to NONE. Auto-login disabled.");
+}).catch((error) => {
+    console.error("Error setting persistence:", error);
+});
 
 // ✅ Check Authentication State
 onAuthStateChanged(auth, (user) => {
-    if (isLoggingOut) {
-        console.log("✅ User manually logged out. Ignoring auto-login.");
-        return; // Prevent auto-login
+    if (sessionStorage.getItem("isLoggingOut") === "true") {
+        console.log("✅ User manually logged out. Preventing auto-login.");
+        return; 
     }
 
     if (user) {
-        console.log("✅ User is logged in:", user.email);
+        console.log("✅ User logged in:", user.email);
         document.getElementById("logout-btn").style.display = "block"; // Show Logout button
-        
-        // ✅ Redirect only if not on home page already
         if (window.location.pathname.includes("index.html")) {
             setTimeout(() => { window.location.href = "home.html"; }, 500);
         }
@@ -84,15 +86,15 @@ document.getElementById("signin-form").addEventListener("submit", (e) => {
 
 // ✅ Logout (100% Fixed)
 document.getElementById("logout-btn").addEventListener("click", () => {
-    sessionStorage.setItem("isLoggingOut", "true"); // Prevent re-login
+    sessionStorage.setItem("isLoggingOut", "true");
 
     signOut(auth)
         .then(() => {
             alert("🚪 Logged out successfully!");
             setTimeout(() => {
                 sessionStorage.removeItem("isLoggingOut");
-                window.location.href = "index.html"; // Redirect to login page
-            }, 2000); // 2 seconds delay to ensure logout is complete
+                window.location.href = "index.html";
+            }, 2000);
         })
         .catch((error) => {
             alert("❌ Error: " + error.message);
