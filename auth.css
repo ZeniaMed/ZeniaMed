@@ -8,6 +8,7 @@ body {
     justify-content: center; /* ✅ Center alignment */
     align-items: center;
     background-color: #55DDE0; /* ✅ Light aqua background */
+    overflow: hidden;
 }
 
 /* ✅ Background Image Correctly Positioned */
@@ -15,58 +16,68 @@ body::before {
     content: "";
     position: absolute;
     top: 0;
-    right: 15%; /* ✅ Slightly left shift to avoid overlap */
-    width: 50%;
+    left: 5%; /* ✅ Shifted left so that the form is on the right */
+    width: 55%;
     height: 100%;
     background: url('images/image.png') no-repeat center;
     background-size: contain;
     z-index: -1;
 }
 
-/* ✅ White Box for Login/Signup */
+/* ✅ Main Sign In Box */
 .auth-container {
-    width: 400px; /* ✅ Increased width for better spacing */
+    width: 420px; /* ✅ Increased width */
     background: white;
     padding: 30px;
     border-radius: 12px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
     position: absolute;
-    right: 10%; /* ✅ Shifted to the right */
+    right: 5%; /* ✅ Fully shifted to the right */
     top: 50%;
     transform: translateY(-50%);
+    text-align: center;
 }
 
-/* ✅ Sign In & Sign Up Buttons - Larger & Right Aligned */
+/* ✅ Decorative Title */
+.auth-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: bold;
+}
+
+/* ✅ Buttons (Sign In & Sign Up) */
 .auth-buttons {
     display: flex;
-    justify-content: flex-end; /* ✅ Shift to the right */
-    gap: 15px;
-    margin-bottom: 15px;
+    justify-content: space-between; /* ✅ Shift to sides */
+    margin-bottom: 20px;
 }
 .auth-buttons button {
-    padding: 12px 20px; /* ✅ Increased size */
-    font-size: 16px; /* ✅ Larger text */
+    flex: 1;
+    padding: 12px 18px; /* ✅ Bigger buttons */
+    font-size: 16px;
     border: none;
     border-radius: 6px;
     cursor: pointer;
     background: #007BFF;
     color: white;
+    margin: 0 5px;
 }
 .auth-buttons button:hover {
     background: #0056b3;
 }
 
-/* ✅ Input Fields - Bigger */
+/* ✅ Input Fields - Bigger & Styled */
 .auth-container input {
     width: 100%;
     padding: 12px;
-    margin: 8px 0;
+    margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 16px;
 }
 
-/* ✅ Sign In & Sign Up Button */
+/* ✅ Sign In & Sign Up Submit Button */
 .auth-container button.submit-btn {
     width: 100%;
     padding: 14px;
@@ -75,8 +86,31 @@ body::before {
     border: none;
     border-radius: 6px;
     font-size: 18px; /* ✅ Bigger size */
+    font-weight: bold;
     cursor: pointer;
+    margin-top: 10px;
 }
 .auth-container button.submit-btn:hover {
     background: #388E3C;
+}
+
+/* ✅ Divider Line */
+.divider {
+    height: 1px;
+    background: #ddd;
+    margin: 20px 0;
+}
+
+/* ✅ Already Have an Account? */
+.auth-container .alt-option {
+    font-size: 14px;
+    color: #555;
+}
+.auth-container .alt-option a {
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: bold;
+}
+.auth-container .alt-option a:hover {
+    text-decoration: underline;
 }
