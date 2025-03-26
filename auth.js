@@ -24,7 +24,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// ✅ **FORCE SESSION PERSISTENCE (Auto-login Disabled)**
+// ✅ **1. FORCE SESSION PERSISTENCE (Auto-login 100% disable)**
 setPersistence(auth, browserSessionPersistence)
     .then(() => {
         console.log("✅ Firebase persistence set to SESSION (Auto-login disabled)");
@@ -33,20 +33,23 @@ setPersistence(auth, browserSessionPersistence)
         console.error("❌ Error setting persistence:", error);
     });
 
-// ✅ **Force Logout on Page Load**
-if (sessionStorage.getItem("forceLogout") !== "false") {
-    signOut(auth)
-        .then(() => {
-            console.log("✅ Forced logout on page load to prevent auto-login.");
-            sessionStorage.setItem("forceLogout", "false"); // Prevent infinite loop
-        })
-        .catch((error) => console.error("❌ Error during forced logout:", error));
-}
+// ✅ **2. Auto Logout Every Time Page Loads**
+sessionStorage.setItem("forceLogout", "true");
 
-// ✅ **Check Authentication State**
+// ✅ **3. Check Authentication State**
 onAuthStateChanged(auth, (user) => {
+    if (sessionStorage.getItem("forceLogout") === "true") {
+        signOut(auth).then(() => {
+            console.log("✅ Forced Logout Done on Page Load");
+            sessionStorage.setItem("forceLogout", "false");
+        }).catch((error) => {
+            console.error("❌ Error during forced logout:", error);
+        });
+        return;
+    }
+
     if (user) {
-        console.log("✅ User logged in:", user.email);
+        console.log("✅ User is logged in:", user.email);
         document.getElementById("logout-btn").style.display = "block"; 
         
         if (window.location.pathname.includes("index.html")) {
@@ -58,7 +61,7 @@ onAuthStateChanged(auth, (user) => {
     }
 });
 
-// ✅ **Sign Up**
+// ✅ **4. Sign Up**
 document.getElementById("signup-form").addEventListener("submit", (e) => {
     e.preventDefault();
     
@@ -76,7 +79,7 @@ document.getElementById("signup-form").addEventListener("submit", (e) => {
         });
 });
 
-// ✅ **Sign In**
+// ✅ **5. Sign In**
 document.getElementById("signin-form").addEventListener("submit", (e) => {
     e.preventDefault();
     
@@ -94,7 +97,7 @@ document.getElementById("signin-form").addEventListener("submit", (e) => {
         });
 });
 
-// ✅ **Logout (Auto-login 100% Fixed)**
+// ✅ **6. Logout (Auto-login 100% Fixed)**
 document.getElementById("logout-btn").addEventListener("click", () => {
     sessionStorage.setItem("forceLogout", "true"); // Prevent auto-login
 
@@ -110,7 +113,7 @@ document.getElementById("logout-btn").addEventListener("click", () => {
         });
 });
 
-// ✅ **Toggle Between Sign In & Sign Up Forms**
+// ✅ **7. Toggle Between Sign In & Sign Up Forms**
 document.getElementById("show-signin").addEventListener("click", () => {
     document.getElementById("signin-form").classList.remove("hidden");
     document.getElementById("signup-form").classList.add("hidden");
