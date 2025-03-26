@@ -24,22 +24,31 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// ✅ Fix Auto-Login (Force Session Only)
+// ✅ **FORCE SESSION PERSISTENCE (Auto-login Disabled)**
 setPersistence(auth, browserSessionPersistence)
-    .then(() => console.log("✅ Persistence set to SESSION only. Auto-login disabled."))
-    .catch((error) => console.error("❌ Error setting persistence:", error));
+    .then(() => {
+        console.log("✅ Firebase persistence set to SESSION (Auto-login disabled)");
+    })
+    .catch((error) => {
+        console.error("❌ Error setting persistence:", error);
+    });
 
-// ✅ Check Authentication State
+// ✅ **Force Logout on Page Load**
+if (sessionStorage.getItem("forceLogout") !== "false") {
+    signOut(auth)
+        .then(() => {
+            console.log("✅ Forced logout on page load to prevent auto-login.");
+            sessionStorage.setItem("forceLogout", "false"); // Prevent infinite loop
+        })
+        .catch((error) => console.error("❌ Error during forced logout:", error));
+}
+
+// ✅ **Check Authentication State**
 onAuthStateChanged(auth, (user) => {
-    if (sessionStorage.getItem("isLoggingOut") === "true") {
-        console.log("✅ Preventing auto-login after logout.");
-        return;
-    }
-
     if (user) {
         console.log("✅ User logged in:", user.email);
         document.getElementById("logout-btn").style.display = "block"; 
-
+        
         if (window.location.pathname.includes("index.html")) {
             setTimeout(() => { window.location.href = "home.html"; }, 500);
         }
@@ -49,7 +58,7 @@ onAuthStateChanged(auth, (user) => {
     }
 });
 
-// ✅ Sign Up
+// ✅ **Sign Up**
 document.getElementById("signup-form").addEventListener("submit", (e) => {
     e.preventDefault();
     
@@ -58,8 +67,8 @@ document.getElementById("signup-form").addEventListener("submit", (e) => {
 
     createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
-            sessionStorage.removeItem("isLoggingOut");
             alert("🎉 Sign-up Successful! Redirecting...");
+            sessionStorage.setItem("forceLogout", "false");
             window.location.href = "home.html";
         })
         .catch((error) => {
@@ -67,7 +76,7 @@ document.getElementById("signup-form").addEventListener("submit", (e) => {
         });
 });
 
-// ✅ Sign In
+// ✅ **Sign In**
 document.getElementById("signin-form").addEventListener("submit", (e) => {
     e.preventDefault();
     
@@ -76,8 +85,8 @@ document.getElementById("signin-form").addEventListener("submit", (e) => {
 
     signInWithEmailAndPassword(auth, email, password)
         .then(() => {
-            sessionStorage.removeItem("isLoggingOut");
             alert("✅ Sign-in Successful! Redirecting...");
+            sessionStorage.setItem("forceLogout", "false");
             window.location.href = "home.html";
         })
         .catch((error) => {
@@ -85,15 +94,14 @@ document.getElementById("signin-form").addEventListener("submit", (e) => {
         });
 });
 
-// ✅ Logout (Auto-login 100% Fixed)
+// ✅ **Logout (Auto-login 100% Fixed)**
 document.getElementById("logout-btn").addEventListener("click", () => {
-    sessionStorage.setItem("isLoggingOut", "true");
+    sessionStorage.setItem("forceLogout", "true"); // Prevent auto-login
 
     signOut(auth)
         .then(() => {
             alert("🚪 Logged out successfully!");
             setTimeout(() => {
-                sessionStorage.removeItem("isLoggingOut");
                 window.location.href = "index.html";
             }, 2000);
         })
@@ -102,7 +110,7 @@ document.getElementById("logout-btn").addEventListener("click", () => {
         });
 });
 
-// ✅ Toggle Between Sign In & Sign Up Forms
+// ✅ **Toggle Between Sign In & Sign Up Forms**
 document.getElementById("show-signin").addEventListener("click", () => {
     document.getElementById("signin-form").classList.remove("hidden");
     document.getElementById("signup-form").classList.add("hidden");
