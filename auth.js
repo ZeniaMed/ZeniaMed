@@ -98,20 +98,25 @@ document.getElementById("signin-form").addEventListener("submit", (e) => {
 });
 
 // ✅ **6. Logout (Auto-login 100% Fixed)**
-document.getElementById("logout-btn").addEventListener("click", () => {
-    sessionStorage.setItem("forceLogout", "true"); // Prevent auto-login
+// ✅ LOGOUT FUNCTION (Fix auto-login issue)
+document.getElementById("logout-btn").addEventListener("click", async () => {
+    sessionStorage.setItem("isLoggingOut", "true"); // Prevent auto-login
 
-    signOut(auth)
-        .then(() => {
-            alert("🚪 Logged out successfully!");
-            setTimeout(() => {
-                window.location.href = "index.html";
-            }, 2000);
-        })
-        .catch((error) => {
-            alert("❌ Error: " + error.message);
-        });
+    try {
+        await signOut(auth);
+        console.log("✅ Successfully logged out!");
+
+        // ✅ Ensure state change is detected before redirecting
+        setTimeout(() => {
+            sessionStorage.removeItem("isLoggingOut");
+            window.location.href = "index.html"; // Redirect to login page
+        }, 1000); // 1-second delay to ensure proper logout
+    } catch (error) {
+        console.error("❌ Logout Error:", error.message);
+        alert("❌ Error: " + error.message);
+    }
 });
+
 
 // ✅ **7. Toggle Between Sign In & Sign Up Forms**
 document.getElementById("show-signin").addEventListener("click", () => {
