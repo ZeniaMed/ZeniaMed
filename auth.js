@@ -4,7 +4,9 @@ import {
     createUserWithEmailAndPassword, 
     signInWithEmailAndPassword, 
     signOut, 
-    onAuthStateChanged 
+    onAuthStateChanged, 
+    setPersistence, 
+    browserSessionPersistence 
 } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
 
 // ✅ Firebase Configuration
@@ -22,29 +24,28 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// ✅ Fix Auto-Login Issue
-auth.setPersistence("none").then(() => {
-    console.log("Persistence set to NONE. Auto-login disabled.");
-}).catch((error) => {
-    console.error("Error setting persistence:", error);
-});
+// ✅ Fix Auto-Login (Force Session Only)
+setPersistence(auth, browserSessionPersistence)
+    .then(() => console.log("✅ Persistence set to SESSION only. Auto-login disabled."))
+    .catch((error) => console.error("❌ Error setting persistence:", error));
 
 // ✅ Check Authentication State
 onAuthStateChanged(auth, (user) => {
     if (sessionStorage.getItem("isLoggingOut") === "true") {
-        console.log("✅ User manually logged out. Preventing auto-login.");
-        return; 
+        console.log("✅ Preventing auto-login after logout.");
+        return;
     }
 
     if (user) {
         console.log("✅ User logged in:", user.email);
-        document.getElementById("logout-btn").style.display = "block"; // Show Logout button
+        document.getElementById("logout-btn").style.display = "block"; 
+
         if (window.location.pathname.includes("index.html")) {
             setTimeout(() => { window.location.href = "home.html"; }, 500);
         }
     } else {
         console.log("⚠️ No user logged in.");
-        document.getElementById("logout-btn").style.display = "none"; // Hide Logout button
+        document.getElementById("logout-btn").style.display = "none";
     }
 });
 
@@ -84,7 +85,7 @@ document.getElementById("signin-form").addEventListener("submit", (e) => {
         });
 });
 
-// ✅ Logout (100% Fixed)
+// ✅ Logout (Auto-login 100% Fixed)
 document.getElementById("logout-btn").addEventListener("click", () => {
     sessionStorage.setItem("isLoggingOut", "true");
 
