@@ -1,13 +1,13 @@
-/* ✅ Full Aqua Background with Image on Right */
+/* ✅ Full Aqua Background with Proper Image Alignment */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     height: 100vh;
     display: flex;
-    justify-content: flex-end; /* ✅ Form right side pe aayega */
+    justify-content: center; /* ✅ Center alignment */
     align-items: center;
-    background-color: aqua; /* ✅ Full Aqua Background */
+    background-color: #55DDE0; /* ✅ Light aqua background */
 }
 
 /* ✅ Background Image Correctly Positioned */
@@ -15,26 +15,26 @@ body::before {
     content: "";
     position: absolute;
     top: 0;
-    right: 0;
-    width: 55%; /* ✅ Image ko right side adjust karne ke liye */
+    right: 20%; /* ✅ Image thoda left shift hoga */
+    width: 50%;
     height: 100%;
-    background: url('images/image.png') no-repeat center center;
+    background: url('images/image.png') no-repeat center;
     background-size: contain;
     z-index: -1;
 }
 
-/* ✅ White Box with Border */
+/* ✅ White Box for Login/Signup */
 .auth-container {
     width: 350px;
     background: white;
     padding: 25px;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    margin-right: 50px; /* ✅ Right side spacing */
+    margin-left: 50px; /* ✅ Left shift to avoid overlap */
     position: relative;
 }
 
-/* ✅ Green Border */
+/* ✅ Adjusted Form Position */
 .auth-container::before {
     content: "";
     position: absolute;
@@ -47,40 +47,16 @@ body::before {
     z-index: -1;
 }
 
-/* ✅ Button Styling */
-.button-container {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-}
-
-.button-container button {
-    width: 48%;
-    background: #4CAF50;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-/* ✅ Input Fields */
-.auth-container input {
+/* ✅ Input Fields & Buttons */
+.auth-container input, .auth-container button {
     width: calc(100% - 20px);
     padding: 10px;
     margin: 8px 0;
-    border: 1px solid #ccc;
     border-radius: 5px;
     display: block;
 }
-
-/* ✅ Submit Buttons */
 .auth-container button {
-    width: 100%;
     background: #4CAF50;
     color: white;
-    padding: 12px;
-    border: none;
-    border-radius: 5px;
     cursor: pointer;
 }
