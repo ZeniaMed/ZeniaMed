@@ -1,63 +1,332 @@
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('images/image.png'); /* ✅ Background image added */
+    background-size: cover;  /* Pure page pe fit hoga */
+    background-position: center; /* Center me dikhayega */
+    background-repeat: no-repeat; /* Repeat nahi hoga */
+    height: 100vh; /* Pure viewport ki height lega */
     display: flex;
-    justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
+    justify-content: center;
 }
 
-.container {
-    width: 350px;
+/* Header */
+header {
+    background-color: green;
+    padding: 10px;
+    color: white;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+/* Navigation Buttons */
+.nav-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-btn {
+    background-color: blue;
+    color: white;
+    padding: 15px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Search Bar */
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 20px;
+}
+
+.search-bar input {
+    padding: 10px;
+    font-size: 14px;
+    width: 250px;
+    border: 2px solid gray;
+    border-radius: 5px;
+}
+
+.search-btn {
+    background-color: blue;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Logo */
+.logo-container {
+    margin-left: auto;
+}
+
+.logo-container img {
+    width: 120px;
+}
+
+/* Categories */
+.categories {
+    background-color: white;
     padding: 20px;
+}
+
+.category-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.category-btn {
+    background-color: blue;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Footer */
+footer {
+    background-color: black;
+    color: white;
+    padding: 10px;
+}
+
+/* Medicine List */
+.medicine-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    padding: 20px;
+}
+
+.medicine-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    width: 230px;
     background: white;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
     text-align: center;
 }
 
-.logo {
-    font-size: 24px;
-    margin-bottom: 10px;
+.medicine-item h3 {
+    margin: 0;
+    font-size: 16px;
 }
 
-.toggle-buttons button {
-    width: 50%;
-    padding: 10px;
-    cursor: pointer;
-    border: none;
-    background: #ddd;
+.medicine-item p {
+    color: green;
+    font-weight: bold;
 }
 
-.toggle-buttons .active {
-    background: #007bff;
+button {
+    background: blue;
     color: white;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
 }
 
-.form {
+/* Cart Page */
+.cart-banner {
+    text-align: center;
+    padding: 20px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 22px;
+}
+
+.cart-container {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+}
+
+.cart-items {
     display: flex;
     flex-direction: column;
+    gap: 15px;
 }
 
-.input-group {
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 5px;
+}
+
+.cart-info h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.remove-item {
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.checkout-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #ff9800;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+/* Checkout Page */
+.checkout-container {
+    width: 80%;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Checkout Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.checkout-img {
+    width: 50px;
+    height: 50px;
+}
+
+/* ✅ Payment Section - Icons Now Horizontal */
+.payment-options {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.payment-option {
     display: flex;
     align-items: center;
-    margin: 10px 0;
+    gap: 6px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
 }
 
-.input-group input {
-    width: 100%;
+/* ✅ Small Icons Like Emoji */
+.payment-option img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+}
+
+/* ✅ Delivery Address Section */
+.address-container {
+    width: 80%;
+    margin: auto;
+    text-align: left;
+    background: white;
+    padding: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.saved-address {
+    background: #f9f9f9;
     padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
 }
 
-.submit-btn {
-    background: #007bff;
+.address-btn {
+    background: blue;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+/* Input Fields */
+input, textarea, select {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+}
+
+/* Checkout Button */
+.checkout-btn {
+    background: green;
     color: white;
     padding: 10px;
     border: none;
     cursor: pointer;
+    width: 100%;
+    margin-top: 15px;
 }
 
-.hidden {
-    display: none;
+.payment-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.pay-btn {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 2px solid #ddd;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 180px;  /* Fix button width */
+    justify-content: center;
+    transition: 0.3s;
+}
+
+.pay-btn img {
+    width: 40px;  /* Fixed size for icons */
+    height: 40px;
+    margin-right: 10px;
+}
+
+.pay-btn:hover {
+    background: #eee;
 }
