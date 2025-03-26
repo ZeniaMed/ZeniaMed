@@ -1,27 +1,25 @@
-/* ✅ Full Page Background */
+/* ✅ Background Image */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     height: 100vh;
     display: flex;
+    justify-content: flex-end; /* ✅ Form right side pe aayega */
     align-items: center;
-    justify-content: center;
     background: url('images/image.png') no-repeat center center fixed; 
-    background-size: contain; /* ✅ Full image dikhega bina zoomed-in hue */
+    background-size: contain; 
 }
 
-/* ✅ Form Box Styling */
+/* ✅ White Box with Border */
 .auth-container {
-    width: 400px; /* ✅ Fixed width */
+    width: 350px;
     background: white;
     padding: 25px;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    position: absolute;
-    right: 50px; /* ✅ Right side me shift kiya */
-    top: 50%;
-    transform: translateY(-50%);
+    margin-right: 50px; /* ✅ Right side spacing */
+    position: relative;
 }
 
 /* ✅ Green Border */
@@ -32,12 +30,29 @@ body {
     left: -10px;
     width: 100%;
     height: 100%;
-    border: 4px solid #4CAF50; /* ✅ Green Border */
+    border: 4px solid #4CAF50;
     border-radius: 10px;
     z-index: -1;
 }
 
-/* ✅ Input Fields Styling */
+/* ✅ Button Styling */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.button-container button {
+    width: 48%;
+    background: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* ✅ Input Fields */
 .auth-container input {
     width: calc(100% - 20px);
     padding: 10px;
@@ -47,25 +62,13 @@ body {
     display: block;
 }
 
-/* ✅ Buttons Styling */
+/* ✅ Submit Buttons */
 .auth-container button {
     width: 100%;
-    background: #4CAF50; /* Green button */
+    background: #4CAF50;
     color: white;
     padding: 12px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 10px;
-}
-
-/* ✅ Button Alignment */
-.button-container {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-}
-
-.button-container button {
-    width: 48%;
 }
