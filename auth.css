@@ -24,90 +24,37 @@ body::before {
     z-index: -1;
 }
 
-/* ✅ Move Sign In Box Completely Outside the Image */
+/* ✅ Move Buttons to Top */
 .auth-container {
     width: 420px;
     background: white;
-    padding: 30px;
+    padding: 20px;
     border-radius: 12px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
     position: fixed; /* ✅ Fixed position so it doesn't overlap */
     right: 20px; /* ✅ Moves it fully outside the image */
-    top: 50%;
-    transform: translateY(-50%);
+    top: 10%; /* ✅ Moves it to the top */
     text-align: center;
     z-index: 1000; /* ✅ Ensures it's above everything */
 }
 
-/* ✅ Decorative Title */
-.auth-container h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #333;
-    font-weight: bold;
-}
-
-/* ✅ Buttons (Sign In & Sign Up) */
+/* ✅ Buttons (Login & Sign Up) */
 .auth-buttons {
     display: flex;
     justify-content: space-between; /* ✅ Shift to sides */
-    margin-bottom: 20px;
 }
 .auth-buttons button {
     flex: 1;
-    padding: 12px 18px; /* ✅ Bigger buttons */
-    font-size: 16px;
+    padding: 14px 18px; /* ✅ Bigger buttons */
+    font-size: 18px;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
     background: #007BFF;
     color: white;
     margin: 0 5px;
+    font-weight: bold;
 }
 .auth-buttons button:hover {
     background: #0056b3;
-}
-
-/* ✅ Input Fields - Bigger & Styled */
-.auth-container input {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 16px;
-}
-
-/* ✅ Sign In & Sign Up Submit Button */
-.auth-container button.submit-btn {
-    width: 100%;
-    padding: 14px;
-    background: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 18px; /* ✅ Bigger size */
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 10px;
-}
-.auth-container button.submit-btn:hover {
-    background: #388E3C;
-}
-
-/* ✅ Logout Button */
-.logout-btn {
-    width: 100%;
-    padding: 12px;
-    background: red;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 15px;
-}
-.logout-btn:hover {
-    background: darkred;
 }
