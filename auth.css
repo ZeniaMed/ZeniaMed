@@ -5,7 +5,7 @@ body {
     padding: 0;
     height: 100vh;
     display: flex;
-    justify-content: center; /* ✅ Center alignment */
+    justify-content: flex-end; /* ✅ Shift everything to the right */
     align-items: center;
     background-color: #55DDE0; /* ✅ Light aqua background */
     overflow: hidden;
@@ -16,7 +16,7 @@ body::before {
     content: "";
     position: absolute;
     top: 0;
-    left: 5%; /* ✅ Shifted left so that the form is on the right */
+    left: 5%; /* ✅ Keeps image in place */
     width: 55%;
     height: 100%;
     background: url('images/image.png') no-repeat center;
@@ -24,21 +24,21 @@ body::before {
     z-index: -1;
 }
 
-/* ✅ Move Buttons to Top */
+/* ✅ Shift Login/Sign-up to Blue Background on the Right */
 .auth-container {
     width: 420px;
     background: white;
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
-    position: fixed; /* ✅ Fixed position so it doesn't overlap */
-    right: 20px; /* ✅ Moves it fully outside the image */
-    top: 10%; /* ✅ Moves it to the top */
+    position: absolute; /* ✅ Absolute position so it's on the blue area */
+    right: 5%; /* ✅ Moves it further right */
+    top: 15%; /* ✅ Moves it slightly lower */
     text-align: center;
     z-index: 1000; /* ✅ Ensures it's above everything */
 }
 
-/* ✅ Buttons (Login & Sign Up) */
+/* ✅ Buttons (Sign In & Sign Up) */
 .auth-buttons {
     display: flex;
     justify-content: space-between; /* ✅ Shift to sides */
