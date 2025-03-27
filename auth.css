@@ -7,7 +7,7 @@ body {
     display: flex;
     justify-content: flex-end; /* ✅ Shift form to right */
     align-items: center;
-    background-color: #55DDE0; /* ✅ Light aqua background */
+    background-color: #E2FEFE; /* ✅ Changed Background Color */
     overflow: hidden;
 }
 
@@ -24,7 +24,7 @@ body::before {
     z-index: -1;
 }
 
-/* ✅ Login/Sign-up Box (Slightly Shifted Left & Styled) */
+/* ✅ Login/Sign-up Box */
 .auth-container {
     width: 450px;
     background: white;
@@ -32,16 +32,16 @@ body::before {
     border-radius: 15px;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
     position: absolute;
-    right: 10%; /* ✅ Slightly shifted left */
+    right: 10%;
     top: 15%;
     text-align: center;
     z-index: 1000;
-    animation: fadeIn 0.8s ease-in-out; /* ✅ Animation Added */
-    border: 2px solid #007BFF; /* ✅ Slight Border */
+    animation: fadeIn 0.8s ease-in-out;
+    border: 2px solid #007BFF;
     transition: transform 0.3s ease-in-out;
 }
 .auth-container:hover {
-    transform: scale(1.05); /* ✅ Hover Animation */
+    transform: scale(1.05);
 }
 
 /* ✅ Buttons (Sign In & Sign Up) */
