@@ -5,7 +5,7 @@ body {
     padding: 0;
     height: 100vh;
     display: flex;
-    justify-content: flex-end; /* ✅ Shift everything to the right */
+    justify-content: flex-end; /* ✅ Shift form to right */
     align-items: center;
     background-color: #55DDE0; /* ✅ Light aqua background */
     overflow: hidden;
@@ -16,7 +16,7 @@ body::before {
     content: "";
     position: absolute;
     top: 0;
-    left: 5%; /* ✅ Keeps image in place */
+    left: 5%;
     width: 55%;
     height: 100%;
     background: url('images/image.png') no-repeat center;
@@ -24,28 +24,34 @@ body::before {
     z-index: -1;
 }
 
-/* ✅ Shift Login/Sign-up to Blue Background on the Right */
+/* ✅ Login/Sign-up Box (Slightly Shifted Left & Styled) */
 .auth-container {
-    width: 420px;
+    width: 450px;
     background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
-    position: absolute; /* ✅ Absolute position so it's on the blue area */
-    right: 5%; /* ✅ Moves it further right */
-    top: 15%; /* ✅ Moves it slightly lower */
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    right: 10%; /* ✅ Slightly shifted left */
+    top: 15%;
     text-align: center;
-    z-index: 1000; /* ✅ Ensures it's above everything */
+    z-index: 1000;
+    animation: fadeIn 0.8s ease-in-out; /* ✅ Animation Added */
+    border: 2px solid #007BFF; /* ✅ Slight Border */
+    transition: transform 0.3s ease-in-out;
+}
+.auth-container:hover {
+    transform: scale(1.05); /* ✅ Hover Animation */
 }
 
 /* ✅ Buttons (Sign In & Sign Up) */
 .auth-buttons {
     display: flex;
-    justify-content: space-between; /* ✅ Shift to sides */
+    justify-content: space-between;
 }
 .auth-buttons button {
     flex: 1;
-    padding: 14px 18px; /* ✅ Bigger buttons */
+    padding: 14px 18px;
     font-size: 18px;
     border: none;
     border-radius: 8px;
@@ -57,4 +63,16 @@ body::before {
 }
 .auth-buttons button:hover {
     background: #0056b3;
+}
+
+/* ✅ Animation Effect */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
